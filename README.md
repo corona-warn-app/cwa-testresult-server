@@ -1,1 +1,1 @@
-# corona-warn-app
+# cwa-testresult-server
