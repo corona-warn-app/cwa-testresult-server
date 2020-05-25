@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 
-namespace Covid19LabResultsService
+namespace CWA.TestResultsService
 {
     public partial class LabTestResultsDBContext : DbContext
     {

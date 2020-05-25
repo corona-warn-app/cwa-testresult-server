@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Covid19LabResultsService.Migrations
+namespace CWA.TestResultsService.Migrations
 {
     public partial class InitialCreate : Migration
     {

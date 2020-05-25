@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Covid19LabResultsService
+namespace CWA.TestResultsService
 {
     public class ApiClientCertificateValidationService
     {

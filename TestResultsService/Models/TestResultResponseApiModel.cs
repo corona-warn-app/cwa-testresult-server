@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Covid19LabResultsService.Models
+namespace CWA.TestResultsService.Models
 {
     /// <summary>
     /// 

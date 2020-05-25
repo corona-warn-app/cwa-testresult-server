@@ -17,7 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Certificate;
 using System.Security.Claims;
 
-namespace Covid19LabResultsService
+namespace CWA.TestResultsService
 {
     public class Startup
     {

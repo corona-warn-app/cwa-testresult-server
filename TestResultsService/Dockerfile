@@ -7,16 +7,17 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY [".", "Covid19LabResultsService/"]
-RUN dotnet restore "Covid19LabResultsService/Covid19LabResultsService.csproj"
+#COPY [".", "TestResultsService/"]
+COPY ["TestResultsService/TestResultsService.csproj", "TestResultsService/"]
+RUN dotnet restore "TestResultsService/TestResultsService.csproj"
 COPY . .
-WORKDIR "/src/Covid19LabResultsService"
-RUN dotnet build "Covid19LabResultsService.csproj" -c Release -o /app/build
+WORKDIR "/src/TestResultsService"
+RUN dotnet build "TestResultsService.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Covid19LabResultsService.csproj" -c Release -o /app/publish
+RUN dotnet publish "TestResultsService.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Covid19LabResultsService.dll"]
+ENTRYPOINT ["dotnet", "CWA.TestResultsService.dll"]

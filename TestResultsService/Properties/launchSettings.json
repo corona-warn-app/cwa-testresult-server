@@ -1,0 +1,38 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:53115/",
+      "sslPort": 44381
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "TestResultsService": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ConnectionStrings__LabTestResultsDB": "Server=tcp:80.158.39.182,1433;Initial Catalog=LabResultsDB;Persist Security Info=False;User ID=rdsuser01;Password=hQJ?4zFq^_mnVfKR;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger/index.html",
+      "environmentVariables": {
+        "ConnectionStrings__LabTestResultsDB": "Server=tcp:80.158.39.182,1433;Initial Catalog=LabResultsDB;Persist Security Info=False;User ID=rdsuser01;Password=hQJ?4zFq^_mnVfKR;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;"
+      },
+      "publishAllPorts": true,
+      "useSSL": true
+    }
+  }
+}

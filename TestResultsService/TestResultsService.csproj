@@ -4,16 +4,18 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>87384c0d-d6d0-4595-8256-c1e8a0fe76e9</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <AssemblyName>CWA.TestResultsService</AssemblyName>
+    <RootNamespace>CWA.TestResultsService</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;1591</NoWarn>
-    <DocumentationFile>.\Covid19LabResultsService.xml</DocumentationFile>
+    <DocumentationFile>.\CWA.TestResultsService.xml</DocumentationFile>
     <OutputPath></OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>.\Covid19LabResultsService.xml</DocumentationFile>
+    <DocumentationFile>.\CWA.TestResultsService.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Covid19LabResultsService.Models
+namespace CWA.TestResultsService.Models
 {
     public partial class TestResultEntity
     {

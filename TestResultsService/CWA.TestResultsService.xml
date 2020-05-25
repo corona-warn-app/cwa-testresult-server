@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Covid19LabResultsService</name>
+        <name>CWA.TestResultsService</name>
     </assembly>
     <members>
-        <member name="M:Covid19LabResultsService.Controllers.AppApiController.QueryTestResult(Covid19LabResultsService.Models.TestResultRequestApiModel)">
+        <member name="M:CWA.TestResultsService.Controllers.AppApiController.QueryTestResult(CWA.TestResultsService.Models.TestResultRequestApiModel)">
             <summary>
             Query the the test result for given id
             </summary>
             <param name="request"></param>
             <returns>The test result</returns>
         </member>
-        <member name="M:Covid19LabResultsService.Controllers.LabApiController.CreateTestResults(Covid19LabResultsService.Models.LabTestResultCollectionApiModel)">
+        <member name="M:CWA.TestResultsService.Controllers.LabApiController.CreateTestResults(CWA.TestResultsService.Models.LabTestResultCollectionApiModel)">
             <summary>
             Create lab results
             </summary>
@@ -20,17 +20,17 @@
             <response code="400">error (tbd)</response>            
             <response code="409">conflict (tbd)</response>            
         </member>
-        <member name="T:Covid19LabResultsService.Models.LabTestResultApiModel">
+        <member name="T:CWA.TestResultsService.Models.LabTestResultApiModel">
             <summary>
             Lab test result 
             </summary>
         </member>
-        <member name="P:Covid19LabResultsService.Models.LabTestResultApiModel.Id">
+        <member name="P:CWA.TestResultsService.Models.LabTestResultApiModel.Id">
             <summary>
             Hash (SHA256) of test result id (aka QR-Code, GUID) encoded as hexstring<br/>
             </summary>
         </member>
-        <member name="P:Covid19LabResultsService.Models.LabTestResultApiModel.Result">
+        <member name="P:CWA.TestResultsService.Models.LabTestResultApiModel.Result">
             <summary>
             Result:<br/>
                 1: negative<br/>
@@ -38,28 +38,28 @@
                 3: invalid<br/>
             </summary>
         </member>
-        <member name="P:Covid19LabResultsService.Models.LabTestResultCollectionApiModel.TestResults">
+        <member name="P:CWA.TestResultsService.Models.LabTestResultCollectionApiModel.TestResults">
             <summary>
             The test results
             </summary>
         </member>
-        <member name="T:Covid19LabResultsService.Models.TestResultRequestApiModel">
+        <member name="T:CWA.TestResultsService.Models.TestResultRequestApiModel">
             <summary>
             Request the test result
             </summary>
         </member>
-        <member name="P:Covid19LabResultsService.Models.TestResultRequestApiModel.Id">
+        <member name="P:CWA.TestResultsService.Models.TestResultRequestApiModel.Id">
             <summary>
             Hash (SHA256) of test result id (aka QR-Code, GUID) encoded as hexstring<br/>
                9cdda87d-a833-4f36-bd55-98b7ff8c81f3 -> 75ab05c2a8f0da58737934b55a96f86df4609458bf6360c1de2010f5edd7fca5 
             </summary>
         </member>
-        <member name="T:Covid19LabResultsService.Models.TestResultResponseApiModel">
+        <member name="T:CWA.TestResultsService.Models.TestResultResponseApiModel">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Covid19LabResultsService.Models.TestResultResponseApiModel.TestResult">
+        <member name="P:CWA.TestResultsService.Models.TestResultResponseApiModel.TestResult">
             <summary>
             The test result state reported by the test lab:<br/>
                Pending  = 0 : The test result does not exist yet<br/>
