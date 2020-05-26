@@ -20,10 +20,6 @@ namespace CWA.TestResultsService
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                //optionsBuilder.UseSqlServer("Server=tcp:labresultsdbsrv.database.windows.net,1433;Initial Catalog=LabResultsDB;Persist Security Info=False;User ID=dbadmin;Password=pV/L65AqYS;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
