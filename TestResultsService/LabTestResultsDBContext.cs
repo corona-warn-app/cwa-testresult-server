@@ -44,7 +44,7 @@ namespace CWA.TestResultsService
 
                 entity.Property(e => e.ResultDate)
                     .HasColumnName("result_date")
-                    .HasColumnType("datetime");
+                    .HasColumnType("timestamp");
 
                 entity.Property(e => e.ResultId)
                     .IsRequired()
