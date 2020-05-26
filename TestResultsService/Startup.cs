@@ -46,7 +46,7 @@ namespace CWA.TestResultsService
             });
 
             services.AddDbContext<LabTestResultsDBContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("LabTestResultsDB")));
+                options.UseNpgsql(Configuration.GetConnectionString("LabTestResultsDB")));
 
             services.AddSingleton<ApiClientCertificateValidationService>();
 
