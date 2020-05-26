@@ -21,6 +21,7 @@ COPY --from=publish /app/publish .
 
 EXPOSE 8080
 EXPOSE 8443
+
 ENV ASPNETCORE_URLS="https://*:8443;http://*:8080"
 
 ENTRYPOINT ["dotnet", "CWA.TestResultsService.dll"]
