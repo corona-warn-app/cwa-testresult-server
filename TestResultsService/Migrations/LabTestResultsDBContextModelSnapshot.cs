@@ -3,8 +3,8 @@ using System;
 using CWA.TestResultsService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CWA.TestResultsService.Migrations
 {
@@ -15,19 +15,19 @@ namespace CWA.TestResultsService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .HasAnnotation("ProductVersion", "3.1.4")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("CWA.TestResultsService.Models.TestResultEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnName("id")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Result")
                         .HasColumnName("result")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("ResultDate")
                         .HasColumnName("result_date")
@@ -36,7 +36,7 @@ namespace CWA.TestResultsService.Migrations
                     b.Property<string>("ResultId")
                         .IsRequired()
                         .HasColumnName("result_id")
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.HasKey("Id");
