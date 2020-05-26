@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CWA.TestResultDB.Models
+namespace CWA.TestResultsDB.Models
 {
-    public partial class TestResultEntity
+    public partial class TestResultsEntity
     {
         public Guid Id { get; set; }
         public string ResultId { get; set; }

@@ -3,20 +3,20 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 
-namespace CWA.TestResultDB
+namespace CWA.TestResultsDB
 {
-    public partial class LabTestResultsDBContext : DbContext
+    public partial class TestResultsDBContext : DbContext
     {
-        public LabTestResultsDBContext()
+        public TestResultsDBContext()
         {
         }
 
-        public LabTestResultsDBContext(DbContextOptions<LabTestResultsDBContext> options)
+        public TestResultsDBContext(DbContextOptions<TestResultsDBContext> options)
             : base(options)
         {
         }
 
-        public virtual DbSet<Models.TestResultEntity> TestResults { get; set; }
+        public virtual DbSet<Models.TestResultsEntity> TestResults { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,7 +28,7 @@ namespace CWA.TestResultDB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Models.TestResultEntity>(entity =>
+            modelBuilder.Entity<Models.TestResultsEntity>(entity =>
             {
                 entity.ToTable("test_results");
 

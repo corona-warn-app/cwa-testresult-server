@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyName>CWA.TestResultDB</AssemblyName>
-    <RootNamespace>CWA.TestResultDB</RootNamespace>
+    <AssemblyName>CWA.TestResultsDB</AssemblyName>
+    <RootNamespace>CWA.TestResultsDB</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
