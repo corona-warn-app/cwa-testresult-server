@@ -3,15 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 
-namespace CWA.TestResultDB
+namespace CWA.TestResultsDB
 {
-    public partial class LabTestResultsDBContext : DbContext
+    public partial class TestResultsDBContext : DbContext
     {
-        public LabTestResultsDBContext()
+        public TestResultsDBContext()
         {
         }
 
-        public LabTestResultsDBContext(DbContextOptions<LabTestResultsDBContext> options)
+        public TestResultsDBContext(DbContextOptions<TestResultsDBContext> options)
             : base(options)
         {
         }
