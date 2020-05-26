@@ -16,7 +16,7 @@ namespace CWA.TestResultsDB
         {
         }
 
-        public virtual DbSet<Models.TestResultsEntity> TestResults { get; set; }
+        public virtual DbSet<Models.TestResultEntity> TestResults { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,7 +28,7 @@ namespace CWA.TestResultsDB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Models.TestResultsEntity>(entity =>
+            modelBuilder.Entity<Models.TestResultEntity>(entity =>
             {
                 entity.ToTable("test_results");
 
