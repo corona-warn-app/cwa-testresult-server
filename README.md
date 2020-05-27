@@ -30,7 +30,6 @@ The goal of this project is to develop the official Corona-Warn-App for Germany 
 For all People who are willing to join the tracing process, but have not been tested by one of the participating labors there will be a serviceline one can call to get a temporaly transactionnumber (TAN) to join the process. The agents at the serviceline will tell the caller some questions to verify his status and then provide one with the transactionnumber.
 This component provides _TBD_
 
-
 ## Working Language
 
 We are building this application for Germany. We want to be as open and transparent as possible, also to interested parties in the global developer community who do not speak German. Later on this application might also serve as a template for other projects outside of Germany. For these reasons, we decided to apply _English_ as the primary project language.  
@@ -48,7 +47,7 @@ The following channels are available for discussions, feedback, and support requ
 | ------------------------ | ------------------------------------------------------ |
 | **General Discussion**   | <a href="https://github.com/corona-warn-app/cwa-testresult-server/issues/new/choose" title="General Discussion"><img src="https://img.shields.io/github/issues/corona-warn-app/cwa-testresult-server/question.svg?style=flat-square"></a> </a>   |
 | **Concept Feedback**    | <a href="https://github.com/corona-warn-app/cwa-testresult-server/issues/new/choose" title="Open Concept Feedback"><img src="https://img.shields.io/github/issues/corona-warn-app/cwa-testresult-server/architecture.svg?style=flat-square"></a>  |
-| **Verification Portal Issue**    | <a href="https://github.com/corona-warn-app/cwa-testresult-server/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/corona-warn-app/cwa-testresult-server?style=flat"></a>  |
+| **Testresult Server Issue**    | <a href="https://github.com/corona-warn-app/cwa-testresult-server/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/corona-warn-app/cwa-testresult-server?style=flat"></a>  |
 | **Other Requests**    | <a href="mailto:opensource@telekom.de" title="Email CWA Team"><img src="https://img.shields.io/badge/email-CWA%20team-green?logo=mail.ru&style=flat-square&logoColor=white"></a>   |
 
 ## How to Contribute
@@ -75,6 +74,7 @@ The following public repositories are currently available for the Corona-Warn-Ap
 [cwa-documentation]: https://github.com/corona-warn-app/cwa-documentation
 [cwa-server]: https://github.com/corona-warn-app/cwa-server
 [cwa-verification-server]: https://github.com/corona-warn-app/cwa-verification-server
+[cwa-verification-portal]: https://github.com/corona-warn-app/cwa-verification-portal
 [cwa-verification-iam]: https://github.com/corona-warn-app/cwa-verification-iam
 [cwa-testresult-server]: https://github.com/corona-warn-app/cwa-testresult-server
 
