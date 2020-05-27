@@ -19,7 +19,7 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ConnectionStrings__LabTestResultsDB": "Server=tcp:80.158.39.182,1433;Initial Catalog=LabResultsDB;Persist Security Info=False;User ID=rdsuser01;Password=hQJ?4zFq^_mnVfKR;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;",
+        "ConnectionStrings__LabTestResultsDB": "Host=80.158.34.215;Database=test_results_db;Username=root;Password=hQJ?4zFq^_mnVfKR",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
@@ -29,7 +29,7 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger/index.html",
       "environmentVariables": {
-        "ConnectionStrings__LabTestResultsDB": "Server=tcp:80.158.39.182,1433;Initial Catalog=LabResultsDB;Persist Security Info=False;User ID=rdsuser01;Password=hQJ?4zFq^_mnVfKR;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;"
+        "ConnectionStrings__LabTestResultsDB": "Host=80.158.34.215;Database=test_results_db;Username=root;Password=hQJ?4zFq^_mnVfKR"
       },
       "publishAllPorts": true,
       "useSSL": true

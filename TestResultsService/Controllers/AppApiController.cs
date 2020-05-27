@@ -19,7 +19,7 @@ namespace CWA.TestResultsService.Controllers
     [ApiController]
     [Produces("application/json")]
     [ApiExplorerSettings(GroupName = "app")]
-    //[Authorize]
+    [Authorize]
     public class AppApiController : ControllerBase
     {
         private readonly ILogger<AppApiController> _logger;

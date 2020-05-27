@@ -36,8 +36,8 @@ namespace CWA.TestResultsService
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("app", new OpenApiInfo { Title = "LabTestResultService App API", Version = "v1" });
-                c.SwaggerDoc("lab", new OpenApiInfo { Title = "LabTestResultService Lab API", Version = "v1" });
+                c.SwaggerDoc("app", new OpenApiInfo { Title = "TestResultsService App API", Version = "v1" });
+                c.SwaggerDoc("lab", new OpenApiInfo { Title = "TestResultsService Lab API", Version = "v1" });
 
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -104,8 +104,8 @@ namespace CWA.TestResultsService
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/app/swagger.json", "LabTestResultService App API");
-                c.SwaggerEndpoint("/swagger/lab/swagger.json", "LabTestResultService Lab API");
+                c.SwaggerEndpoint("/swagger/app/swagger.json", "TestResultsService App API");
+                c.SwaggerEndpoint("/swagger/lab/swagger.json", "TestResultsService Lab API");
             });
 
             app.UseRouting();
