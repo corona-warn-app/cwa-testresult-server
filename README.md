@@ -79,7 +79,7 @@ The docker image will then run on your local machine on port 8080 assuming you c
 
 Along with the application there comes an OpenApi Doc based swagger documentation which you can access in your web browser, when the verification server applications runs:  
 ````URL
-    <base-url>/swagger-ui.html#/verification-controller
+<base-url>/swagger-ui.html#/verification-controller
 ````
 Which results in the following URL on your local machine:
 http://localhost:8080/swagger-ui.html#/verification-controller
@@ -124,7 +124,7 @@ The following public repositories are currently available for the Corona-Warn-Ap
 | [cwa-verification-server] | Backend implementation of the verification process|
 | [cwa-verification-portal] | The portal to interact with the verification server |
 | [cwa-verification-iam] | The identy and access management to interact with the verification server |
-| [cwa-testresult-server] | receives the testresults from connected labors |
+| [cwa-testresult-server] | receives the test results from connected labors |
 
 [cwa-documentation]: (https://github.com/corona-warn-app/cwa-documentation)
 [cwa-server]:(https://github.com/corona-warn-app/cwa-server)
