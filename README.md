@@ -21,6 +21,7 @@
 The goal of this project is to develop the official Corona-Warn-App for Germany based on the exposure notification API from [Apple](https://www.apple.com/covid19/contacttracing/) and [Google](https://www.google.com/covid19/exposurenotifications/). The apps (for both iOS and Android) use Bluetooth technology to exchange anonymous encrypted data with other mobile phones (on which the app is also installed) in the vicinity of an app user's phone. The data is stored locally on each user's device, preventing authorities or other parties from accessing or controlling the data. This repository contains the **testresult server** for the Corona-Warn-App. This implementation is still a **work in progress**, and the code it contains is currently alpha-quality code.
 
 ## Status
+
 ![ci](https://github.com/corona-warn-app/cwa-testresult-server/workflows/ci/badge.svg)
 [![quality gate](https://sonarcloud.io/api/project_badges/measure?project=corona-warn-app_cwa-testresult-server&metric=alert_status)](https://sonarcloud.io/dashboard?id=corona-warn-app_cwa-testresult-server)
 [![coverage](https://sonarcloud.io/api/project_badges/measure?project=corona-warn-app_cwa-testresult-server&metric=coverage)](https://sonarcloud.io/dashboard?id=corona-warn-app_cwa-testresult-server)
@@ -66,6 +67,7 @@ You can then open a terminal pointing to the root directory of the verification 
 The verification server will start up and run locally on your machine available on port 8080.
 
 #### Docker based build  
+
 We recommend that you first check the prerequisites to ensure that  
 - [Docker](https://www.docker.com)  
 
@@ -104,6 +106,7 @@ Consequently, all content will be made available primarily in English. We also a
 The full documentation for the Corona-Warn-App can be found in the [cwa-documentation](https://github.com/corona-warn-app/cwa-documentation) repository. The documentation repository contains technical documents, architecture information, and white papers related to this implementation.
 
 ## Support and Feedback
+
 The following channels are available for discussions, feedback, and support requests:
 
 | Type                     | Channel                                                |
