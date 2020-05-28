@@ -1,0 +1,65 @@
+databaseChangeLog:
+- changeSet:
+    id: create-test-result-table
+    author: jhagestedt
+    changes:
+    - createTable:
+        tableName: test_result
+        columns:
+        - column:
+            name: id
+            type: bigint
+            constraints:
+              unique: true
+              nullable: false
+              primaryKey: true
+        - column:
+            name: version
+            type: bigint
+        - column:
+            name: created_at
+            type: datetime
+            constraints:
+              nullable: false
+        - column:
+            name: updated_at
+            type: datetime
+            constraints:
+              nullable: false
+        - column:
+            name: result
+            type: integer
+            constraints:
+              nullable: false
+        - column:
+            name: result_id
+            type: varchar(64)
+            constraints:
+              unique: true
+              nullable: false
+        - column:
+            name: result_date
+            type: datetime
+            constraints:
+              nullable: false
+- changeSet:
+    id: create-test-result-table-increment
+    author: jhagestedt
+    changes:
+    - addAutoIncrement:
+        tableName: test_result
+        columnName: id
+        columnDataType: bigint
+        startWith: 1
+        incrementBy: 1
+- changeSet:
+    id: create-test-result-table-indexes
+    author: jhagestedt
+    changes:
+    - createIndex:
+        tableName: test_result
+        indexName: idx_test_result_result_id
+        columns:
+        - column:
+            name: result_id
+            type: varchar(64)

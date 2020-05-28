@@ -1,0 +1,4 @@
+databaseChangeLog:
+- include:
+    file: changelog/v000-create-test-result.yml
+    relativeToChangelogFile: true
