@@ -124,14 +124,14 @@ The following public repositories are currently available for the Corona-Warn-Ap
 | [cwa-verification-server] | Backend implementation of the verification process|
 | [cwa-verification-portal] | The portal to interact with the verification server |
 | [cwa-verification-iam] | The identy and access management to interact with the verification server |
-| [cwa-testresult-server] | _TBD_ |
+| [cwa-testresult-server] | receives the testresults from connected labors |
 
-[cwa-documentation]: https://github.com/corona-warn-app/cwa-documentation
-[cwa-server]: https://github.com/corona-warn-app/cwa-server
-[cwa-verification-server]: https://github.com/corona-warn-app/cwa-verification-server
-[cwa-verification-portal]: https://github.com/corona-warn-app/cwa-verification-portal
-[cwa-verification-iam]: https://github.com/corona-warn-app/cwa-verification-iam
-[cwa-testresult-server]: https://github.com/corona-warn-app/cwa-testresult-server
+[cwa-documentation]: (https://github.com/corona-warn-app/cwa-documentation)
+[cwa-server]:(https://github.com/corona-warn-app/cwa-server)
+[cwa-verification-server]:(https://github.com/corona-warn-app/cwa-verification-server)
+[cwa-verification-portal]: (https://github.com/corona-warn-app/cwa-verification-portal)
+[cwa-verification-iam]: (https://github.com/corona-warn-app/cwa-verification-iam)
+[cwa-testresult-server]: (https://github.com/corona-warn-app/cwa-testresult-server)
 
 ## Licensing
 
