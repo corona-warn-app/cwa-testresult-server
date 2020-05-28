@@ -18,7 +18,7 @@
   <a href="#licensing">Licensing</a>
 </p>
 
-The goal of this project is to develop the official Corona-Warn-App for Germany based on the exposure notification API from [Apple](https://www.apple.com/covid19/contacttracing/) and [Google](https://www.google.com/covid19/exposurenotifications/). The apps (for both iOS and Android) use Bluetooth technology to exchange anonymous encrypted data with other mobile phones (on which the app is also installed) in the vicinity of an app user's phone. The data is stored locally on each user's device, preventing authorities or other parties from accessing or controlling the data. This repository contains the **verification portal** for the Corona-Warn-App. This implementation is still a **work in progress**, and the code it contains is currently alpha-quality code.
+The goal of this project is to develop the official Corona-Warn-App for Germany based on the exposure notification API from [Apple](https://www.apple.com/covid19/contacttracing/) and [Google](https://www.google.com/covid19/exposurenotifications/). The apps (for both iOS and Android) use Bluetooth technology to exchange anonymous encrypted data with other mobile phones (on which the app is also installed) in the vicinity of an app user's phone. The data is stored locally on each user's device, preventing authorities or other parties from accessing or controlling the data. This repository contains the **testresult server** for the Corona-Warn-App. This implementation is still a **work in progress**, and the code it contains is currently alpha-quality code.
 
 ## Status
 ![ci](https://github.com/corona-warn-app/cwa-testresult-server/workflows/ci/badge.svg)
@@ -27,8 +27,63 @@ The goal of this project is to develop the official Corona-Warn-App for Germany 
 [![bugs](https://sonarcloud.io/api/project_badges/measure?project=corona-warn-app_cwa-testresult-server&metric=bugs)](https://sonarcloud.io/dashboard?id=corona-warn-app_cwa-testresult-server)
 
 ## About this component
-For all People who are willing to join the tracing process, but have not been tested by one of the participating labors there will be a serviceline one can call to get a temporaly transactionnumber (TAN) to join the process. The agents at the serviceline will tell the caller some questions to verify his status and then provide one with the transactionnumber.
-This component provides _TBD_
+This component receives the test results of COVID-19 Tests from connected labors. The information submitted by the labors contain an UUID and the result.  
+
+## Development
+
+This component can be locally build in order to test the functionality of the interfaces and verify the concepts it is build upon.  
+There are two ways to build:
+ - [Maven](https:///maven.apache.org) build - to run this component as spring application on your local machine
+ - [Docker](https://www.docker.com) build - to run it as docker container build from the provided docker build [file](https://github.com/corona-warn-app/cwa-verification-server/blob/master/Dockerfile)
+ ### Prerequisites
+ [Open JDK 11](https://openjdk.java.net)  
+ [Maven](https://apache.maven.org)  
+ *(optional)*: [Docker](https://www.docker.com)  
+ ### Build
+ Whether you cloned or downloaded the 'zipped' sources you will either find the sources in the chosen checkout-directory or get a zip file with the source code, which you can expand to a folder of your choice.
+
+ In either case open a terminal pointing to the directory you put the sources in. The local build process is described afterwards depending on the way you choose.
+#### Maven based build
+For actively take part on the development this is the way you should choose.   
+Please check, whether following prerequisites are fulfilled
+- [Open JDK 11](https://openjdk.java.net) or a similar JDK 11 compatible VM  
+- [Maven](https://apache.maven.org)  
+
+is installed on your machine.  
+You can then open a terminal pointing to the root directory of the verification server and do the following:
+
+    mvn package
+    java -jar target/cwa-testresult-server-0.0.1-SNAPSHOT.jar  
+
+The verification server will start up and run locally on your machine available on port 8080.
+
+#### Docker based build  
+We recommend that you first check the prerequisites to ensure that  
+- [Docker](https://www.docker.com)  
+
+is installed on you machine  
+
+On the commandline do the following:
+```bash
+docker build -f|--file <path to dockerfile>  -t <imagename>  <path-to-testresultserver-root>
+docker run -p 127.0.0.1:8080:8080/tcp -it <imagename>
+```
+or simply  
+```bash
+docker build --pull --rm -f "Dockerfile" -t cwa-testresultserver "."
+docker run -p 127.0.0.1:8080:8080/tcp -it cwa-testresultserver
+```
+if you are in the root of the checked out repository.  
+The docker image will then run on your local machine on port 8080 assuming you configured docker for shared network mode.
+#### API Documentation  
+
+Along with the application there comes an OpenApi Doc based swagger documentation which you can access in your web browser, when the verification server applications runs:  
+````URL
+<base-url>/swagger-ui.html#/verification-controller
+````
+Which results in the following URL on your local machine:
+http://localhost:8080/swagger-ui.html#/verification-controller
+
 
 ## Working Language
 
@@ -69,14 +124,14 @@ The following public repositories are currently available for the Corona-Warn-Ap
 | [cwa-verification-server] | Backend implementation of the verification process|
 | [cwa-verification-portal] | The portal to interact with the verification server |
 | [cwa-verification-iam] | The identy and access management to interact with the verification server |
-| [cwa-testresult-server] | _TBD_ |
+| [cwa-testresult-server] | receives the test results from connected labors |
 
-[cwa-documentation]: https://github.com/corona-warn-app/cwa-documentation
-[cwa-server]: https://github.com/corona-warn-app/cwa-server
-[cwa-verification-server]: https://github.com/corona-warn-app/cwa-verification-server
-[cwa-verification-portal]: https://github.com/corona-warn-app/cwa-verification-portal
-[cwa-verification-iam]: https://github.com/corona-warn-app/cwa-verification-iam
-[cwa-testresult-server]: https://github.com/corona-warn-app/cwa-testresult-server
+[cwa-documentation]: (https://github.com/corona-warn-app/cwa-documentation)
+[cwa-server]:(https://github.com/corona-warn-app/cwa-server)
+[cwa-verification-server]:(https://github.com/corona-warn-app/cwa-verification-server)
+[cwa-verification-portal]: (https://github.com/corona-warn-app/cwa-verification-portal)
+[cwa-verification-iam]: (https://github.com/corona-warn-app/cwa-verification-iam)
+[cwa-testresult-server]: (https://github.com/corona-warn-app/cwa-testresult-server)
 
 ## Licensing
 
