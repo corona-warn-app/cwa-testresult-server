@@ -21,13 +21,22 @@
 The goal of this project is to develop the official Corona-Warn-App for Germany based on the exposure notification API from [Apple](https://www.apple.com/covid19/contacttracing/) and [Google](https://www.google.com/covid19/exposurenotifications/). The apps (for both iOS and Android) use Bluetooth technology to exchange anonymous encrypted data with other mobile phones (on which the app is also installed) in the vicinity of an app user's phone. The data is stored locally on each user's device, preventing authorities or other parties from accessing or controlling the data. This repository contains the **testresult server** for the Corona-Warn-App. This implementation is still a **work in progress**, and the code it contains is currently alpha-quality code.
 
 ## Status
+
 ![ci](https://github.com/corona-warn-app/cwa-testresult-server/workflows/ci/badge.svg)
 [![quality gate](https://sonarcloud.io/api/project_badges/measure?project=corona-warn-app_cwa-testresult-server&metric=alert_status)](https://sonarcloud.io/dashboard?id=corona-warn-app_cwa-testresult-server)
 [![coverage](https://sonarcloud.io/api/project_badges/measure?project=corona-warn-app_cwa-testresult-server&metric=coverage)](https://sonarcloud.io/dashboard?id=corona-warn-app_cwa-testresult-server)
 [![bugs](https://sonarcloud.io/api/project_badges/measure?project=corona-warn-app_cwa-testresult-server&metric=bugs)](https://sonarcloud.io/dashboard?id=corona-warn-app_cwa-testresult-server)
 
 ## About this component
-This component receives the test results of COVID-19 Tests from connected labors. The information submitted by the labors contain an UUID and the result.  
+
+In the world of the Corona Warn App the testresult-server receives the results from laboratories and delivers these results to the app via the verification-server.The parts of the verification component cooperate in the following manner:
+
+- The Verification Server of the Corona Warn App (repository: cwa-verification-server) helps validating whether upload requests from the mobile App are valid or not.
+- The Verification Portal of the Corona Warn App (repository: cwa-verification-portal) allows hotline employees to generate teleTANs which are used by users of the mobile App to upload their diagnostic keys.
+- The Verification Identity and Access of the Corona Warn App (repository: cwa-verification-iam) ensures that only authorized health personnel get access to the Verification Portal.
+- The Testresult Server of the Corona Warn App (repository: cwa-testresult-server) receives the results from laboratories and delivers these results to the app via the verification-server.
+
+So, this component receives the test results of COVID-19 Tests from connected laboratories. The information submitted by the laboratories contains an UUID and the result.    
 
 ## Development
 
@@ -58,6 +67,7 @@ You can then open a terminal pointing to the root directory of the verification 
 The verification server will start up and run locally on your machine available on port 8080.
 
 #### Docker based build  
+
 We recommend that you first check the prerequisites to ensure that  
 - [Docker](https://www.docker.com)  
 
@@ -96,12 +106,13 @@ Consequently, all content will be made available primarily in English. We also a
 The full documentation for the Corona-Warn-App can be found in the [cwa-documentation](https://github.com/corona-warn-app/cwa-documentation) repository. The documentation repository contains technical documents, architecture information, and white papers related to this implementation.
 
 ## Support and Feedback
+
 The following channels are available for discussions, feedback, and support requests:
 
 | Type                     | Channel                                                |
 | ------------------------ | ------------------------------------------------------ |
-| **General Discussion**   | <a href="https://github.com/corona-warn-app/cwa-testresult-server/issues/new/choose" title="General Discussion"><img src="https://img.shields.io/github/issues/corona-warn-app/cwa-testresult-server/question.svg?style=flat-square"></a> </a>   |
-| **Concept Feedback**    | <a href="https://github.com/corona-warn-app/cwa-testresult-server/issues/new/choose" title="Open Concept Feedback"><img src="https://img.shields.io/github/issues/corona-warn-app/cwa-testresult-server/architecture.svg?style=flat-square"></a>  |
+| **General Discussion**   | <a href="https://github.com/corona-warn-app/cwa-documentation/issues/new/choose" title="General Discussion"><img src="https://img.shields.io/github/issues/corona-warn-app/cwa-documentation/question.svg?style=flat-square"></a> </a>   |
+| **Concept Feedback**    | <a href="https://github.com/corona-warn-app/cwa-documentation/issues/new/choose" title="Open Concept Feedback"><img src="https://img.shields.io/github/issues/corona-warn-app/cwa-documentation/architecture.svg?style=flat-square"></a>  |
 | **Testresult Server Issue**    | <a href="https://github.com/corona-warn-app/cwa-testresult-server/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/corona-warn-app/cwa-testresult-server?style=flat"></a>  |
 | **Other Requests**    | <a href="mailto:opensource@telekom.de" title="Email CWA Team"><img src="https://img.shields.io/badge/email-CWA%20team-green?logo=mail.ru&style=flat-square&logoColor=white"></a>   |
 
@@ -124,7 +135,7 @@ The following public repositories are currently available for the Corona-Warn-Ap
 | [cwa-verification-server] | Backend implementation of the verification process|
 | [cwa-verification-portal] | The portal to interact with the verification server |
 | [cwa-verification-iam] | The identy and access management to interact with the verification server |
-| [cwa-testresult-server] | receives the test results from connected labors |
+| [cwa-testresult-server] | receives the test results from connected laboratories |
 
 [cwa-documentation]: (https://github.com/corona-warn-app/cwa-documentation)
 [cwa-server]:(https://github.com/corona-warn-app/cwa-server)
