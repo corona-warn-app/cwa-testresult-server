@@ -4,7 +4,7 @@ by Andreas Scheibal (andreas.scheibal@t-systems.com)
 
 ##	Introduction
 
-This document describes the component Test Result Server for the System “Corona Warn App”. In the world of the Corona Warn App the Testresult Server holds results of medical tests for SARS-CoV-2.
+This document describes the component Test Result Server for the System “Corona Warn App”. In the world of the Corona Warn App the Test Result Server holds results of medical tests for SARS-CoV-2.
 
 This document links the overall system architecture.
 Please keep in mind, that this document is still **work-in-progress**.  
@@ -20,7 +20,7 @@ The primary scope of the component is to provide the verification server with in
 The Test Result Server provides test results of SARS-CoV-2 tests in a pseudonymized form to only the verification server as it requests such information.
 
 ![Overview Architecture](cwa-testresult-server.png)  
-Figure 1: Components Testresult Server 
+Figure 1: Components Test Result Server 
 
 - Lab Server Gateway: System which aggregates the test results from different labs 
 - Lab: is the medical facility which executes the test for SARS-CoV-2 and produces the test result 
@@ -65,7 +65,7 @@ Logfiles are kept for 30 days.
 - **Test Center**: Facility where the user can donate a probe to be tested for SARS-CoV-2, such as hospitals or practicing doctors 
 - **Lab**: Facility which tests the probe of the user and produces a trusted test result on SARS-CoV-2. 
 - **Verification Server**: Software service which proves that a user, who is taking part in the Corona Warn App and who is willing to file his Diagnosis Keys, has been really tested positive by an established authority 
-- **Testresult Server**: Software service, that imports the test results provided by the Labs and stores them for further use. 
+- **Test Result Server**: Software service, that imports the test results provided by the Labs and stores them for further use. 
 
 
 ##	Supported User Stories 
