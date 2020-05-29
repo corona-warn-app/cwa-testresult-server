@@ -38,7 +38,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
- * This class represents the TAN - entity.
+ * This class represents the test result entity.
  */
 @Data
 @NoArgsConstructor
