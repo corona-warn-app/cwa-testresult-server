@@ -15,7 +15,7 @@ Please keep in mind, that this document is still **work-in-progress**.
 
 ##	Purpose of the Software System Component
 
-The primary scope of the component is to provide the verification server with information of labor test results of SARS-CoV-2 tested people.
+The primary scope of the component is to provide the verification server with information of lab test results of SARS-CoV-2 tested people.
 
 ##	Context
 
@@ -95,7 +95,7 @@ API Endpoint:
 The endpoint can receive several test results in one call.
 
 Steps:
-1.	Labor provides 1..n test results
+1.	lab provides 1..n test results
 2.	test result server inserts test results into its DB
 
 ###	Use Case retrieve test result
