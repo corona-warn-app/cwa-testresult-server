@@ -4,7 +4,8 @@ by Andreas Scheibal (andreas.scheibal@t-systems.com)
 
 ##	Introduction
 
-This document describes the component Test Result Server for the System “Corona Warn App”. In the world of the Corona Warn App the Verification Server helps validating whether upload requests from the mobile App are valid or not.
+This document describes the component Test Result Server for the System “Corona Warn App”. In the world of the Corona Warn App the Testresult Server holds results of medical tests for SARS-CoV-2.
+
 This document links the overall system architecture.
 Please keep in mind, that this document is still **work-in-progress**.  
 
@@ -21,12 +22,9 @@ The Test Result Server provides test results of SARS-CoV-2 tests in a pseudonymi
 ![Overview Architecture](cwa-testresult-server.png)  
 Figure 1: Components Testresult Server 
 
-- The Corona-Warn-App is a system which requests test result status and obtains proofs. 
-- The Corona-Warn-App Server is a system which needs to verify proof.
-- The Portal Server is a system which creates and obtains proof and therefore acts as source for proof.
-- The Lab Server/Laboratory Information System (LIS) is a system which acts as trusted source for proof.
-
-Proof is represented by a Transaction Authorization Number (TAN), which is not bound to a specific transaction.
+- Lab Server Gateway: System which aggregates the test results from different labs 
+- Lab: is the medical facility which executes the test for SARS-CoV-2 and produces the test result 
+- Verification Server: The instance which creates proof certificates (TAN) for positive tested users to allow them to upload their diagnostic keys
 
 
 ##	Core Entities
@@ -158,38 +156,7 @@ All data is deleted after 14 days.
 **_This chapter is still in work._**
 
 ###	Threats
-Based on STRIDE threat modelling, the threats below are anticipated:
-
-|ID|	Category|	Name|	Definition|
-| ------------- |:-------------:| -----:| -----:|
-|T1|	Brute Force	| Brute Force teleTAN| 	Try to guess a teleTAN via brute force attack.|
-|T2|		DDoS Attack|	The API is attacked by a high number of requests, leading to an outage of the service|
-|T3|		Code injection|	The payload and/or header contain code which is executed|
-|T4|			
-|T5|		Brute force attack|	By a brute force attack a client wants to guess a valid GUID to create a valid TAN|
-|T6|		Steal secrets from logs	|
-			
-Categories follow STRIDE:
--	Spoofing
--	Tampering
--	Repudiation
--	Information disclosure (privacy breach or data leak)
--	Denial of service
--	Elevation of privilege
-
 ###	Measures
-
-|ID|	Threat|	Name|	Definition|
-| ------------- |:-------------:| -----:| -----:|
-|MT1|||OTC DDoD Protection	Infrastructure Level|
-|MT2|||Strong input parameter verification, with 100% code coverage and very high amount of testing	|
-|MT3|||Enforcing TLS 1.2 and above	|
-|MT6|T2||	Use Open Telekom Cloud Anti-DDoS	|
-|MT7|T3||	Strict validation of http headers, body content	|
-|MT9|T5||	Use Throttling @ Code Level in API implementation to reduce the possible frequency of guessing attempts	|
-|MT10|T5||	Detect unusual load scenario and trigger warning for operation	|
-|MT11|T6||	Use only POST requests to avoid logging of secrets at infrastructure components|
-|MT12|||	Strict input validation, all REST input parameter are validated in a strict manner|
 			
 			
 
@@ -197,11 +164,6 @@ Categories follow STRIDE:
 - Hashing of GUID: SHA-256, no salt, no pepper
 
 ##	Complexity of secrets
-
 - hashed GUID: 128 bits
 
 ## Used Timeframes
-
-hashed GUID
--	Lifespan of TAN is 14 days
-
