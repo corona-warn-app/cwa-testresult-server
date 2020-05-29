@@ -6,6 +6,8 @@ by Andreas Scheibal (andreas.scheibal@t-systems.com)
 
 This document describes the component Test Result Server for the System “Corona Warn App”. In the world of the Corona Warn App the Test Result Server holds results of medical tests for SARS-CoV-2.
 
+This component was named Lab Server in earlier iterations.
+
 This document links the overall system architecture.
 Please keep in mind, that this document is still **work-in-progress**.  
 
