@@ -29,12 +29,12 @@ The goal of this project is to develop the official Corona-Warn-App for Germany 
 
 ## About this component
 
-In the world of the Corona Warn App the testresult-server receives the results from laboratories and delivers these results to the app via the verification-server. The parts of the verification component cooperate in the following manner:
+In the world of the Corona Warn App the Test Result Server receives the results from laboratories and delivers these results to the app via the verification-server. The parts of the verification component cooperate in the following manner:
 
 - The Verification Server of the Corona Warn App (repository: cwa-verification-server) helps validating whether upload requests from the mobile App are valid or not.
 - The Verification Portal of the Corona Warn App (repository: cwa-verification-portal) allows hotline employees to generate teleTANs which are used by users of the mobile App to upload their diagnostic keys.
 - The Verification Identity and Access of the Corona Warn App (repository: cwa-verification-iam) ensures that only authorized health personnel get access to the Verification Portal.
-- The Testresult Server of the Corona Warn App (repository: cwa-testresult-server) receives the results from laboratories and delivers these results to the app via the verification-server.
+- The Test Result Server of the Corona Warn App (repository: cwa-testresult-server) receives the results from laboratories and delivers these results to the app via the verification-server.
 
 So, this component receives the test results of COVID-19 Tests from connected laboratories. The information submitted by the laboratories contains an UUID and the result.    
 
@@ -113,7 +113,7 @@ The following channels are available for discussions, feedback, and support requ
 | ------------------------ | ------------------------------------------------------ |
 | **General Discussion**   | <a href="https://github.com/corona-warn-app/cwa-documentation/issues/new/choose" title="General Discussion"><img src="https://img.shields.io/github/issues/corona-warn-app/cwa-documentation/question.svg?style=flat-square"></a> </a>   |
 | **Concept Feedback**    | <a href="https://github.com/corona-warn-app/cwa-documentation/issues/new/choose" title="Open Concept Feedback"><img src="https://img.shields.io/github/issues/corona-warn-app/cwa-documentation/architecture.svg?style=flat-square"></a>  |
-| **Testresult Server Issue**    | <a href="https://github.com/corona-warn-app/cwa-testresult-server/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/corona-warn-app/cwa-testresult-server?style=flat"></a>  |
+| **Test Result Server Issue**    | <a href="https://github.com/corona-warn-app/cwa-testresult-server/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/corona-warn-app/cwa-testresult-server?style=flat"></a>  |
 | **Other Requests**    | <a href="mailto:opensource@telekom.de" title="Email CWA Team"><img src="https://img.shields.io/badge/email-CWA%20team-green?logo=mail.ru&style=flat-square&logoColor=white"></a>   |
 
 ## How to Contribute
