@@ -1,4 +1,4 @@
-# Software Design Testresult Server
+# Software Design Test Result Server
 
 by Andreas Scheibal (andreas.scheibal@t-systems.com)
 
