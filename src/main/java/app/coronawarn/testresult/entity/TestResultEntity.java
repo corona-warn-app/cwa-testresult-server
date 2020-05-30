@@ -19,7 +19,7 @@
  * under the License.
  */
 
-package app.coronawarn.testresult;
+package app.coronawarn.testresult.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;

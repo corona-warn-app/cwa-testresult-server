@@ -21,6 +21,7 @@
 
 package app.coronawarn.testresult;
 
+import app.coronawarn.testresult.entity.TestResultEntity;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.junit.Assert;
