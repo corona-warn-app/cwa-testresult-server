@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       .mvcMatchers("/api/**").permitAll()
       .mvcMatchers("/management/*").permitAll()
       .mvcMatchers("/v3/**").permitAll()
-      .mvcMatchers("/swagger*").permitAll()
+      .mvcMatchers("/swagger-ui/*").permitAll()
       .anyRequest().denyAll()
       .and().csrf().disable();
   }
