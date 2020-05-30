@@ -12,6 +12,16 @@ spring:
       ddl-auto: validate
   liquibase:
     change-log: classpath:db/changelog.yml
+management:
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+  endpoints:
+    enabled-by-default: false
+    web:
+      base-path: /management
 testresult:
   cleanup:
     days: 14
