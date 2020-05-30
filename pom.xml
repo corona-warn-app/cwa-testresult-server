@@ -36,11 +36,13 @@
     <lombok.version>1.18.12</lombok.version>
     <liquibase.version>3.9.0</liquibase.version>
     <springdoc.version>1.3.9</springdoc.version>
+    <guava.version>29.0-jre</guava.version>
     <!-- plugins -->
     <plugin.checkstyle.version>3.1.1</plugin.checkstyle.version>
     <plugin.sonar.version>3.6.1.1688</plugin.sonar.version>
     <plugin.jacoco.version>0.8.5</plugin.jacoco.version>
-    <guava.version>29.0-jre</guava.version>
+    <!-- sonar -->
+    <sonar.coverage.exclusions>**/config/*,**/exception/*,**/entity/*,**/model/*</sonar.coverage.exclusions>
   </properties>
 
   <dependencyManagement>

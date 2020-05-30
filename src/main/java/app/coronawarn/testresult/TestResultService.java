@@ -21,6 +21,7 @@
 
 package app.coronawarn.testresult;
 
+import app.coronawarn.testresult.entity.TestResultEntity;
 import app.coronawarn.testresult.exception.TestResultException;
 import app.coronawarn.testresult.model.TestResult;
 import java.time.LocalDateTime;

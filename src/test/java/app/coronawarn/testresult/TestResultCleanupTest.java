@@ -1,5 +1,6 @@
 package app.coronawarn.testresult;
 
+import app.coronawarn.testresult.entity.TestResultEntity;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.Optional;
