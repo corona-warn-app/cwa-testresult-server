@@ -22,6 +22,7 @@
 package app.coronawarn.testresult;
 
 import app.coronawarn.testresult.model.TestResult;
+import app.coronawarn.testresult.model.TestResultRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collections;
 import java.util.List;
@@ -59,6 +60,10 @@ public class TestResultControllerTest {
 
   @Test
   public void insertInvalidShouldReturnBadRequest() throws Exception {
+    // data
+    String id = "";
+    Integer result = 0;
+    // create
     List<TestResult> invalid = Collections.singletonList(
       new TestResult().setId("").setResult(0)
     );
@@ -73,8 +78,12 @@ public class TestResultControllerTest {
 
   @Test
   public void insertValidShouldReturnNoContent() throws Exception {
+    // data
+    String id = "a".repeat(64);
+    Integer result = 1;
+    // create
     List<TestResult> valid = Collections.singletonList(
-      new TestResult().setId("a".repeat(64)).setResult(1)
+      new TestResult().setId(id).setResult(result)
     );
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/lab/results")
@@ -83,6 +92,34 @@ public class TestResultControllerTest {
       .content(objectMapper.writeValueAsString(valid)))
       .andDo(MockMvcResultHandlers.print())
       .andExpect(MockMvcResultMatchers.status().isNoContent());
+  }
+
+  @Test
+  public void insertValidAndGetShouldReturnOk() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    Integer result = 1;
+    // create
+    List<TestResult> valid = Collections.singletonList(
+      new TestResult().setId(id).setResult(result)
+    );
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/lab/results")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isNoContent());
+    // get
+    TestResultRequest request = new TestResultRequest()
+      .setId(id);
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/app/result")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(request)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isOk());
   }
 
 }
