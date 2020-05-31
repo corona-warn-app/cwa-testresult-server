@@ -25,6 +25,7 @@ import app.coronawarn.testresult.entity.TestResultEntity;
 import app.coronawarn.testresult.exception.TestResultException;
 import app.coronawarn.testresult.model.TestResult;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -60,7 +61,8 @@ public class TestResultService {
         .setId(entity.getResultId())
         .setResult(entity.getResult());
     } catch (Exception e) {
-      throw new TestResultException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to insert or update test result.");
+      throw new TestResultException(HttpStatus.INTERNAL_SERVER_ERROR,
+        "Failed to insert or update test result.");
     }
   }
 
@@ -70,12 +72,17 @@ public class TestResultService {
    * @param id the test result id
    * @return the test result
    */
-  public TestResult get(String id) {
-    TestResultEntity entity = testResultRepository.findByResultId(id)
-      .orElseThrow(() -> new TestResultException(HttpStatus.NOT_FOUND, "Test result not found."));
-    return new TestResult()
-      .setId(entity.getResultId())
-      .setResult(entity.getResult());
+  public TestResult getOrCreate(String id) {
+    Optional<TestResultEntity> entity = testResultRepository.findByResultId(id);
+    if (entity.isPresent()) {
+      return new TestResult()
+        .setId(entity.get().getResultId())
+        .setResult(entity.get().getResult());
+    } else {
+      return insertOrUpdate(new TestResult()
+        .setId(id)
+        .setResult(0));
+    }
   }
 
 }

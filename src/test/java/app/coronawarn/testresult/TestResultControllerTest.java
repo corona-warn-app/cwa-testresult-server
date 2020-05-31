@@ -122,4 +122,25 @@ public class TestResultControllerTest {
       .andExpect(MockMvcResultMatchers.status().isOk());
   }
 
+  @Test
+  public void notExisitingTestResultShouldReturnOk() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    Integer result = 1;
+    // create
+    List<TestResult> valid = Collections.singletonList(
+      new TestResult().setId(id).setResult(result)
+    );
+    // get
+    TestResultRequest request = new TestResultRequest()
+      .setId(id);
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/app/result")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(request)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isOk());
+  }
+
 }
