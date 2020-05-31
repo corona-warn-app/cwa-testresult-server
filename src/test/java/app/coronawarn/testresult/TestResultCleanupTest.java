@@ -51,7 +51,7 @@ public class TestResultCleanupTest {
     Assert.assertEquals(resultId, find.get().getResultId());
     Assert.assertEquals(resultDate, find.get().getResultDate());
     // wait
-    Single.fromCallable(() -> true).delay(1, TimeUnit.SECONDS).toBlocking().value();
+    Single.fromCallable(() -> true).delay(2, TimeUnit.SECONDS).toBlocking().value();
     // find
     find = testResultRepository.findByResultId(resultId);
     Assert.assertFalse(find.isPresent());
