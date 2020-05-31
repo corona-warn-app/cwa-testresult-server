@@ -1,0 +1,13 @@
+databaseChangeLog:
+- changeSet:
+    id: update-test-result-nullable
+    author: jhagestedt
+    changes:
+    - dropNotNullConstraint:
+        tableName: test_result
+        columnName: result
+        columnDataType: integer
+    - dropNotNullConstraint:
+        tableName: test_result
+        columnName: result_date
+        columnDataType: datetime
