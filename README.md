@@ -22,7 +22,7 @@ The goal of this project is to develop the official Corona-Warn-App for Germany 
 
 ## Status
 
-![ci](https://github.com/corona-warn-app/cwa-testresult-server/workflows/ci/badge.svg)
+[![ci](https://github.com/corona-warn-app/cwa-testresult-server/workflows/ci/badge.svg)](https://github.com/corona-warn-app/cwa-testresult-server/actions)
 [![quality gate](https://sonarcloud.io/api/project_badges/measure?project=corona-warn-app_cwa-testresult-server&metric=alert_status)](https://sonarcloud.io/dashboard?id=corona-warn-app_cwa-testresult-server)
 [![coverage](https://sonarcloud.io/api/project_badges/measure?project=corona-warn-app_cwa-testresult-server&metric=coverage)](https://sonarcloud.io/dashboard?id=corona-warn-app_cwa-testresult-server)
 [![bugs](https://sonarcloud.io/api/project_badges/measure?project=corona-warn-app_cwa-testresult-server&metric=bugs)](https://sonarcloud.io/dashboard?id=corona-warn-app_cwa-testresult-server)
