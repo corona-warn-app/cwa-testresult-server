@@ -123,7 +123,34 @@ public class TestResultControllerTest {
   }
 
   @Test
-  public void notExisitingTestResultShouldReturnOk() throws Exception {
+  public void insertValidPendingAndGetShouldReturnOk() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    // create
+    List<TestResult> valid = Collections.singletonList(
+      new TestResult().setId(id)
+    );
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/lab/results")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isNoContent());
+    // get
+    TestResultRequest request = new TestResultRequest()
+      .setId(id);
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/app/result")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(request)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isOk());
+  }
+
+  @Test
+  public void notExistingTestResultShouldReturnOk() throws Exception {
     // data
     String id = "b".repeat(64);
     Integer result = 1;

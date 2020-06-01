@@ -25,10 +25,18 @@ import app.coronawarn.testresult.entity.TestResultEntity;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 public interface TestResultRepository extends JpaRepository<TestResultEntity, Long> {
 
   Optional<TestResultEntity> findByResultId(String resultId);
 
-  void deleteByResultDateBefore(LocalDateTime before);
+  @Modifying
+  @Query("update TestResultEntity t set t.result = ?1 where t.result != ?1 and t.resultDate < ?2")
+  Integer updateResultByResultDateBefore(Integer result, LocalDateTime before);
+
+  @Modifying
+  @Query("delete from TestResultEntity t where t.resultDate < ?1")
+  Integer deleteByResultDateBefore(LocalDateTime before);
 }

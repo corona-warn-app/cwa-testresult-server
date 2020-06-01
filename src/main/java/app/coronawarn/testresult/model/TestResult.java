@@ -55,7 +55,6 @@ public class TestResult {
    * 2: positive
    * 3: invalid
    */
-  @NotNull
   @Min(1)
   @Max(3)
   private Integer result;

@@ -62,7 +62,7 @@ public class TestResultController {
   public ResponseEntity<TestResultResponse> result(
     @RequestBody @Valid TestResultRequest request
   ) {
-    TestResult result = testResultService.getOrCreate(request.getId());
+    TestResult result = testResultService.get(request.getId());
     return ResponseEntity.ok(new TestResultResponse()
       .setTestResult(result.getResult() == null ? 0 : result.getResult()));
   }

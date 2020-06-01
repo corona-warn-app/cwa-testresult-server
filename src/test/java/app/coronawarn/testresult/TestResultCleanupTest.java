@@ -18,7 +18,10 @@ import rx.Single;
 @RunWith(SpringRunner.class)
 @SpringBootTest(
   properties = {
-    "testresult.cleanup.rate=1000"
+    "testresult.cleanup.redeem.days=21",
+    "testresult.cleanup.redeem.rate=1000",
+    "testresult.cleanup.delete.days=90",
+    "testresult.cleanup.delete.rate=1000"
   }
 )
 @ContextConfiguration(classes = TestResultApplication.class)
@@ -33,10 +36,38 @@ public class TestResultCleanupTest {
   }
 
   @Test
-  public void shouldCleanupDatabase() {
+  public void shouldCleanupRedeem() {
     // data
     String resultId = "a".repeat(64);
-    LocalDateTime resultDate = LocalDateTime.now().minus(Period.ofDays(14));
+    Integer resultRedeemed = TestResultEntity.Result.REDEEMED.ordinal();
+    LocalDateTime resultDate = LocalDateTime.now().minus(Period.ofDays(21));
+    // create
+    TestResultEntity create = testResultRepository.save(new TestResultEntity()
+      .setResult(1)
+      .setResultId(resultId)
+      .setResultDate(resultDate)
+    );
+    Assert.assertNotNull(create);
+    Assert.assertEquals(resultId, create.getResultId());
+    // find
+    Optional<TestResultEntity> find = testResultRepository.findByResultId(resultId);
+    Assert.assertTrue(find.isPresent());
+    Assert.assertEquals(resultId, find.get().getResultId());
+    Assert.assertEquals(resultDate, find.get().getResultDate());
+    // wait
+    Single.fromCallable(() -> true).delay(2, TimeUnit.SECONDS).toBlocking().value();
+    // find
+    find = testResultRepository.findByResultId(resultId);
+    Assert.assertTrue(find.isPresent());
+    Assert.assertEquals(resultId, find.get().getResultId());
+    Assert.assertEquals(resultRedeemed, find.get().getResult());
+  }
+
+  @Test
+  public void shouldCleanupDelete() {
+    // data
+    String resultId = "d".repeat(64);
+    LocalDateTime resultDate = LocalDateTime.now().minus(Period.ofDays(90));
     // create
     TestResultEntity create = testResultRepository.save(new TestResultEntity()
       .setResult(1)

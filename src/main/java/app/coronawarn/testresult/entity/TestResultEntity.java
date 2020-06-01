@@ -48,6 +48,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "test_result")
 public class TestResultEntity {
 
+  public enum Result {
+    PENDING, NEGATIVE, POSITIVE, INVALID, REDEEMED
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
