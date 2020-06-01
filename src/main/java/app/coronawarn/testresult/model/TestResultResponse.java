@@ -46,10 +46,11 @@ public class TestResultResponse {
    * Negative = 1 : No indication for COVID-19
    * Positive = 2 : The test result indicates infection with COVID-19
    * Invalid  = 3 : The test result is invalid due to unknown reason
+   * Redeemed = 4 : The test result is redeemed by time
    */
   @NotNull
   @Min(0)
-  @Max(3)
+  @Max(4)
   private Integer testResult;
 
   public TestResultResponse setTestResult(Integer testResult) {

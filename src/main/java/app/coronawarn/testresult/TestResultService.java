@@ -65,25 +65,27 @@ public class TestResultService {
   }
 
   /**
-   * Get a test result by it's id.
+   * Get a test result by it's id or return default pending test result with passed id.
    *
    * @param id the test result id
    * @return the test result
    */
-  public TestResult get(final String id) {
+  public TestResult getOrInsert(final String id) {
     try {
       TestResultEntity entity = testResultRepository.findByResultId(id)
         .orElseGet(() ->
-          new TestResultEntity()
+          testResultRepository.save(new TestResultEntity()
             .setResult(TestResultEntity.Result.PENDING.ordinal())
             .setResultId(id)
+            .setResultDate(LocalDateTime.now())
+          )
         );
       return new TestResult()
         .setId(entity.getResultId())
         .setResult(entity.getResult());
     } catch (Exception e) {
       throw new TestResultException(HttpStatus.INTERNAL_SERVER_ERROR,
-        "Failed to insert or update test result.");
+        "Failed to get test result.");
     }
   }
 
