@@ -54,7 +54,7 @@ The data is protected by several measures.
 
 ##	Measures to increase data privacy
 ###	Separate Operation of Test Result Server and Verification Server
-The Test Result Server and Verifiaction Server are operated by different operating teams and run in different namespaces in one cloud tenant. The namespaces organize access rights to different group of people, such as operation teams.
+The Test Result Server and Verification Server are operated by different operating teams and run in different namespaces in one cloud tenant. The namespaces organize access rights to different group of people, such as operation teams.
 
 ###	Logging
 
