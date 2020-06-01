@@ -63,7 +63,7 @@ public class TestResultServiceTest {
     Assert.assertNotNull(testResult);
     Assert.assertEquals(result, testResult.getResult());
     // get
-    testResult = testResultService.getOrCreate(id);
+    testResult = testResultService.getOrInsert(id);
     Assert.assertNotNull(testResult);
     Assert.assertEquals(result, testResult.getResult());
   }

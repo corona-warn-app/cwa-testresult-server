@@ -25,7 +25,6 @@ import app.coronawarn.testresult.entity.TestResultEntity;
 import app.coronawarn.testresult.exception.TestResultException;
 import app.coronawarn.testresult.model.TestResult;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -43,7 +42,7 @@ public class TestResultService {
    *
    * @param result the test result to insert or update
    */
-  public TestResult insertOrUpdate(TestResult result) {
+  public TestResult insertOrUpdate(final TestResult result) {
     try {
       TestResultEntity entity = testResultRepository.findByResultId(result.getId())
         .orElseGet(() ->
@@ -54,7 +53,6 @@ public class TestResultService {
           )
         );
       entity.setResult(result.getResult())
-        .setResultId(result.getId())
         .setResultDate(LocalDateTime.now());
       entity = testResultRepository.save(entity);
       return new TestResult()
@@ -67,21 +65,27 @@ public class TestResultService {
   }
 
   /**
-   * Get a test result by it's id.
+   * Get a test result by it's id or return default pending test result with passed id.
    *
    * @param id the test result id
    * @return the test result
    */
-  public TestResult getOrCreate(String id) {
-    Optional<TestResultEntity> entity = testResultRepository.findByResultId(id);
-    if (entity.isPresent()) {
+  public TestResult getOrInsert(final String id) {
+    try {
+      TestResultEntity entity = testResultRepository.findByResultId(id)
+        .orElseGet(() ->
+          testResultRepository.save(new TestResultEntity()
+            .setResult(TestResultEntity.Result.PENDING.ordinal())
+            .setResultId(id)
+            .setResultDate(LocalDateTime.now())
+          )
+        );
       return new TestResult()
-        .setId(entity.get().getResultId())
-        .setResult(entity.get().getResult());
-    } else {
-      return insertOrUpdate(new TestResult()
-        .setId(id)
-        .setResult(0));
+        .setId(entity.getResultId())
+        .setResult(entity.getResult());
+    } catch (Exception e) {
+      throw new TestResultException(HttpStatus.INTERNAL_SERVER_ERROR,
+        "Failed to get test result.");
     }
   }
 

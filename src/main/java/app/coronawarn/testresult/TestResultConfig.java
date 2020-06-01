@@ -17,7 +17,17 @@ public class TestResultConfig {
   @Setter
   public static class Cleanup {
 
+    private Scheduled redeem;
+    private Scheduled delete;
+
+  }
+
+  @Getter
+  @Setter
+  public static class Scheduled {
+
     private Integer days;
 
   }
+
 }

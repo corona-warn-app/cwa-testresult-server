@@ -29,5 +29,9 @@ management:
       base-path: /management
 testresult:
   cleanup:
-    days: 14
-    rate: 60000
+    redeem:
+      days: 21
+      rate: 3600000
+    delete:
+      days: 90
+      rate: 3600000
