@@ -59,11 +59,11 @@ public class TestResultServiceTest {
       .setId(id)
       .setResult(result);
     // insert
-    testResult = testResultService.insertOrUpdate(testResult);
+    testResult = testResultService.insertAndUpdate(testResult);
     Assert.assertNotNull(testResult);
     Assert.assertEquals(result, testResult.getResult());
     // get
-    testResult = testResultService.getOrInsert(id);
+    testResult = testResultService.getOrInsert(testResult);
     Assert.assertNotNull(testResult);
     Assert.assertEquals(result, testResult.getResult());
   }

@@ -23,6 +23,8 @@ package app.coronawarn.testresult;
 
 import app.coronawarn.testresult.entity.TestResultEntity;
 import app.coronawarn.testresult.exception.TestResultException;
+import app.coronawarn.testresult.mapper.entity.TestResultEntityToTestResult;
+import app.coronawarn.testresult.mapper.entity.TestResultToTestResultEntity;
 import app.coronawarn.testresult.model.TestResult;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
@@ -36,57 +38,67 @@ import org.springframework.stereotype.Service;
 public class TestResultService {
 
   private final TestResultRepository testResultRepository;
+  private final TestResultEntityToTestResult toTestResultMapper;
+  private final TestResultToTestResultEntity toTestResultEntityMapper;
 
   /**
    * Insert or update a test result to the repository.
    *
    * @param result the test result to insert or update
    */
-  public TestResult insertOrUpdate(final TestResult result) {
+  public TestResult insertAndUpdate(final TestResult result) {
     try {
-      TestResultEntity entity = testResultRepository.findByResultId(result.getId())
-        .orElseGet(() ->
-          testResultRepository.save(new TestResultEntity()
-            .setResult(result.getResult())
-            .setResultId(result.getId())
-            .setResultDate(LocalDateTime.now())
-          )
-        );
-      entity.setResult(result.getResult())
-        .setResultDate(LocalDateTime.now());
-      entity = testResultRepository.save(entity);
-      return new TestResult()
-        .setId(entity.getResultId())
-        .setResult(entity.getResult());
+      TestResultEntity entity =
+        testResultRepository
+          .findByResultId(result.getId())
+          .orElseGet(() -> insert(result));
+
+      entity = update(entity, result);
+      return toTestResultMapper.map(entity);
     } catch (Exception e) {
       throw new TestResultException(HttpStatus.INTERNAL_SERVER_ERROR,
         "Failed to insert or update test result.");
     }
   }
 
+  private TestResultEntity insert(TestResult result) {
+    TestResultEntity entity = toTestResultEntityMapper.map(result);
+    return testResultRepository.save(entity);
+  }
+
+  private TestResultEntity update(TestResultEntity toBeUpdated, TestResult result) {
+    toBeUpdated
+      .setResult(result.getResult())
+      .setResultDate(LocalDateTime.now());
+    toBeUpdated = testResultRepository.save(toBeUpdated);
+    return toBeUpdated;
+  }
+
   /**
    * Get a test result by it's id or return default pending test result with passed id.
    *
-   * @param id the test result id
+   * @param toBeSearched the test result id
    * @return the test result
    */
-  public TestResult getOrInsert(final String id) {
+  public TestResult getOrInsert(final TestResult toBeSearched) {
     try {
-      TestResultEntity entity = testResultRepository.findByResultId(id)
-        .orElseGet(() ->
-          testResultRepository.save(new TestResultEntity()
-            .setResult(TestResultEntity.Result.PENDING.ordinal())
-            .setResultId(id)
-            .setResultDate(LocalDateTime.now())
-          )
-        );
-      return new TestResult()
-        .setId(entity.getResultId())
-        .setResult(entity.getResult());
+      return
+        testResultRepository
+          .findByResultId(toBeSearched.getId())
+          .map(toTestResultMapper::map)
+          .orElseGet(
+            () -> insertWithTestResult(toBeSearched, TestResultEntity.Result.PENDING.ordinal()));
     } catch (Exception e) {
       throw new TestResultException(HttpStatus.INTERNAL_SERVER_ERROR,
         "Failed to get test result.");
     }
+  }
+
+  private TestResult insertWithTestResult(TestResult result, int testResultValue) {
+    TestResultEntity entityToSave =
+      toTestResultEntityMapper.mapWithResultValue(result, testResultValue);
+    TestResultEntity savedEnity = testResultRepository.save(entityToSave);
+    return toTestResultMapper.map(savedEnity);
   }
 
 }

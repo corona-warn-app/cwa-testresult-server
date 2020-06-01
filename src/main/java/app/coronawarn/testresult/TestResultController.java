@@ -21,6 +21,8 @@
 
 package app.coronawarn.testresult;
 
+import app.coronawarn.testresult.mapper.model.TestResultRequestToTestResult;
+import app.coronawarn.testresult.mapper.model.TestResultToTestResultResponse;
 import app.coronawarn.testresult.model.TestResult;
 import app.coronawarn.testresult.model.TestResultRequest;
 import app.coronawarn.testresult.model.TestResultResponse;
@@ -44,6 +46,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestResultController {
 
   private final TestResultService testResultService;
+  private final TestResultRequestToTestResult toTestResultMapper;
+  private final TestResultToTestResultResponse toTestResultResponseMapper;
 
   /**
    * Get the test result response from a request containing the id.
@@ -62,9 +66,10 @@ public class TestResultController {
   public ResponseEntity<TestResultResponse> result(
     @RequestBody @Valid TestResultRequest request
   ) {
-    TestResult result = testResultService.getOrInsert(request.getId());
-    return ResponseEntity.ok(new TestResultResponse()
-      .setTestResult(result.getResult() == null ? 0 : result.getResult()));
+    TestResult toSearch = toTestResultMapper.map(request);
+    TestResult result = testResultService.insertAndUpdate(toSearch);
+    TestResultResponse response = toTestResultResponseMapper.map(result);
+    return ResponseEntity.ok(response);
   }
 
   /**
@@ -84,7 +89,7 @@ public class TestResultController {
   public ResponseEntity<?> results(
     @RequestBody @NotEmpty List<@Valid TestResult> request
   ) {
-    request.forEach(testResultService::insertOrUpdate);
+    request.forEach(testResultService::getOrInsert);
     return ResponseEntity.noContent().build();
   }
 }

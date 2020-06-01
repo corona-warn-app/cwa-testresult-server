@@ -62,10 +62,10 @@ public class TestResultEntityToTestResultTest {
     TestResultEntity source = new TestResultEntity();
     TestResult expected = new TestResult();
 
-    checkForValidationErrors(expected, 2);
+    checkForValidationErrors(expected, 1);
 
     TestResult actual = mapper.map(source);
-    checkForValidationErrors(actual, 2);
+    checkForValidationErrors(actual, 1);
     Assert.assertTrue(EqualsBuilder.reflectionEquals(expected, actual));
   }
 
