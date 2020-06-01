@@ -21,12 +21,13 @@
 
 package app.coronawarn.testresult.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Builder;
+import lombok.Value;
 
 /**
  * Request model of the test result.
@@ -34,9 +35,8 @@ import lombok.ToString;
 @Schema(
   description = "The test result request model."
 )
-@Getter
-@ToString
-@EqualsAndHashCode
+@Value
+@Builder
 public class TestResultRequest {
 
   /**
@@ -44,10 +44,10 @@ public class TestResultRequest {
    */
   @NotBlank
   @Pattern(regexp = "^([A-Fa-f0-9]{2}){32}$")
-  private String id;
+  String id;
 
-  public TestResultRequest setId(String id) {
+  @JsonCreator
+  public TestResultRequest(@JsonProperty("id") String id) {
     this.id = id;
-    return this;
   }
 }

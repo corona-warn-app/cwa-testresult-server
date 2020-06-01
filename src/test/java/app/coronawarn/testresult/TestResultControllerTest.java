@@ -65,7 +65,7 @@ public class TestResultControllerTest {
     Integer result = 0;
     // create
     List<TestResult> invalid = Collections.singletonList(
-      new TestResult().setId("").setResult(0)
+      TestResult.builder().id("").result(0).build()
     );
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/lab/results")
@@ -83,7 +83,7 @@ public class TestResultControllerTest {
     Integer result = 1;
     // create
     List<TestResult> valid = Collections.singletonList(
-      new TestResult().setId(id).setResult(result)
+      TestResult.builder().id(id).result(result).build()
     );
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/lab/results")
@@ -101,7 +101,7 @@ public class TestResultControllerTest {
     Integer result = 1;
     // create
     List<TestResult> valid = Collections.singletonList(
-      new TestResult().setId(id).setResult(result)
+      TestResult.builder().id(id).result(result).build()
     );
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/lab/results")
@@ -111,8 +111,9 @@ public class TestResultControllerTest {
       .andDo(MockMvcResultHandlers.print())
       .andExpect(MockMvcResultMatchers.status().isNoContent());
     // get
-    TestResultRequest request = new TestResultRequest()
-      .setId(id);
+    TestResultRequest request = TestResultRequest.builder()
+      .id(id)
+      .build();
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/app/result")
       .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -128,7 +129,7 @@ public class TestResultControllerTest {
     String id = "b".repeat(64);
     // create
     List<TestResult> valid = Collections.singletonList(
-      new TestResult().setId(id)
+      TestResult.builder().id(id).build()
     );
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/lab/results")
@@ -138,8 +139,9 @@ public class TestResultControllerTest {
       .andDo(MockMvcResultHandlers.print())
       .andExpect(MockMvcResultMatchers.status().isNoContent());
     // get
-    TestResultRequest request = new TestResultRequest()
-      .setId(id);
+    TestResultRequest request = TestResultRequest.builder()
+      .id(id)
+      .build();
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/app/result")
       .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -156,11 +158,12 @@ public class TestResultControllerTest {
     Integer result = 1;
     // create
     List<TestResult> valid = Collections.singletonList(
-      new TestResult().setId(id).setResult(result)
+      TestResult.builder().id(id).build()
     );
     // get
-    TestResultRequest request = new TestResultRequest()
-      .setId(id);
+    TestResultRequest request = TestResultRequest.builder()
+      .id(id)
+      .build();
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/app/result")
       .accept(MediaType.APPLICATION_JSON_VALUE)

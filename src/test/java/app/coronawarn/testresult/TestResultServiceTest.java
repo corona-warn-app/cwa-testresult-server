@@ -55,9 +55,10 @@ public class TestResultServiceTest {
     String id = "a".repeat(64);
     Integer result = 1;
     // to entity
-    TestResult model = new TestResult()
-      .setId(id)
-      .setResult(result);
+    TestResult model = TestResult.builder()
+      .id(id)
+      .result(result)
+      .build();
     TestResultEntity entity = testResultService.toEntity(model);
     Assert.assertNotNull(entity);
     Assert.assertEquals(id, entity.getResultId());
@@ -74,9 +75,10 @@ public class TestResultServiceTest {
     // data
     String id = "a".repeat(64);
     Integer result = 1;
-    TestResult create = new TestResult()
-      .setId(id)
-      .setResult(result);
+    TestResult create = TestResult.builder()
+      .id(id)
+      .result(result)
+      .build();
     // create
     create = testResultService.createOrUpdate(create);
     Assert.assertNotNull(create);
@@ -93,9 +95,10 @@ public class TestResultServiceTest {
     String id = "a".repeat(64);
     Integer resultCreate = 1;
     Integer resultUpdate = 2;
-    TestResult create = new TestResult()
-      .setId(id)
-      .setResult(resultCreate);
+    TestResult create = TestResult.builder()
+      .id(id)
+      .result(resultCreate)
+      .build();
     // create
     create = testResultService.createOrUpdate(create);
     Assert.assertNotNull(create);
@@ -105,9 +108,10 @@ public class TestResultServiceTest {
     Assert.assertNotNull(get);
     Assert.assertEquals(resultCreate, get.getResult());
     // update
-    TestResult update = new TestResult()
-      .setId(id)
-      .setResult(resultUpdate);
+    TestResult update = TestResult.builder()
+      .id(id)
+      .result(resultUpdate)
+      .build();
     update = testResultService.createOrUpdate(update);
     Assert.assertNotNull(update);
     Assert.assertEquals(resultUpdate, update.getResult());

@@ -25,9 +25,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Builder;
+import lombok.Value;
 
 /**
  * Response model of the test result.
@@ -35,9 +34,8 @@ import lombok.ToString;
 @Schema(
   description = "The test result response model."
 )
-@Getter
-@ToString
-@EqualsAndHashCode
+@Value
+@Builder
 public class TestResultResponse {
 
   /**
@@ -51,10 +49,5 @@ public class TestResultResponse {
   @NotNull
   @Min(0)
   @Max(4)
-  private Integer testResult;
-
-  public TestResultResponse setTestResult(Integer testResult) {
-    this.testResult = testResult;
-    return this;
-  }
+  Integer testResult;
 }

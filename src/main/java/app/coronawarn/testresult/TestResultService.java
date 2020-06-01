@@ -45,9 +45,10 @@ public class TestResultService {
    * @return the mapped model from entity
    */
   public TestResult toModel(TestResultEntity entity) {
-    return new TestResult()
-      .setId(entity.getResultId())
-      .setResult(entity.getResult());
+    return TestResult.builder()
+      .id(entity.getResultId())
+      .result(entity.getResult())
+      .build();
   }
 
   /**
