@@ -53,7 +53,6 @@ public class TestResultService {
           )
         );
       entity.setResult(result.getResult())
-        .setResultId(result.getId())
         .setResultDate(LocalDateTime.now());
       entity = testResultRepository.save(entity);
       return new TestResult()
