@@ -23,10 +23,19 @@ management:
       enabled: true
     health:
       enabled: true
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
   endpoints:
     enabled-by-default: false
     web:
       base-path: /management
+      exposure:
+        include: info,health,metrics,prometheus
+    jmx:
+      exposure:
+        include: info,health,metrics,prometheus
 testresult:
   cleanup:
     redeem:
