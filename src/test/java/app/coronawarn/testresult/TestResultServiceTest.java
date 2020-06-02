@@ -123,7 +123,6 @@ public class TestResultServiceTest {
     String id = "a".repeat(64);
     Integer result = 0;
     // get
-    // get
     TestResult get = testResultService.getOrCreate(id);
     Assert.assertNotNull(get);
     Assert.assertEquals(result, get.getResult());
