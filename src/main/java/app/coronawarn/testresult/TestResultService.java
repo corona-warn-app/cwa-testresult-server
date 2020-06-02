@@ -25,6 +25,7 @@ import app.coronawarn.testresult.entity.TestResultEntity;
 import app.coronawarn.testresult.exception.TestResultException;
 import app.coronawarn.testresult.model.TestResult;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -38,26 +39,48 @@ public class TestResultService {
   private final TestResultRepository testResultRepository;
 
   /**
+   * Map the entity of a test result to a test result model.
+   *
+   * @param entity the test result entity to map
+   * @return the mapped model from entity
+   */
+  public TestResult toModel(TestResultEntity entity) {
+    return new TestResult()
+      .setId(entity.getResultId())
+      .setResult(entity.getResult());
+  }
+
+  /**
+   * Map the model of a test result to a test result entity.
+   * This will also set current date time as value for result date.
+   *
+   * @param model the test result model to map
+   * @return the mapped entity from model
+   */
+  public TestResultEntity toEntity(TestResult model) {
+    return new TestResultEntity()
+      .setResult(model.getResult())
+      .setResultId(model.getId())
+      .setResultDate(LocalDateTime.now());
+  }
+
+  /**
    * Insert or update a test result to the repository.
    *
    * @param result the test result to insert or update
    */
-  public TestResult insertOrUpdate(final TestResult result) {
+  public TestResult createOrUpdate(final TestResult result) {
     try {
-      TestResultEntity entity = testResultRepository.findByResultId(result.getId())
-        .orElseGet(() ->
-          testResultRepository.save(new TestResultEntity()
-            .setResult(result.getResult())
-            .setResultId(result.getId())
-            .setResultDate(LocalDateTime.now())
-          )
-        );
-      entity.setResult(result.getResult())
-        .setResultDate(LocalDateTime.now());
-      entity = testResultRepository.save(entity);
-      return new TestResult()
-        .setId(entity.getResultId())
-        .setResult(entity.getResult());
+      final Optional<TestResultEntity> optional = testResultRepository.findByResultId(result.getId());
+      TestResultEntity entity = optional.orElseGet(() ->
+        testResultRepository.save(toEntity(result))
+      );
+      if (optional.isPresent()) {
+        entity.setResult(result.getResult())
+          .setResultDate(LocalDateTime.now());
+        entity = testResultRepository.save(entity);
+      }
+      return toModel(entity);
     } catch (Exception e) {
       throw new TestResultException(HttpStatus.INTERNAL_SERVER_ERROR,
         "Failed to insert or update test result.");
@@ -70,19 +93,16 @@ public class TestResultService {
    * @param id the test result id
    * @return the test result
    */
-  public TestResult getOrInsert(final String id) {
+  public TestResult getOrCreate(final String id) {
     try {
       TestResultEntity entity = testResultRepository.findByResultId(id)
         .orElseGet(() ->
           testResultRepository.save(new TestResultEntity()
             .setResult(TestResultEntity.Result.PENDING.ordinal())
             .setResultId(id)
-            .setResultDate(LocalDateTime.now())
-          )
+            .setResultDate(LocalDateTime.now()))
         );
-      return new TestResult()
-        .setId(entity.getResultId())
-        .setResult(entity.getResult());
+      return toModel(entity);
     } catch (Exception e) {
       throw new TestResultException(HttpStatus.INTERNAL_SERVER_ERROR,
         "Failed to get test result.");
