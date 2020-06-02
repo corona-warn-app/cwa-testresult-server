@@ -38,12 +38,25 @@ public class TestResultService {
 
   private final TestResultRepository testResultRepository;
 
+  /**
+   * Map the entity of a test result to a test result model.
+   *
+   * @param entity the test result entity to map
+   * @return the mapped model from entity
+   */
   public TestResult toModel(TestResultEntity entity) {
     return new TestResult()
       .setId(entity.getResultId())
       .setResult(entity.getResult());
   }
 
+  /**
+   * Map the model of a test result to a test result entity.
+   * This will also set current date time as value for result date.
+   *
+   * @param model the test result model to map
+   * @return the mapped entity from model
+   */
   public TestResultEntity toEntity(TestResult model) {
     return new TestResultEntity()
       .setResult(model.getResult())
