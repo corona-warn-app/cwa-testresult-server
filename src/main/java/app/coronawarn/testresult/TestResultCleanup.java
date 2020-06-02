@@ -1,5 +1,6 @@
 package app.coronawarn.testresult;
 
+import app.coronawarn.testresult.config.TestResultConfig;
 import app.coronawarn.testresult.entity.TestResultEntity;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -25,11 +26,10 @@ public class TestResultCleanup {
   )
   @Transactional
   public void redeem() {
-    log.info("redeem()");
     Integer redeemed = testResultRepository.updateResultByResultDateBefore(
       TestResultEntity.Result.REDEEMED.ordinal(),
       LocalDateTime.now().minus(Period.ofDays(testResultConfig.getCleanup().getRedeem().getDays())));
-    log.info("redeem() {}", redeemed);
+    log.info("Cleanup redeemed {} test results.", redeemed);
   }
 
   /**
@@ -40,9 +40,8 @@ public class TestResultCleanup {
   )
   @Transactional
   public void delete() {
-    log.info("delete()");
     Integer deleted = testResultRepository.deleteByResultDateBefore(
       LocalDateTime.now().minus(Period.ofDays(testResultConfig.getCleanup().getDelete().getDays())));
-    log.info("delete() {}", deleted);
+    log.info("Cleanup deleted {} test results.", deleted);
   }
 }

@@ -1,4 +1,4 @@
-package app.coronawarn.testresult;
+package app.coronawarn.testresult.config;
 
 import lombok.Getter;
 import lombok.Setter;

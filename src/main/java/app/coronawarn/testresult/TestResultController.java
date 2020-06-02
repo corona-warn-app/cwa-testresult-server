@@ -62,6 +62,7 @@ public class TestResultController {
   public ResponseEntity<TestResultResponse> result(
     @RequestBody @Valid TestResultRequest request
   ) {
+    log.info("Received test result request from app.");
     TestResult result = testResultService.getOrCreate(request.getId());
     return ResponseEntity.ok(new TestResultResponse()
       .setTestResult(result.getResult() == null ? 0 : result.getResult()));
@@ -84,6 +85,7 @@ public class TestResultController {
   public ResponseEntity<?> results(
     @RequestBody @NotEmpty List<@Valid TestResult> request
   ) {
+    log.info("Received {} test results to insert or update from lab.", request.size());
     request.forEach(testResultService::createOrUpdate);
     return ResponseEntity.noContent().build();
   }
