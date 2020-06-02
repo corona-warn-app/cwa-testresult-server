@@ -48,33 +48,23 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "test_result")
 public class TestResultEntity {
 
-  public enum Result {
-    PENDING, NEGATIVE, POSITIVE, INVALID, REDEEMED
-  }
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
-
   @CreatedDate
   @Column(name = "created_at")
   private LocalDateTime createdAt;
-
   @LastModifiedDate
   @Column(name = "updated_at")
   private LocalDateTime updatedAt;
-
   @Version
   @Column(name = "version")
   private Long version;
-
   @Column(name = "result")
   private Integer result;
-
   @Column(name = "result_id")
   private String resultId;
-
   @Column(name = "result_date")
   private LocalDateTime resultDate;
 
@@ -91,5 +81,9 @@ public class TestResultEntity {
   public TestResultEntity setResultDate(LocalDateTime resultDate) {
     this.resultDate = resultDate;
     return this;
+  }
+
+  public enum Result {
+    PENDING, NEGATIVE, POSITIVE, INVALID, REDEEMED
   }
 }

@@ -21,16 +21,15 @@
 
 package app.coronawarn.testresult;
 
-import app.coronawarn.testresult.exception.TestResultException;
+import app.coronawarn.testresult.entity.TestResultEntity;
 import app.coronawarn.testresult.model.TestResult;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -45,41 +44,89 @@ public class TestResultServiceTest {
   @Autowired
   private TestResultRepository testResultRepository;
 
-  @Before
+  @BeforeEach
   public void before() {
     testResultRepository.deleteAll();
   }
 
   @Test
-  public void insert() {
+  public void toEntityAndToModel() {
     // data
     String id = "a".repeat(64);
     Integer result = 1;
-    TestResult testResult = new TestResult()
-      .setId(id)
-      .setResult(result);
-    // insert
-    testResult = testResultService.insertOrUpdate(testResult);
-    Assert.assertNotNull(testResult);
-    Assert.assertEquals(result, testResult.getResult());
-    // get
-    testResult = testResultService.getOrInsert(id);
-    Assert.assertNotNull(testResult);
-    Assert.assertEquals(result, testResult.getResult());
+    // toEntity
+    TestResult model = new TestResult()
+      .setId("a".repeat(64))
+      .setResult(1);
+    TestResultEntity entity = testResultService.toEntity(model);
+    Assert.assertNotNull(entity);
+    Assert.assertEquals(id, entity.getResultId());
+    Assert.assertEquals(result, entity.getResult());
+    // toModel
+    model = testResultService.toModel(entity);
+    Assert.assertNotNull(model);
+    Assert.assertEquals(id, model.getId());
+    Assert.assertEquals(result, model.getResult());
   }
 
   @Test
-  public void getNotFound() {
+  public void insertOrUpdate() {
     // data
-    String id = "b".repeat(64);
+    String id = "a".repeat(64);
+    Integer result = 1;
+    TestResult create = new TestResult()
+      .setId(id)
+      .setResult(result);
+    // create
+    create = testResultService.createOrUpdate(create);
+    Assert.assertNotNull(create);
+    Assert.assertEquals(result, create.getResult());
     // get
-    try {
-      //should always return pending test result
-      //testResultService.get(id);
-      //Assert.fail();
-    } catch (TestResultException e) {
-      Assert.assertEquals(HttpStatus.NOT_FOUND, e.getStatus());
-    }
+    TestResult get = testResultService.getOrCreate(id);
+    Assert.assertNotNull(get);
+    Assert.assertEquals(result, get.getResult());
+  }
+
+  @Test
+  public void insertAndUpdate() {
+    // data
+    String id = "a".repeat(64);
+    Integer resultCreate = 1;
+    Integer resultUpdate = 2;
+    TestResult create = new TestResult()
+      .setId(id)
+      .setResult(resultCreate);
+    // create
+    create = testResultService.createOrUpdate(create);
+    Assert.assertNotNull(create);
+    Assert.assertEquals(resultCreate, create.getResult());
+    // get
+    TestResult get = testResultService.getOrCreate(id);
+    Assert.assertNotNull(get);
+    Assert.assertEquals(resultCreate, get.getResult());
+    // update
+    TestResult update = new TestResult()
+      .setId(id)
+      .setResult(resultUpdate);
+    update = testResultService.createOrUpdate(update);
+    Assert.assertNotNull(update);
+    Assert.assertEquals(resultUpdate, update.getResult());
+    // get
+    get = testResultService.getOrCreate(id);
+    Assert.assertNotNull(get);
+    Assert.assertEquals(resultUpdate, get.getResult());
+  }
+
+  @Test
+  public void getOrCreate() {
+    // data
+    String id = "a".repeat(64);
+    Integer result = 0;
+    // get
+    // get
+    TestResult get = testResultService.getOrCreate(id);
+    Assert.assertNotNull(get);
+    Assert.assertEquals(result, get.getResult());
   }
 
 }

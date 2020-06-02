@@ -62,7 +62,7 @@ public class TestResultController {
   public ResponseEntity<TestResultResponse> result(
     @RequestBody @Valid TestResultRequest request
   ) {
-    TestResult result = testResultService.getOrInsert(request.getId());
+    TestResult result = testResultService.getOrCreate(request.getId());
     return ResponseEntity.ok(new TestResultResponse()
       .setTestResult(result.getResult() == null ? 0 : result.getResult()));
   }
@@ -84,7 +84,7 @@ public class TestResultController {
   public ResponseEntity<?> results(
     @RequestBody @NotEmpty List<@Valid TestResult> request
   ) {
-    request.forEach(testResultService::insertOrUpdate);
+    request.forEach(testResultService::createOrUpdate);
     return ResponseEntity.noContent().build();
   }
 }
