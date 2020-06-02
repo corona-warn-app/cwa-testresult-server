@@ -84,7 +84,7 @@ public class TestResultService {
       }
       return toModel(entity);
     } catch (Exception e) {
-      log.warn("Create or update test result failed. {}", e.getMessage());
+      log.error("Create or update test result failed. {}", e.getMessage());
       throw new TestResultException(HttpStatus.INTERNAL_SERVER_ERROR,
         "Failed to create or update test result.");
     }
@@ -108,7 +108,7 @@ public class TestResultService {
         });
       return toModel(entity);
     } catch (Exception e) {
-      log.warn("Get or create test result failed. {}", e.getMessage());
+      log.error("Get or create test result failed. {}", e.getMessage());
       throw new TestResultException(HttpStatus.INTERNAL_SERVER_ERROR,
         "Failed to get or create test result.");
     }
