@@ -54,15 +54,15 @@ public class TestResultServiceTest {
     // data
     String id = "a".repeat(64);
     Integer result = 1;
-    // toEntity
+    // to entity
     TestResult model = new TestResult()
-      .setId("a".repeat(64))
-      .setResult(1);
+      .setId(id)
+      .setResult(result);
     TestResultEntity entity = testResultService.toEntity(model);
     Assert.assertNotNull(entity);
     Assert.assertEquals(id, entity.getResultId());
     Assert.assertEquals(result, entity.getResult());
-    // toModel
+    // to model
     model = testResultService.toModel(entity);
     Assert.assertNotNull(model);
     Assert.assertEquals(id, model.getId());
