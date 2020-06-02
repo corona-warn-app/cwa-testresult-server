@@ -142,7 +142,7 @@ The entity TAN represents the authorization (sometimes referred as “proof”) 
 
 ###	Data Deletion
 After 21 days the result attribute is set to the "redeemed" state which masks the former state. 
-Data is deleted after 60 days.
+Data is deleted after 90 days.
 
 # Security
 
