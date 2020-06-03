@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
       .mvcMatchers("/api/**").permitAll()
-      .mvcMatchers("/management/*").permitAll()
+      .mvcMatchers("/actuator/**").permitAll()
       .anyRequest().denyAll()
       .and().csrf().disable();
   }
