@@ -37,6 +37,8 @@ public class TestResultCleanupTest {
 
   @Test
   public void shouldCleanupRedeem() {
+    // prepare
+    testResultRepository.deleteAll();
     // data
     String resultId = "a".repeat(64);
     Integer resultRedeemed = TestResultEntity.Result.REDEEMED.ordinal();
@@ -65,6 +67,8 @@ public class TestResultCleanupTest {
 
   @Test
   public void shouldCleanupDelete() {
+    // prepare
+    testResultRepository.deleteAll();
     // data
     String resultId = "d".repeat(64);
     LocalDateTime resultDate = LocalDateTime.now().minus(Period.ofDays(90));
