@@ -1,0 +1,9 @@
+databaseChangeLog:
+- changeSet:
+    id: revert-test-result-result-nullable
+    author: jhagestedt
+    changes:
+    - addNotNullConstraint:
+        tableName: test_result
+        columnName: result
+        columnDataType: integer

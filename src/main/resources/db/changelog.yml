@@ -5,3 +5,6 @@ databaseChangeLog:
 - include:
     file: changelog/v001-update-test-result-result-nullable.yml
     relativeToChangelogFile: true
+- include:
+    file: changelog/v002-revert-test-result-result-nullable.yml
+    relativeToChangelogFile: true
