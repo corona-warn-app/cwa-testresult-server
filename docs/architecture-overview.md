@@ -138,10 +138,11 @@ The entity TAN represents the authorization (sometimes referred as “proof”) 
 |id|	Y|	GUID| row key|
 |result_id|	Y|	string[64]|	sha256 hash of the GUID of the test|
 |result_date|	Y|	Date|	Date the result was received, used for purging the result after a given amount of time |
-|result| N|	int | the integer value representing the result|
+|result| N|	int | the integer value representing the result (enumeration of PENDING, NEGATIVE, POSITIVE, INVALID, REDEEMED)|
 
 ###	Data Deletion
-All data is deleted after 14 days.
+After 21 days the result attribute is set to the "redeemed" state which masks the former state. 
+Data is deleted after 90 days.
 
 # Security
 
