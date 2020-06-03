@@ -37,6 +37,9 @@ management:
     jmx:
       exposure:
         include: info,health,metrics,prometheus
+  health:
+    probes:
+      enabled: true
   metrics:
     export:
       prometheus:
