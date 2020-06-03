@@ -72,18 +72,21 @@ public class TestResultService {
   public TestResult createOrUpdate(final TestResult result) {
     try {
       final Optional<TestResultEntity> optional = testResultRepository.findByResultId(result.getId());
-      TestResultEntity entity = optional.orElseGet(() ->
-        testResultRepository.save(toEntity(result))
-      );
+      TestResultEntity entity = optional.orElseGet(() -> {
+        log.info("Creating test result in database.");
+        return testResultRepository.save(toEntity(result));
+      });
       if (optional.isPresent()) {
+        log.info("Updating test result in database.");
         entity.setResult(result.getResult())
           .setResultDate(LocalDateTime.now());
         entity = testResultRepository.save(entity);
       }
       return toModel(entity);
     } catch (Exception e) {
+      log.error("Create or update test result failed. {}", e.getMessage());
       throw new TestResultException(HttpStatus.INTERNAL_SERVER_ERROR,
-        "Failed to insert or update test result.");
+        "Failed to create or update test result.");
     }
   }
 
@@ -96,16 +99,18 @@ public class TestResultService {
   public TestResult getOrCreate(final String id) {
     try {
       TestResultEntity entity = testResultRepository.findByResultId(id)
-        .orElseGet(() ->
-          testResultRepository.save(new TestResultEntity()
+        .orElseGet(() -> {
+          log.info("Get failed now creating test result in database.");
+          return testResultRepository.save(new TestResultEntity()
             .setResult(TestResultEntity.Result.PENDING.ordinal())
             .setResultId(id)
-            .setResultDate(LocalDateTime.now()))
-        );
+            .setResultDate(LocalDateTime.now()));
+        });
       return toModel(entity);
     } catch (Exception e) {
+      log.error("Get or create test result failed. {}", e.getMessage());
       throw new TestResultException(HttpStatus.INTERNAL_SERVER_ERROR,
-        "Failed to get test result.");
+        "Failed to get or create test result.");
     }
   }
 
