@@ -152,7 +152,7 @@ Data is deleted after 90 days.
 
 |Role|	Authentication	|Comment|
 | ------------- |:-------------:| -----:|
-|GW to connected Labs (/lab/result Endpoint) | TLS Client Certificate, 2nd factor IP Range | Endpoint is exposed to an other securiy zone
+|GW to connected Labs (/lab/result Endpoint) | TLS Client Certificate, 2nd factor IP Range | Endpoint is exposed to an other security zone
 |cwa-verification-server| Signed JWT, verification of signature |
 
 ## Threat Model
