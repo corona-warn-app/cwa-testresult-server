@@ -96,7 +96,9 @@ The endpoint can receive several test results in one call.
 
 Steps:
 1.	lab provides 1..n test results
-2.	test result server inserts test results into its DB
+2.	test result server inserts or updates test results into its DB
+
+The implementation is able to update existing test results, this a rare but real case for test results.
 
 ###	Use Case retrieve test result
 It is important to note, that only one Registration Token will be generated for a specific GUID or teleTAN. The use case generates Registration Tokens from hashed GUIDs xor teleTANs. This is a measure to increase data privacy.
