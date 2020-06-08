@@ -230,6 +230,10 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <apiDocsUrl>http://localhost:8080/api/docs</apiDocsUrl>
+          <outputFileName>openapi.json</outputFileName>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

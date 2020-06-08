@@ -49,6 +49,10 @@ jobs:
       with:
         name: target
         path: target
+    - uses: actions/upload-artifact@v1
+      with:
+        name: openapi.json
+        path: target/openapi.json
     - name: docker build
       run: |
         docker build \
