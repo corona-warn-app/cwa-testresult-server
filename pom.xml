@@ -5,7 +5,7 @@
 
   <groupId>app.coronawarn.testresult</groupId>
   <artifactId>cwa-testresult-server</artifactId>
-  <version>0.6.2-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>cwa-testresult-server</name>
