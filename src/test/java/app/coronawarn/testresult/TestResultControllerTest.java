@@ -66,7 +66,7 @@ public class TestResultControllerTest {
     Integer result = 0;
     // create
     List<TestResult> invalid = Collections.singletonList(
-      new TestResult().setId("").setResult(0)
+      new TestResult().setId(id).setResult(result)
     );
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/lab/results")
