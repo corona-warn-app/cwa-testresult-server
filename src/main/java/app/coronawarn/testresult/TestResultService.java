@@ -72,17 +72,16 @@ public class TestResultService {
   public TestResult createOrUpdate(final TestResult result) {
     try {
       final Optional<TestResultEntity> optional = testResultRepository.findByResultId(result.getId());
-      TestResultEntity entity = optional.orElseGet(() -> {
+      final TestResultEntity testResultEntity = optional.map(tsr -> {
+        log.info("Updating test result in database.");
+        tsr.setResult(result.getResult())
+          .setResultDate(LocalDateTime.now());
+        return testResultRepository.save(tsr);
+      }).orElseGet(() -> {
         log.info("Creating test result in database.");
         return testResultRepository.save(toEntity(result));
       });
-      if (optional.isPresent()) {
-        log.info("Updating test result in database.");
-        entity.setResult(result.getResult())
-          .setResultDate(LocalDateTime.now());
-        entity = testResultRepository.save(entity);
-      }
-      return toModel(entity);
+      return toModel(testResultEntity);
     } catch (Exception e) {
       log.error("Create or update test result failed. {}", e.getMessage());
       throw new TestResultException(HttpStatus.INTERNAL_SERVER_ERROR,
