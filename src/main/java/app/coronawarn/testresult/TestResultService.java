@@ -100,11 +100,9 @@ public class TestResultService {
     try {
       TestResultEntity entity = testResultRepository.findByResultId(id)
         .orElseGet(() -> {
-          log.info("Get failed now creating test result in database.");
-          return testResultRepository.save(new TestResultEntity()
-            .setResult(TestResultEntity.Result.PENDING.ordinal())
-            .setResultId(id)
-            .setResultDate(LocalDateTime.now()));
+          log.info("No test result found in database.");
+          return new TestResultEntity()
+            .setResult(TestResultEntity.Result.PENDING.ordinal());
         });
       return toModel(entity);
     } catch (Exception e) {
