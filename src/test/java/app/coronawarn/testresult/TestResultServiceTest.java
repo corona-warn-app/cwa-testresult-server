@@ -128,4 +128,29 @@ public class TestResultServiceTest {
     Assert.assertEquals(result, get.getResult());
   }
 
+  @Test
+  public void createAndDenyRedeemedUpdate() {
+    // data
+    String id = "a".repeat(64);
+    Integer resultCreate = 1;
+    Integer resultUpdate = 2;
+    TestResult create = new TestResult()
+      .setId(id)
+      .setResult(resultCreate);
+    // create
+    create = testResultService.createOrUpdate(create);
+    Assert.assertNotNull(create);
+    Assert.assertEquals(resultCreate, create.getResult());
+    // redeem
+    testResultRepository.findByResultId(id)
+      .ifPresent(u -> testResultRepository.save(u
+        .setResult(TestResultEntity.Result.REDEEMED.ordinal())));
+    // update
+    TestResult update = new TestResult()
+      .setId(id)
+      .setResult(resultUpdate);
+    update = testResultService.createOrUpdate(update);
+    Assert.assertNotNull(update);
+    Assert.assertNotEquals(resultUpdate, update.getResult());
+  }
 }
