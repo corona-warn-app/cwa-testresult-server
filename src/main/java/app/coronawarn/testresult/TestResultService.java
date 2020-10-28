@@ -77,6 +77,10 @@ public class TestResultService {
         return testResultRepository.save(toEntity(result));
       });
       if (optional.isPresent()) {
+        if (TestResultEntity.Result.REDEEMED.ordinal() == entity.getResult()) {
+          log.info("Updating test result is not possible because result is already redeemed.");
+          return toModel(entity);
+        }
         log.info("Updating test result in database.");
         entity.setResult(result.getResult())
           .setResultDate(LocalDateTime.now());
