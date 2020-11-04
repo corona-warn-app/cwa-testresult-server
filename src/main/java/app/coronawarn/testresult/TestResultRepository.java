@@ -33,8 +33,16 @@ public interface TestResultRepository extends JpaRepository<TestResultEntity, Lo
   Optional<TestResultEntity> findByResultId(String resultId);
 
   @Modifying
+  @Query("update TestResultEntity t set t.result = ?1 where t.result != ?1 and t.createdAt < ?2")
+  Integer updateResultByCreatedAtBefore(Integer result, LocalDateTime before);
+
+  @Modifying
   @Query("update TestResultEntity t set t.result = ?1 where t.result != ?1 and t.resultDate < ?2")
   Integer updateResultByResultDateBefore(Integer result, LocalDateTime before);
+
+  @Modifying
+  @Query("delete from TestResultEntity t where t.createdAt < ?1")
+  Integer deleteByCreatedAtBefore(LocalDateTime before);
 
   @Modifying
   @Query("delete from TestResultEntity t where t.resultDate < ?1")

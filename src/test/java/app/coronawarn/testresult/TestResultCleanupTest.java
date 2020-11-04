@@ -20,7 +20,7 @@ import rx.Single;
   properties = {
     "testresult.cleanup.redeem.days=21",
     "testresult.cleanup.redeem.rate=1000",
-    "testresult.cleanup.delete.days=90",
+    "testresult.cleanup.delete.days=60",
     "testresult.cleanup.delete.rate=1000"
   }
 )
@@ -43,18 +43,23 @@ public class TestResultCleanupTest {
     String resultId = "a".repeat(64);
     Integer resultRedeemed = TestResultEntity.Result.REDEEMED.ordinal();
     LocalDateTime resultDate = LocalDateTime.now().minus(Period.ofDays(21));
+    LocalDateTime createdAt = LocalDateTime.now().minus(Period.ofDays(21));
     // create
     TestResultEntity create = testResultRepository.save(new TestResultEntity()
       .setResult(1)
       .setResultId(resultId)
       .setResultDate(resultDate)
     );
+    create.setCreatedAt(createdAt);
+    testResultRepository.save(create);
     Assert.assertNotNull(create);
+    Assert.assertEquals(createdAt, create.getCreatedAt());
     Assert.assertEquals(resultId, create.getResultId());
     // find
     Optional<TestResultEntity> find = testResultRepository.findByResultId(resultId);
     Assert.assertTrue(find.isPresent());
     Assert.assertEquals(resultId, find.get().getResultId());
+    Assert.assertEquals(createdAt, find.get().getCreatedAt());
     Assert.assertEquals(resultDate, find.get().getResultDate());
     // wait
     Single.fromCallable(() -> true).delay(2, TimeUnit.SECONDS).toBlocking().value();
@@ -71,19 +76,24 @@ public class TestResultCleanupTest {
     testResultRepository.deleteAll();
     // data
     String resultId = "d".repeat(64);
-    LocalDateTime resultDate = LocalDateTime.now().minus(Period.ofDays(90));
+    LocalDateTime resultDate = LocalDateTime.now().minus(Period.ofDays(60));
+    LocalDateTime createdAt = LocalDateTime.now().minus(Period.ofDays(60));
     // create
     TestResultEntity create = testResultRepository.save(new TestResultEntity()
       .setResult(1)
       .setResultId(resultId)
       .setResultDate(resultDate)
     );
+    create.setCreatedAt(createdAt);
+    testResultRepository.save(create);
     Assert.assertNotNull(create);
+    Assert.assertEquals(createdAt, create.getCreatedAt());
     Assert.assertEquals(resultId, create.getResultId());
     // find
     Optional<TestResultEntity> find = testResultRepository.findByResultId(resultId);
     Assert.assertTrue(find.isPresent());
     Assert.assertEquals(resultId, find.get().getResultId());
+    Assert.assertEquals(createdAt, find.get().getCreatedAt());
     Assert.assertEquals(resultDate, find.get().getResultDate());
     // wait
     Single.fromCallable(() -> true).delay(2, TimeUnit.SECONDS).toBlocking().value();
