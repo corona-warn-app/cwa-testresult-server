@@ -13,6 +13,7 @@ jobs:
         fetch-depth: 0
     - uses: actions/cache@v1
       env:
+        ACTIONS_ALLOW_UNSECURE_COMMAND: true
         cache-name: m2
       with:
         path: ~/.m2/repository
@@ -34,6 +35,7 @@ jobs:
     - name: mvn deploy
       run: mvn --batch-mode deploy
       env:
+        ACTIONS_ALLOW_UNSECURE_COMMAND: true
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: mvn sonar
       run: |
@@ -61,6 +63,7 @@ jobs:
         --tag ${TRUSTED_URL}/${TRUSTED_REPOSITORY}/${ARTIFACT_ID}:${VERSION} \
         .
       env:
+        ACTIONS_ALLOW_UNSECURE_COMMAND: true
         TRUSTED_URL: ${{ secrets.TRUSTED_URL }}
         TRUSTED_REPOSITORY: ${{ secrets.TRUSTED_REPOSITORY }}
     - name: docker push github
@@ -68,6 +71,7 @@ jobs:
         echo ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY_OWNER} --password-stdin
         docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/${ARTIFACT_ID}:${VERSION}
       env:
+        ACTIONS_ALLOW_UNSECURE_COMMAND: true
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: docker push trusted
       run: |
@@ -83,6 +87,7 @@ jobs:
         docker trust sign ${TRUSTED_URL}/${TRUSTED_REPOSITORY}/${ARTIFACT_ID}:${VERSION}
         docker push ${TRUSTED_URL}/${TRUSTED_REPOSITORY}/${ARTIFACT_ID}:${VERSION}
       env:
+        ACTIONS_ALLOW_UNSECURE_COMMAND: true
         TRUSTED_KEY: ${{ secrets.TRUSTED_KEY }}
         TRUSTED_URL: ${{ secrets.TRUSTED_URL }}
         TRUSTED_SERVER_URL: ${{ secrets.TRUSTED_SERVER_URL }}
