@@ -8,4 +8,6 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 server:
   ssl:
-    key-password=password:${SSL_TESTRESULT_KEYSTORE_PASSWORD:changeit}
+    enabled: true
+    key-store: ${SERVER_SSL_KEY_STORE}
+    key-store-password: ${SSL_TESTRESULT_KEYSTORE_PASSWORD:changeit}
