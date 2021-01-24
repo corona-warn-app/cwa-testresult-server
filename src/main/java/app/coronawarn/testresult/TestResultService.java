@@ -79,7 +79,8 @@ public class TestResultService {
       if (optional.isPresent()) {
         if (TestResultEntity.Result.REDEEMED.ordinal() == entity.getResult()) {
           log.info("Updating test result is not possible because result is already redeemed.");
-          return toModel(entity);
+          //return toModel(entity);
+          throw new TestResultException(HttpStatus.CONFLICT,"Trying to update an already redeemed Testresult.");
         }
         log.info("Updating test result in database.");
         entity.setResult(result.getResult())
@@ -87,6 +88,9 @@ public class TestResultService {
         entity = testResultRepository.save(entity);
       }
       return toModel(entity);
+    } catch (TestResultException te) {
+      // log.error("Create or update test result failed. {}", e.getMessage());
+      throw new TestResultException(te.getStatus(), te.getMessage());
     } catch (Exception e) {
       log.error("Create or update test result failed. {}", e.getMessage());
       throw new TestResultException(HttpStatus.INTERNAL_SERVER_ERROR,

@@ -10,6 +10,11 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: validate
+  h2:
+    console:
+      enabled: true
+      path: /h2
+      
   liquibase:
     change-log: classpath:db/changelog.yml
 springdoc:
