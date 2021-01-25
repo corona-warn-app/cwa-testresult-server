@@ -22,6 +22,7 @@
 package app.coronawarn.testresult;
 
 import app.coronawarn.testresult.entity.TestResultEntity;
+import app.coronawarn.testresult.exception.TestResultException;
 import app.coronawarn.testresult.model.TestResult;
 import org.junit.Assert;
 import org.junit.Before;
@@ -128,7 +129,7 @@ public class TestResultServiceTest {
     Assert.assertEquals(result, get.getResult());
   }
 
-  @Test
+  @Test (expected= TestResultException.class)
   public void createAndDenyRedeemedUpdate() {
     // data
     String id = "a".repeat(64);
@@ -150,7 +151,7 @@ public class TestResultServiceTest {
       .setId(id)
       .setResult(resultUpdate);
     update = testResultService.createOrUpdate(update);
-    Assert.assertNotNull(update);
+    Assert.assertNotNull(update);  
     Assert.assertNotEquals(resultUpdate, update.getResult());
   }
 }

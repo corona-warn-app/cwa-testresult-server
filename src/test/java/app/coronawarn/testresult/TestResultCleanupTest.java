@@ -3,6 +3,7 @@ package app.coronawarn.testresult;
 import app.coronawarn.testresult.entity.TestResultEntity;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
@@ -42,8 +43,8 @@ public class TestResultCleanupTest {
     // data
     String resultId = "a".repeat(64);
     Integer resultRedeemed = TestResultEntity.Result.REDEEMED.ordinal();
-    LocalDateTime resultDate = LocalDateTime.now().minus(Period.ofDays(21));
-    LocalDateTime createdAt = LocalDateTime.now().minus(Period.ofDays(21));
+    LocalDateTime resultDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS).minus(Period.ofDays(21));
+    LocalDateTime createdAt = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS).minus(Period.ofDays(21));
     // create
     TestResultEntity create = testResultRepository.save(new TestResultEntity()
       .setResult(1)
@@ -76,8 +77,8 @@ public class TestResultCleanupTest {
     testResultRepository.deleteAll();
     // data
     String resultId = "d".repeat(64);
-    LocalDateTime resultDate = LocalDateTime.now().minus(Period.ofDays(60));
-    LocalDateTime createdAt = LocalDateTime.now().minus(Period.ofDays(60));
+    LocalDateTime resultDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS).minus(Period.ofDays(60));
+    LocalDateTime createdAt = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS).minus(Period.ofDays(60));
     // create
     TestResultEntity create = testResultRepository.save(new TestResultEntity()
       .setResult(1)

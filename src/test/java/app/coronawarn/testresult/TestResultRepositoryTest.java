@@ -23,6 +23,7 @@ package app.coronawarn.testresult;
 
 import app.coronawarn.testresult.entity.TestResultEntity;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Before;
@@ -51,7 +52,7 @@ public class TestResultRepositoryTest {
     // data
     Integer result = 1;
     String resultId = "a".repeat(64);
-    LocalDateTime resultDate = LocalDateTime.now();
+    LocalDateTime resultDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
     // create
     TestResultEntity create = testResultRepository.save(new TestResultEntity()
       .setResult(result)
