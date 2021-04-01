@@ -54,9 +54,15 @@ public class TestResult {
    * 1: negative
    * 2: positive
    * 3: invalid
+   * Quick-test states
+   * 5: Pending
+   * 6: Negative
+   * 7: Positive
+   * 8: Invalid
+   * 9: Redeemed
    */
   @Min(1)
-  @Max(3)
+  @Max(9)
   @NotNull
   private Integer result;
 
