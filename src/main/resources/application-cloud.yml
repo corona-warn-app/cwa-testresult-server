@@ -10,4 +10,4 @@ server:
   ssl:
     enabled: true
     key-store-password: ${SSL_TESTRESULT_KEYSTORE_PASSWORD:changeit}
-    trust-store-password: ${SSL_TESTRESULT_KEYSTORE_PASSWORD:changeit}
+    trust-store-password: ${SSL_TESTRESULT_TRUSTSTORE_PASSWORD:changeit}
