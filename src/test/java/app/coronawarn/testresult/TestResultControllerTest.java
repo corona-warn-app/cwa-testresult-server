@@ -94,7 +94,7 @@ public class TestResultControllerTest {
       .andExpect(MockMvcResultMatchers.status().isBadRequest());
     // create
     invalid = new TestResultList().setTestResults(Collections.singletonList(
-      new TestResult().setId(id).setResult(4)
+      new TestResult().setId(id).setResult(10)
     ));
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/lab/results")
