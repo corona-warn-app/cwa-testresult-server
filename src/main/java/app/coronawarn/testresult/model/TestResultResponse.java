@@ -41,7 +41,7 @@ import lombok.ToString;
 public class TestResultResponse {
 
   /**
-   * The test result value from test lab or quick test
+   * The test result value from test lab or quick test.
    * 1: negative
    * 2: positive
    * 3: invalid
