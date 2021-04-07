@@ -50,7 +50,7 @@ public class TestResultResponse {
    */
   @NotNull
   @Min(0)
-  @Max(4)
+  @Max(9)
   private Integer testResult;
 
   public TestResultResponse setTestResult(Integer testResult) {

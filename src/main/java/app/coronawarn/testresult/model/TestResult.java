@@ -56,7 +56,7 @@ public class TestResult {
    * 3: invalid
    */
   @Min(1)
-  @Max(3)
+  @Max(9)
   @NotNull
   private Integer result;
 
