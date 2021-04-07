@@ -55,12 +55,12 @@ public class TestResult {
    * 1: negative
    * 2: positive
    * 3: invalid
-   * Quick-test states
-   * 5: Pending
-   * 6: Negative
-   * 7: Positive
-   * 8: Invalid
-   * 9: Redeemed
+   * 4: redeemed
+   * 5: quick-test-Pending
+   * 6: quick-test-Negative
+   * 7: quick-test-Positive
+   * 8: quick-test-Invalid
+   * 9: quick-test-Redeemed
    */
   @Min(1)
   @Max(9)
