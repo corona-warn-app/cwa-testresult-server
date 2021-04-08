@@ -21,6 +21,7 @@
 
 package app.coronawarn.testresult;
 
+import app.coronawarn.testresult.model.QuickTestResult;
 import app.coronawarn.testresult.model.TestResult;
 import app.coronawarn.testresult.model.TestResultList;
 import app.coronawarn.testresult.model.TestResultRequest;
@@ -182,7 +183,7 @@ public class TestResultControllerTest {
     String id = "b".repeat(64);
     Integer result = 5;
     // create
-    TestResult valid = new TestResult().setId(id).setResult(result);
+    QuickTestResult valid = new QuickTestResult().setId(id).setResult(result);
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/quicktest/results")
       .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -198,7 +199,7 @@ public class TestResultControllerTest {
     String id = "b".repeat(64);
     Integer result = 4;
     // create
-    TestResult valid = new TestResult().setId(id).setResult(result);
+    QuickTestResult valid = new QuickTestResult().setId(id).setResult(result);
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/quicktest/results")
       .accept(MediaType.APPLICATION_JSON_VALUE)
