@@ -41,16 +41,20 @@ import lombok.ToString;
 public class TestResultResponse {
 
   /**
-   * The test result value from test lab.
-   * Pending  = 0 : The test result does not exist yet
-   * Negative = 1 : No indication for COVID-19
-   * Positive = 2 : The test result indicates infection with COVID-19
-   * Invalid  = 3 : The test result is invalid due to unknown reason
-   * Redeemed = 4 : The test result is redeemed by time
+   * The test result value from test lab or quick test.
+   * 1: negative
+   * 2: positive
+   * 3: invalid
+   * 4: redeemed
+   * 5: quick-test-Pending
+   * 6: quick-test-Negative
+   * 7: quick-test-Positive
+   * 8: quick-test-Invalid
+   * 9: quick-test-Redeemed
    */
   @NotNull
   @Min(0)
-  @Max(4)
+  @Max(9)
   private Integer testResult;
 
   public TestResultResponse setTestResult(Integer testResult) {

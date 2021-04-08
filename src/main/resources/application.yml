@@ -50,5 +50,5 @@ testresult:
       days: 21
       rate: 3600000
     delete:
-      days: 90
+      days: 60
       rate: 3600000

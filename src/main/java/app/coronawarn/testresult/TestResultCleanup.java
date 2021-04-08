@@ -26,7 +26,7 @@ public class TestResultCleanup {
   )
   @Transactional
   public void redeem() {
-    Integer redeemed = testResultRepository.updateResultByResultDateBefore(
+    Integer redeemed = testResultRepository.updateResultByCreatedAtBefore(
       TestResultEntity.Result.REDEEMED.ordinal(),
       LocalDateTime.now().minus(Period.ofDays(testResultConfig.getCleanup().getRedeem().getDays())));
     log.info("Cleanup redeemed {} test results.", redeemed);
@@ -40,7 +40,7 @@ public class TestResultCleanup {
   )
   @Transactional
   public void delete() {
-    Integer deleted = testResultRepository.deleteByResultDateBefore(
+    Integer deleted = testResultRepository.deleteByCreatedAtBefore(
       LocalDateTime.now().minus(Period.ofDays(testResultConfig.getCleanup().getDelete().getDays())));
     log.info("Cleanup deleted {} test results.", deleted);
   }
