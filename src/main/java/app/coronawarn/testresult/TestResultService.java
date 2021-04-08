@@ -23,6 +23,7 @@ package app.coronawarn.testresult;
 
 import app.coronawarn.testresult.entity.TestResultEntity;
 import app.coronawarn.testresult.exception.TestResultException;
+import app.coronawarn.testresult.model.QuickTestResult;
 import app.coronawarn.testresult.model.TestResult;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -116,6 +117,13 @@ public class TestResultService {
       throw new TestResultException(HttpStatus.INTERNAL_SERVER_ERROR,
         "Failed to get or create test result.");
     }
+  }
+
+  public TestResult convertQuickTest(QuickTestResult quickTestResult){
+    TestResult testResult = new TestResult();
+    testResult.setResult(quickTestResult.getResult());
+    testResult.setId(quickTestResult.getId());
+    return testResult;
   }
 
 }

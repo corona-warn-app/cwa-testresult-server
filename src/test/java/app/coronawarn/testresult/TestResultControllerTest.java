@@ -172,4 +172,40 @@ public class TestResultControllerTest {
       .andExpect(MockMvcResultMatchers.status().isOk());
   }
 
+
+
+
+
+  @Test
+  public void quickInsertValidShouldReturnNoContent() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    Integer result = 5;
+    // create
+    TestResult valid = new TestResult().setId(id).setResult(result);
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/quicktest/results")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isCreated());
+  }
+
+  @Test
+  public void quickInsertInValidShouldReturnUnprocessableEntity() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    Integer result = 4;
+    // create
+    TestResult valid = new TestResult().setId(id).setResult(result);
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/quicktest/results")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isBadRequest());
+  }
+
 }

@@ -21,15 +21,16 @@
 
 package app.coronawarn.testresult;
 
-import app.coronawarn.testresult.model.TestResult;
-import app.coronawarn.testresult.model.TestResultList;
-import app.coronawarn.testresult.model.TestResultRequest;
-import app.coronawarn.testresult.model.TestResultResponse;
+import app.coronawarn.testresult.model.*;
+import com.sun.xml.bind.v2.model.annotation.Quick;
 import io.swagger.v3.oas.annotations.Operation;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -88,5 +89,27 @@ public class TestResultController {
     log.info("Received {} test results to insert or update from lab.", list.getTestResults().size());
     list.getTestResults().forEach(testResultService::createOrUpdate);
     return ResponseEntity.noContent().build();
+  }
+
+  /**
+   * Insert or update the quick test.
+   *
+   * @param testResult the test result to update
+   * @return the response
+   */
+  @Operation(
+    description = "Create test results from collection."
+  )
+  @PostMapping(
+    value = "/api/v1/quicktest/results",
+    consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  public ResponseEntity<?> QuicktestResults(
+    @RequestBody @NotNull @Valid QuickTestResult testResult
+  ) {
+    log.info("Received test result to insert or update from Quicktests.");
+    testResultService.createOrUpdate(testResultService.convertQuickTest(testResult));
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 }
