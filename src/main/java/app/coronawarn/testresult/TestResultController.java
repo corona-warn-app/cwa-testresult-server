@@ -21,13 +21,14 @@
 
 package app.coronawarn.testresult;
 
-import app.coronawarn.testresult.model.*;
-import com.sun.xml.bind.v2.model.annotation.Quick;
+import app.coronawarn.testresult.model.QuickTestResult;
+import app.coronawarn.testresult.model.TestResult;
+import app.coronawarn.testresult.model.TestResultList;
+import app.coronawarn.testresult.model.TestResultRequest;
+import app.coronawarn.testresult.model.TestResultResponse;
 import io.swagger.v3.oas.annotations.Operation;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -94,7 +95,7 @@ public class TestResultController {
   /**
    * Insert or update the quick test.
    *
-   * @param testResult the test result to update
+   * @param testResult the test result to update.
    * @return the response
    */
   @Operation(
@@ -105,7 +106,7 @@ public class TestResultController {
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public ResponseEntity<?> QuicktestResults(
+  public ResponseEntity<?> quicktestResults(
     @RequestBody @NotNull @Valid QuickTestResult testResult
   ) {
     log.info("Received test result to insert or update from Quicktests.");

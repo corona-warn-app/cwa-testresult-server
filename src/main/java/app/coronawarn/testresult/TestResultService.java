@@ -119,7 +119,13 @@ public class TestResultService {
     }
   }
 
-  public TestResult convertQuickTest(QuickTestResult quickTestResult){
+  /**
+   * Converting a QuicktestResult to Testresult for saving.
+   *
+   * @param quickTestResult the Result to convert
+   * @return the converted test result
+   */
+  public TestResult convertQuickTest(QuickTestResult quickTestResult) {
     TestResult testResult = new TestResult();
     testResult.setResult(quickTestResult.getResult());
     testResult.setId(quickTestResult.getId());
