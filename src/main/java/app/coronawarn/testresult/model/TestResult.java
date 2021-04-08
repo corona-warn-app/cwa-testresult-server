@@ -29,6 +29,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.ToString;
 
 /**
@@ -54,6 +55,12 @@ public class TestResult {
    * 1: negative
    * 2: positive
    * 3: invalid
+   * 4: redeemed
+   * 5: quick-test-Pending
+   * 6: quick-test-Negative
+   * 7: quick-test-Positive
+   * 8: quick-test-Invalid
+   * 9: quick-test-Redeemed
    */
   @Min(1)
   @Max(9)
