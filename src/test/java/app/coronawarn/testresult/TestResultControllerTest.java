@@ -21,6 +21,7 @@
 
 package app.coronawarn.testresult;
 
+import app.coronawarn.testresult.model.QuickTestResult;
 import app.coronawarn.testresult.model.TestResult;
 import app.coronawarn.testresult.model.TestResultList;
 import app.coronawarn.testresult.model.TestResultRequest;
@@ -170,6 +171,42 @@ public class TestResultControllerTest {
       .content(objectMapper.writeValueAsString(request)))
       .andDo(MockMvcResultHandlers.print())
       .andExpect(MockMvcResultMatchers.status().isOk());
+  }
+
+
+
+
+
+  @Test
+  public void quickInsertValidShouldReturnNoContent() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    Integer result = 5;
+    // create
+    QuickTestResult valid = new QuickTestResult().setId(id).setResult(result);
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/quicktest/results")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isCreated());
+  }
+
+  @Test
+  public void quickInsertInValidShouldReturnUnprocessableEntity() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    Integer result = 4;
+    // create
+    QuickTestResult valid = new QuickTestResult().setId(id).setResult(result);
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/quicktest/results")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isBadRequest());
   }
 
 }
