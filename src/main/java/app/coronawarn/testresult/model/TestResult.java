@@ -63,7 +63,7 @@ public class TestResult {
    * 9: quick-test-Redeemed
    */
   @Min(1)
-  @Max(9)
+  @Max(3)
   @NotNull
   private Integer result;
 
