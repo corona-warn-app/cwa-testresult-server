@@ -22,6 +22,7 @@
 package app.coronawarn.testresult;
 
 import app.coronawarn.testresult.model.QuickTestResult;
+import app.coronawarn.testresult.model.QuickTestResultList;
 import app.coronawarn.testresult.model.TestResult;
 import app.coronawarn.testresult.model.TestResultList;
 import app.coronawarn.testresult.model.TestResultRequest;
@@ -31,13 +32,14 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -65,7 +67,30 @@ public class TestResultController {
     @RequestBody @Valid TestResultRequest request
   ) {
     log.info("Received test result request from app.");
-    TestResult result = testResultService.getOrCreate(request.getId());
+    TestResult result = testResultService.getOrCreate(request.getId(),false);
+    return ResponseEntity.ok(new TestResultResponse()
+      .setTestResult(result.getResult()));
+  }
+
+  /**
+   * Get the test result response from a request containing the id.
+   *
+   * @param request the test result request with id
+   * @return the test result response
+   */
+  @Operation(
+    description = "Get test result response from request."
+  )
+  @PostMapping(
+    value = "/api/v1/quicktest/result",
+    consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  public ResponseEntity<TestResultResponse> quickTestResult(
+    @RequestBody @Valid TestResultRequest request
+  ) {
+    log.info("Received test result request from Quicktest.");
+    TestResult result = testResultService.getOrCreate(request.getId(),true);
     return ResponseEntity.ok(new TestResultResponse()
       .setTestResult(result.getResult()));
   }
@@ -95,7 +120,7 @@ public class TestResultController {
   /**
    * Insert or update the quick test.
    *
-   * @param testResult the test result to update.
+   * @param list the test result list request
    * @return the response
    */
   @Operation(
@@ -107,10 +132,12 @@ public class TestResultController {
     produces = MediaType.APPLICATION_JSON_VALUE
   )
   public ResponseEntity<?> quicktestResults(
-    @RequestBody @NotNull @Valid QuickTestResult testResult
+    @RequestBody @NotNull @Valid QuickTestResultList list
   ) {
-    log.info("Received test result to insert or update from Quicktests.");
-    testResultService.createOrUpdate(testResultService.convertQuickTest(testResult));
-    return ResponseEntity.status(HttpStatus.CREATED).build();
+    log.info("Received {} test result to insert or update from Quicktests. ", list.getTestResults().size());
+    for (QuickTestResult result: list.getTestResults()) {
+      testResultService.createOrUpdate(testResultService.convertQuickTest(result));
+    }
+    return ResponseEntity.noContent().build();
   }
 }

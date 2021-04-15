@@ -101,15 +101,20 @@ public class TestResultService {
    * @param id the test result id
    * @return the test result
    */
-  public TestResult getOrCreate(final String id) {
+  public TestResult getOrCreate(final String id, boolean quicktest) {
     try {
       TestResultEntity entity = testResultRepository.findByResultId(id)
         .orElseGet(() -> {
           log.info("Get failed now creating test result in database.");
-          return testResultRepository.save(new TestResultEntity()
-            .setResult(TestResultEntity.Result.PENDING.ordinal())
-            .setResultId(id)
-            .setResultDate(LocalDateTime.now()));
+          TestResultEntity resultEntity = new TestResultEntity();
+          if (quicktest) {
+            resultEntity.setResult(TestResultEntity.Result.QUICK_PENDING.ordinal());
+          } else {
+            resultEntity.setResult(TestResultEntity.Result.PENDING.ordinal());
+          }
+          resultEntity.setResultId(id);
+          resultEntity.setResultDate(LocalDateTime.now());
+          return testResultRepository.save(resultEntity);
         });
       return toModel(entity);
     } catch (Exception e) {
