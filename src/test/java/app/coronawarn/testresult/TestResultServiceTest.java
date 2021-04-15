@@ -82,7 +82,7 @@ public class TestResultServiceTest {
     Assert.assertNotNull(create);
     Assert.assertEquals(result, create.getResult());
     // get
-    TestResult get = testResultService.getOrCreate(id);
+    TestResult get = testResultService.getOrCreate(id,false);
     Assert.assertNotNull(get);
     Assert.assertEquals(result, get.getResult());
   }
@@ -101,7 +101,7 @@ public class TestResultServiceTest {
     Assert.assertNotNull(create);
     Assert.assertEquals(resultCreate, create.getResult());
     // get
-    TestResult get = testResultService.getOrCreate(id);
+    TestResult get = testResultService.getOrCreate(id,false);
     Assert.assertNotNull(get);
     Assert.assertEquals(resultCreate, get.getResult());
     // update
@@ -112,7 +112,7 @@ public class TestResultServiceTest {
     Assert.assertNotNull(update);
     Assert.assertEquals(resultUpdate, update.getResult());
     // get
-    get = testResultService.getOrCreate(id);
+    get = testResultService.getOrCreate(id,false);
     Assert.assertNotNull(get);
     Assert.assertEquals(resultUpdate, get.getResult());
   }
@@ -123,7 +123,7 @@ public class TestResultServiceTest {
     String id = "a".repeat(64);
     Integer result = 0;
     // get
-    TestResult get = testResultService.getOrCreate(id);
+    TestResult get = testResultService.getOrCreate(id,false);
     Assert.assertNotNull(get);
     Assert.assertEquals(result, get.getResult());
   }

@@ -21,10 +21,7 @@
 
 package app.coronawarn.testresult;
 
-import app.coronawarn.testresult.model.QuickTestResult;
-import app.coronawarn.testresult.model.TestResult;
-import app.coronawarn.testresult.model.TestResultList;
-import app.coronawarn.testresult.model.TestResultRequest;
+import app.coronawarn.testresult.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collections;
 import java.util.List;
@@ -183,14 +180,17 @@ public class TestResultControllerTest {
     String id = "b".repeat(64);
     Integer result = 5;
     // create
-    QuickTestResult valid = new QuickTestResult().setId(id).setResult(result);
+    QuickTestResultList valid = new QuickTestResultList();
+    valid.setTestResults( Collections.singletonList(
+      new QuickTestResult().setId(id).setResult(result)
+    ));
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/quicktest/results")
       .accept(MediaType.APPLICATION_JSON_VALUE)
       .contentType(MediaType.APPLICATION_JSON_VALUE)
       .content(objectMapper.writeValueAsString(valid)))
       .andDo(MockMvcResultHandlers.print())
-      .andExpect(MockMvcResultMatchers.status().isCreated());
+      .andExpect(MockMvcResultMatchers.status().isNoContent());
   }
 
   @Test
@@ -199,7 +199,10 @@ public class TestResultControllerTest {
     String id = "b".repeat(64);
     Integer result = 4;
     // create
-    QuickTestResult valid = new QuickTestResult().setId(id).setResult(result);
+    QuickTestResultList valid = new QuickTestResultList();
+    valid.setTestResults( Collections.singletonList(
+      new QuickTestResult().setId(id).setResult(result)
+    ));
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/quicktest/results")
       .accept(MediaType.APPLICATION_JSON_VALUE)
