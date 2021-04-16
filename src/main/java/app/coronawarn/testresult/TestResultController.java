@@ -27,6 +27,8 @@ import app.coronawarn.testresult.model.TestResult;
 import app.coronawarn.testresult.model.TestResultList;
 import app.coronawarn.testresult.model.TestResultRequest;
 import app.coronawarn.testresult.model.TestResultResponse;
+import app.coronawarn.testresult.service.HashingService;
+import app.coronawarn.testresult.service.TestResultService;
 import io.swagger.v3.oas.annotations.Operation;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -73,6 +75,28 @@ public class TestResultController {
   }
 
   /**
+   * Insert or update the test results.
+   *
+   * @param list the test result list request
+   * @return the response
+   */
+  @Operation(
+    description = "Create test results from collection."
+  )
+  @PostMapping(
+    value = "/api/v1/lab/results",
+    consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  public ResponseEntity<?> results(
+    @RequestBody @NotNull @Valid TestResultList list
+  ) {
+    log.info("Received {} test results to insert or update from lab.", list.getTestResults().size());
+    list.getTestResults().forEach(testResultService::createOrUpdate);
+    return ResponseEntity.noContent().build();
+  }
+
+  /**
    * Get the test result response from a request containing the id.
    *
    * @param request the test result request with id
@@ -93,28 +117,6 @@ public class TestResultController {
     TestResult result = testResultService.getOrCreate(request.getId(),true);
     return ResponseEntity.ok(new TestResultResponse()
       .setTestResult(result.getResult()));
-  }
-
-  /**
-   * Insert or update the test results.
-   *
-   * @param list the test result list request
-   * @return the response
-   */
-  @Operation(
-    description = "Create test results from collection."
-  )
-  @PostMapping(
-    value = "/api/v1/lab/results",
-    consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE
-  )
-  public ResponseEntity<?> results(
-    @RequestBody @NotNull @Valid TestResultList list
-  ) {
-    log.info("Received {} test results to insert or update from lab.", list.getTestResults().size());
-    list.getTestResults().forEach(testResultService::createOrUpdate);
-    return ResponseEntity.noContent().build();
   }
 
   /**
