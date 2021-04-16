@@ -19,8 +19,9 @@
  * under the License.
  */
 
-package app.coronawarn.testresult;
+package app.coronawarn.testresult.service;
 
+import app.coronawarn.testresult.TestResultRepository;
 import app.coronawarn.testresult.entity.TestResultEntity;
 import app.coronawarn.testresult.exception.TestResultException;
 import app.coronawarn.testresult.model.QuickTestResult;
@@ -38,6 +39,7 @@ import org.springframework.stereotype.Service;
 public class TestResultService {
 
   private final TestResultRepository testResultRepository;
+  private final HashingService hashingService;
 
   /**
    * Map the entity of a test result to a test result model.
@@ -109,10 +111,11 @@ public class TestResultService {
           TestResultEntity resultEntity = new TestResultEntity();
           if (quicktest) {
             resultEntity.setResult(TestResultEntity.Result.QUICK_PENDING.ordinal());
+            resultEntity.setResultId(hashingService.sha256Hash(id));
           } else {
             resultEntity.setResult(TestResultEntity.Result.PENDING.ordinal());
+            resultEntity.setResultId(id);
           }
-          resultEntity.setResultId(id);
           resultEntity.setResultDate(LocalDateTime.now());
           return testResultRepository.save(resultEntity);
         });
@@ -133,7 +136,7 @@ public class TestResultService {
   public TestResult convertQuickTest(QuickTestResult quickTestResult) {
     TestResult testResult = new TestResult();
     testResult.setResult(quickTestResult.getResult());
-    testResult.setId(quickTestResult.getId());
+    testResult.setId(hashingService.sha256Hash(quickTestResult.getId()));
     return testResult;
   }
 

@@ -23,6 +23,7 @@ package app.coronawarn.testresult;
 
 import app.coronawarn.testresult.entity.TestResultEntity;
 import app.coronawarn.testresult.model.TestResult;
+import app.coronawarn.testresult.service.TestResultService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
