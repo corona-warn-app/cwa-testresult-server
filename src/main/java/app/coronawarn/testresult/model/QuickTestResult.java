@@ -62,6 +62,11 @@ public class QuickTestResult {
   @NotNull
   private Integer result;
 
+  /**
+   * Timestamp of the SampleCollection (sc).
+   */
+  private Long sc;
+
   public QuickTestResult setId(String id) {
     this.id = id;
     return this;
@@ -69,6 +74,11 @@ public class QuickTestResult {
 
   public QuickTestResult setResult(Integer result) {
     this.result = result;
+    return this;
+  }
+
+  public QuickTestResult setSampleCollection(Long sc) {
+    this.sc = sc;
     return this;
   }
 }

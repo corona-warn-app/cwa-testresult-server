@@ -171,7 +171,24 @@ public class TestResultControllerTest {
   }
 
 
-
+  @Test
+  public void quickInsertValidWithCSShouldReturnNoContent() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    Integer result = 5;
+    // create
+    QuickTestResultList valid = new QuickTestResultList();
+    valid.setTestResults( Collections.singletonList(
+      new QuickTestResult().setId(id).setResult(result).setSampleCollection(System.currentTimeMillis())
+    ));
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/quicktest/results")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isNoContent());
+  }
 
 
   @Test
