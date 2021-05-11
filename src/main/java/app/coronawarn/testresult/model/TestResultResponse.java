@@ -63,7 +63,6 @@ public class TestResultResponse {
   /**
    * Timestamp of the SampleCollection (sc).
    */
-  @Nullable
   private Long sc;
 
   /**

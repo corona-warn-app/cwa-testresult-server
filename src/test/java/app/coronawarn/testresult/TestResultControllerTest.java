@@ -172,7 +172,7 @@ public class TestResultControllerTest {
 
 
   @Test
-  public void quickInsertValidWithCSShouldReturnNoContent() throws Exception {
+  public void quickInsertValidWithCsShouldReturnNoContent() throws Exception {
     // data
     String id = "b".repeat(64);
     Integer result = 5;
@@ -190,6 +190,38 @@ public class TestResultControllerTest {
       .andExpect(MockMvcResultMatchers.status().isNoContent());
   }
 
+  @Test
+  public void quickInsertValidWithCsShouldReturnNoContentAndQueryResult() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    Integer result = 5;
+    // create
+    QuickTestResultList valid = new QuickTestResultList();
+    valid.setTestResults(Collections.singletonList(
+      new QuickTestResult().setId(id).setResult(result).setSampleCollection(System.currentTimeMillis())
+    ));
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/quicktest/results")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+    TestResultRequest request = new TestResultRequest()
+      .setId(id);
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/app/result")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(request)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isOk())
+      .andReturn()
+      .getResponse()
+      .getContentAsString()
+      .contains("cs");
+  }
 
   @Test
   public void quickInsertValidShouldReturnNoContent() throws Exception {
