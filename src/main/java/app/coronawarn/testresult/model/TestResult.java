@@ -67,6 +67,11 @@ public class TestResult {
   @NotNull
   private Integer result;
 
+  /**
+   * Timestamp of the SampleCollection (sc).
+   */
+  private Long sc;
+
   public TestResult setId(String id) {
     this.id = id;
     return this;
@@ -74,6 +79,11 @@ public class TestResult {
 
   public TestResult setResult(Integer result) {
     this.result = result;
+    return this;
+  }
+
+  public TestResult setSampleCollection(Long sc) {
+    this.sc = sc;
     return this;
   }
 }

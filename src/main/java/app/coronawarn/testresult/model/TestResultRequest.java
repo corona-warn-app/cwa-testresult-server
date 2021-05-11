@@ -46,8 +46,26 @@ public class TestResultRequest {
   @Pattern(regexp = "^([A-Fa-f0-9]{2}){32}$")
   private String id;
 
+  /**
+   * Timestamp of the SampleCollection (sc).
+   */
+  private Long sc;
+
+  /**
+   * Default constructor with sc null.
+   */
   public TestResultRequest setId(String id) {
     this.id = id;
+    this.sc = null;
+    return this;
+  }
+
+  /**
+   * All args constructor with sc.
+   */
+  public TestResultRequest setId(String id, Long sc) {
+    this.id = id;
+    this.sc = sc;
     return this;
   }
 }
