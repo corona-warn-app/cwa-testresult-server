@@ -27,6 +27,7 @@ import app.coronawarn.testresult.exception.TestResultException;
 import app.coronawarn.testresult.model.QuickTestResult;
 import app.coronawarn.testresult.model.TestResult;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +53,7 @@ public class TestResultService {
     return new TestResult()
       .setId(entity.getResultId())
       .setResult(entity.getResult())
-      .setSampleCollection(entity.getResultDate().toEpochSecond(ZoneOffset.UTC));
+      .setSampleCollection(entity.getResultDate().atZone(ZoneId.of("UTC")).toEpochSecond());
   }
 
   /**
