@@ -71,7 +71,8 @@ public class TestResultController {
     log.info("Received test result request from app.");
     TestResult result = testResultService.getOrCreate(request.getId(),false);
     return ResponseEntity.ok(new TestResultResponse()
-      .setTestResult(result.getResult()));
+      .setTestResult(result.getResult(), result.getSc())
+    );
   }
 
   /**

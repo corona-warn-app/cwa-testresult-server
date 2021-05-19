@@ -21,7 +21,9 @@
 
 package app.coronawarn.testresult.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
+import javax.annotation.Nullable;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -38,6 +40,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TestResultResponse {
 
   /**
@@ -57,8 +60,26 @@ public class TestResultResponse {
   @Max(9)
   private Integer testResult;
 
+  /**
+   * Timestamp of the SampleCollection (sc).
+   */
+  private Long cs;
+
+  /**
+   * Default constructor with sc null.
+   */
   public TestResultResponse setTestResult(Integer testResult) {
     this.testResult = testResult;
+    this.cs = null;
+    return this;
+  }
+
+  /**
+   * All args constructor with sc.
+   */
+  public TestResultResponse setTestResult(Integer testResult,Long resultDate) {
+    this.testResult = testResult;
+    this.cs = resultDate;
     return this;
   }
 }
