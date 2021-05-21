@@ -63,14 +63,14 @@ public class TestResultResponse {
   /**
    * Timestamp of the SampleCollection (sc).
    */
-  private Long cs;
+  private Long sc;
 
   /**
    * Default constructor with sc null.
    */
   public TestResultResponse setTestResult(Integer testResult) {
     this.testResult = testResult;
-    this.cs = null;
+    this.sc = null;
     return this;
   }
 
@@ -79,7 +79,7 @@ public class TestResultResponse {
    */
   public TestResultResponse setTestResult(Integer testResult,Long resultDate) {
     this.testResult = testResult;
-    this.cs = resultDate;
+    this.sc = resultDate;
     return this;
   }
 }
