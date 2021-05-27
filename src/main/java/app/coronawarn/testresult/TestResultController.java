@@ -70,7 +70,7 @@ public class TestResultController {
   ) {
     log.info("Received test result request from app.");
 
-    TestResult result = testResultService.getOrCreate(request.getId(),false, null);
+    TestResult result = testResultService.getOrCreate(request.getId(), false, null);
     return ResponseEntity.ok(new TestResultResponse()
       .setTestResult(result.getResult(), result.getSc())
     );
@@ -116,7 +116,7 @@ public class TestResultController {
     @RequestBody @Valid TestResultRequest request
   ) {
     log.info("Received test result request from Quicktest.");
-    TestResult result = testResultService.getOrCreate(request.getId(),true, request.getSc());
+    TestResult result = testResultService.getOrCreate(request.getId(), true, request.getSc());
     return ResponseEntity.ok(new TestResultResponse()
       .setTestResult(result.getResult()));
   }

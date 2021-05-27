@@ -70,7 +70,7 @@ public class TestResultService {
     return new TestResultEntity()
       .setResult(model.getResult())
       .setResultId(model.getId())
-      .setResultDate(LocalDateTime.ofEpochSecond(model.getSc(),0,ZoneOffset.UTC));
+      .setResultDate(LocalDateTime.ofEpochSecond(model.getSc(), 0, ZoneOffset.UTC));
   }
 
   /**
@@ -125,7 +125,7 @@ public class TestResultService {
           if (sc == null) {
             resultEntity.setResultDate(LocalDateTime.now());
           } else  {
-            resultEntity.setResultDate(LocalDateTime.ofEpochSecond(sc,0,ZoneOffset.UTC));
+            resultEntity.setResultDate(LocalDateTime.ofEpochSecond(sc, 0, ZoneOffset.UTC));
           }
           return testResultRepository.save(resultEntity);
         });
