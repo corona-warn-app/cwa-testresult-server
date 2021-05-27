@@ -64,10 +64,13 @@ public class TestResultService {
    * @return the mapped entity from model
    */
   public TestResultEntity toEntity(TestResult model) {
+    if (model.getSc() == null) {
+      model.setSampleCollection(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+    }
     return new TestResultEntity()
       .setResult(model.getResult())
       .setResultId(model.getId())
-      .setResultDate(LocalDateTime.now());
+      .setResultDate(LocalDateTime.ofEpochSecond(model.getSc(), 0, ZoneOffset.UTC));
   }
 
   /**
@@ -106,7 +109,7 @@ public class TestResultService {
    * @param id the test result id
    * @return the test result
    */
-  public TestResult getOrCreate(final String id, boolean quicktest) {
+  public TestResult getOrCreate(final String id, boolean quicktest, Long sc) {
     try {
       TestResultEntity entity = testResultRepository.findByResultId(id)
         .orElseGet(() -> {
@@ -119,7 +122,11 @@ public class TestResultService {
             resultEntity.setResult(TestResultEntity.Result.PENDING.ordinal());
             resultEntity.setResultId(id);
           }
-          resultEntity.setResultDate(LocalDateTime.now());
+          if (sc == null) {
+            resultEntity.setResultDate(LocalDateTime.now());
+          } else  {
+            resultEntity.setResultDate(LocalDateTime.ofEpochSecond(sc, 0, ZoneOffset.UTC));
+          }
           return testResultRepository.save(resultEntity);
         });
       return toModel(entity);
