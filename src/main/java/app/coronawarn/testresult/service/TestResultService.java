@@ -91,8 +91,12 @@ public class TestResultService {
           return toModel(entity);
         }
         log.info("Updating test result in database.");
+        LocalDateTime sc = LocalDateTime.now();
+        if (result.getSc() != null) {
+          sc = LocalDateTime.ofEpochSecond(result.getSc(),0, ZoneOffset.UTC);
+        }
         entity.setResult(result.getResult())
-          .setResultDate(LocalDateTime.now());
+          .setResultDate(sc);
         entity = testResultRepository.save(entity);
       }
       return toModel(entity);
