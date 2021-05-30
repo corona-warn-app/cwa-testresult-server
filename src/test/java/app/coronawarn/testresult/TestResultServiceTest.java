@@ -54,68 +54,83 @@ public class TestResultServiceTest {
   public void toEntityAndToModel() {
     // data
     String id = "a".repeat(64);
+    String labId = "l".repeat(64);
     Integer result = 1;
     // to entity
     TestResult model = new TestResult()
       .setId(id)
+      .setLabId(labId)
       .setResult(result);
     TestResultEntity entity = testResultService.toEntity(model);
     Assert.assertNotNull(entity);
     Assert.assertEquals(id, entity.getResultId());
     Assert.assertEquals(result, entity.getResult());
+    Assert.assertEquals(labId, entity.getLabId());
     // to model
     model = testResultService.toModel(entity);
     Assert.assertNotNull(model);
     Assert.assertEquals(id, model.getId());
     Assert.assertEquals(result, model.getResult());
+    Assert.assertEquals(labId, model.getLabId());
   }
 
   @Test
   public void insertOrUpdate() {
     // data
     String id = "a".repeat(64);
+    String labId = "l".repeat(64);
     Integer result = 1;
     TestResult create = new TestResult()
       .setId(id)
-      .setResult(result);
+      .setResult(result)
+      .setLabId(labId);
     // create
     create = testResultService.createOrUpdate(create);
     Assert.assertNotNull(create);
     Assert.assertEquals(result, create.getResult());
+    Assert.assertEquals(labId, create.getLabId());
     // get
     TestResult get = testResultService.getOrCreate(id, false, 0L);
     Assert.assertNotNull(get);
     Assert.assertEquals(result, get.getResult());
+    Assert.assertEquals(labId, get.getLabId());
   }
 
   @Test
   public void insertAndUpdate() {
     // data
     String id = "a".repeat(64);
+    String labId = "l".repeat(64);
     Integer resultCreate = 1;
     Integer resultUpdate = 2;
     TestResult create = new TestResult()
       .setId(id)
-      .setResult(resultCreate);
+      .setResult(resultCreate)
+      .setLabId(labId);
     // create
     create = testResultService.createOrUpdate(create);
     Assert.assertNotNull(create);
     Assert.assertEquals(resultCreate, create.getResult());
+    Assert.assertEquals(labId, create.getLabId());
     // get
     TestResult get = testResultService.getOrCreate(id, false, 0L);
     Assert.assertNotNull(get);
     Assert.assertEquals(resultCreate, get.getResult());
+    Assert.assertEquals(labId, get.getLabId());
     // update
     TestResult update = new TestResult()
       .setId(id)
-      .setResult(resultUpdate);
+      .setResult(resultUpdate)
+      .setLabId(labId);
     update = testResultService.createOrUpdate(update);
     Assert.assertNotNull(update);
     Assert.assertEquals(resultUpdate, update.getResult());
+    Assert.assertEquals(labId, update.getLabId());
     // get
     get = testResultService.getOrCreate(id, false, 0L);
     Assert.assertNotNull(get);
     Assert.assertEquals(resultUpdate, get.getResult());
+    Assert.assertEquals(labId, get.getLabId());
   }
 
   @Test
@@ -127,6 +142,7 @@ public class TestResultServiceTest {
     TestResult get = testResultService.getOrCreate(id, false, 0L);
     Assert.assertNotNull(get);
     Assert.assertEquals(result, get.getResult());
+    Assert.assertNull(get.getLabId());
   }
 
   @Test

@@ -21,6 +21,7 @@
 
 package app.coronawarn.testresult.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -29,8 +30,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
+import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 /**
  * Model of the test result.
@@ -39,8 +41,10 @@ import lombok.ToString;
   description = "The test result model."
 )
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
+@Accessors(chain = true)
 public class TestResult {
 
   /**
@@ -72,18 +76,6 @@ public class TestResult {
    */
   private Long sc;
 
-  public TestResult setId(String id) {
-    this.id = id;
-    return this;
-  }
-
-  public TestResult setResult(Integer result) {
-    this.result = result;
-    return this;
-  }
-
-  public TestResult setSampleCollection(Long sc) {
-    this.sc = sc;
-    return this;
-  }
+  @JsonIgnore
+  private String labId;
 }

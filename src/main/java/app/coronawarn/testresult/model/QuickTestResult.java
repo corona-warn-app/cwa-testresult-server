@@ -29,7 +29,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 /**
  * Model of the test result.
@@ -38,8 +40,10 @@ import lombok.ToString;
   description = "The test result model."
 )
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
+@Accessors(chain = true)
 public class QuickTestResult {
 
   /**
@@ -66,19 +70,4 @@ public class QuickTestResult {
    * Timestamp of the SampleCollection (sc).
    */
   private Long sc;
-
-  public QuickTestResult setId(String id) {
-    this.id = id;
-    return this;
-  }
-
-  public QuickTestResult setResult(Integer result) {
-    this.result = result;
-    return this;
-  }
-
-  public QuickTestResult setSampleCollection(Long sc) {
-    this.sc = sc;
-    return this;
-  }
 }

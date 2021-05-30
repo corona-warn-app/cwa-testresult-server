@@ -21,7 +21,14 @@
 
 package app.coronawarn.testresult;
 
-import app.coronawarn.testresult.model.*;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
+import app.coronawarn.testresult.model.QuickTestResult;
+import app.coronawarn.testresult.model.QuickTestResultList;
+import app.coronawarn.testresult.model.TestResult;
+import app.coronawarn.testresult.model.TestResultList;
+import app.coronawarn.testresult.model.TestResultRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collections;
 import java.util.List;
@@ -104,7 +111,7 @@ public class TestResultControllerTest {
   }
 
   @Test
-  public void insertValidShouldReturnNoContent() throws Exception {
+  public void insertValidShouldReturnNoContentWithoutLabId() throws Exception {
     // data
     String id = "b".repeat(64);
     Integer result = 1;
@@ -122,7 +129,28 @@ public class TestResultControllerTest {
   }
 
   @Test
-  public void insertValidAndGetShouldReturnOk() throws Exception {
+  public void insertValidShouldReturnNoContentWithLabId() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    String labId = "l".repeat(64);
+    Integer result = 1;
+    // create
+    TestResultList valid = new TestResultList()
+      .setLabId(labId)
+      .setTestResults(Collections.singletonList(
+      new TestResult().setId(id).setResult(result)
+    ));
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/lab/results")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isNoContent());
+  }
+
+  @Test
+  public void insertValidAndGetShouldReturnOkWithoutLabId() throws Exception {
     // data
     String id = "c".repeat(64);
     Integer result = 1;
@@ -146,7 +174,41 @@ public class TestResultControllerTest {
       .contentType(MediaType.APPLICATION_JSON_VALUE)
       .content(objectMapper.writeValueAsString(request)))
       .andDo(MockMvcResultHandlers.print())
-      .andExpect(MockMvcResultMatchers.status().isOk());
+      .andExpect(MockMvcResultMatchers.status().isOk())
+      .andExpect(jsonPath("labId").doesNotExist());
+
+  }
+
+  @Test
+  public void insertValidAndGetShouldReturnOkWithLabId() throws Exception {
+    // data
+    String id = "c".repeat(64);
+    String labId = "l".repeat(64);
+    Integer result = 1;
+    // create
+    TestResultList valid = new TestResultList()
+      .setLabId(labId)
+      .setTestResults(Collections.singletonList(
+      new TestResult().setId(id).setResult(result)
+    ));
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/lab/results")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isNoContent());
+    // get
+    TestResultRequest request = new TestResultRequest()
+      .setId(id);
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/app/result")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(request)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isOk())
+      .andExpect(jsonPath("labId", is(labId)));
   }
 
   @Test
@@ -178,8 +240,29 @@ public class TestResultControllerTest {
     Integer result = 5;
     // create
     QuickTestResultList valid = new QuickTestResultList();
-    valid.setTestResults( Collections.singletonList(
-      new QuickTestResult().setId(id).setResult(result).setSampleCollection(System.currentTimeMillis())
+    valid.setTestResults(Collections.singletonList(
+      new QuickTestResult().setId(id).setResult(result).setSc(System.currentTimeMillis())
+    ));
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/quicktest/results")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isNoContent());
+  }
+
+  @Test
+  public void quickInsertValidWithCsShouldReturnNoContentWithLabId() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    String labId = "l".repeat(64);
+    Integer result = 5;
+    // create
+    QuickTestResultList valid = new QuickTestResultList();
+    valid.setLabId(labId);
+    valid.setTestResults(Collections.singletonList(
+      new QuickTestResult().setId(id).setResult(result).setSc(System.currentTimeMillis())
     ));
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/quicktest/results")
@@ -198,7 +281,7 @@ public class TestResultControllerTest {
     // create
     QuickTestResultList valid = new QuickTestResultList();
     valid.setTestResults(Collections.singletonList(
-      new QuickTestResult().setId(id).setResult(result).setSampleCollection(System.currentTimeMillis())
+      new QuickTestResult().setId(id).setResult(result).setSc(System.currentTimeMillis())
     ));
     mockMvc.perform(MockMvcRequestBuilders
       .post("/api/v1/quicktest/results")
@@ -230,7 +313,7 @@ public class TestResultControllerTest {
     Integer result = 5;
     // create
     QuickTestResultList valid = new QuickTestResultList();
-    valid.setTestResults( Collections.singletonList(
+    valid.setTestResults(Collections.singletonList(
       new QuickTestResult().setId(id).setResult(result)
     ));
     mockMvc.perform(MockMvcRequestBuilders
@@ -249,7 +332,7 @@ public class TestResultControllerTest {
     Integer result = 4;
     // create
     QuickTestResultList valid = new QuickTestResultList();
-    valid.setTestResults( Collections.singletonList(
+    valid.setTestResults(Collections.singletonList(
       new QuickTestResult().setId(id).setResult(result)
     ));
     mockMvc.perform(MockMvcRequestBuilders

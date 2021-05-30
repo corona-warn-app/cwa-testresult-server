@@ -68,6 +68,9 @@ public class TestResultEntity {
   @Column(name = "result_date")
   private LocalDateTime resultDate;
 
+  @Column(name = "lab_id")
+  private String labId;
+
   public TestResultEntity setResult(Integer result) {
     this.result = result;
     return this;
@@ -80,6 +83,11 @@ public class TestResultEntity {
 
   public TestResultEntity setResultDate(LocalDateTime resultDate) {
     this.resultDate = resultDate;
+    return this;
+  }
+
+  public TestResultEntity setLabId(String labId) {
+    this.labId = labId;
     return this;
   }
 

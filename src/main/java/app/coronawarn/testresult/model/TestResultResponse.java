@@ -23,13 +23,14 @@ package app.coronawarn.testresult.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
-import javax.annotation.Nullable;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 /**
  * Response model of the test result.
@@ -41,6 +42,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Accessors(chain = true)
 public class TestResultResponse {
 
   /**
@@ -64,6 +66,12 @@ public class TestResultResponse {
    * Timestamp of the SampleCollection (sc).
    */
   private Long sc;
+
+  /**
+   * LabId of the lab that executed the test.
+   */
+  @Setter
+  private String labId;
 
   /**
    * Default constructor with sc null.
