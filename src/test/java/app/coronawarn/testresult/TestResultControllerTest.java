@@ -150,6 +150,27 @@ public class TestResultControllerTest {
   }
 
   @Test
+  public void insertValidDobHashShouldReturnNoContentWithLabId() throws Exception {
+    // data
+    String id = "x" + "b".repeat(63);
+    String labId = "l".repeat(64);
+    Integer result = 1;
+    // create
+    TestResultList valid = new TestResultList()
+      .setLabId(labId)
+      .setTestResults(Collections.singletonList(
+        new TestResult().setId(id).setResult(result)
+      ));
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/lab/results")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isNoContent());
+  }
+
+  @Test
   public void insertValidAndGetShouldReturnOkWithoutLabId() throws Exception {
     // data
     String id = "c".repeat(64);
@@ -237,6 +258,25 @@ public class TestResultControllerTest {
   public void quickInsertValidWithCsShouldReturnNoContent() throws Exception {
     // data
     String id = "b".repeat(64);
+    Integer result = 5;
+    // create
+    QuickTestResultList valid = new QuickTestResultList();
+    valid.setTestResults(Collections.singletonList(
+      new QuickTestResult().setId(id).setResult(result).setSc(System.currentTimeMillis())
+    ));
+    mockMvc.perform(MockMvcRequestBuilders
+      .post("/api/v1/quicktest/results")
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isNoContent());
+  }
+
+  @Test
+  public void quickInsertValidWithDobHashAndWithCsShouldReturnNoContent() throws Exception {
+    // data
+    String id = "x" + "b".repeat(63);
     Integer result = 5;
     // create
     QuickTestResultList valid = new QuickTestResultList();

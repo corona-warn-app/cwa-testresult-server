@@ -50,7 +50,7 @@ public class QuickTestResult {
    * Hash (SHA256) of test result id (aka QR-Code, GUID) encoded as hex string.
    */
   @NotBlank
-  @Pattern(regexp = "^([A-Fa-f0-9]{2}){32}$")
+  @Pattern(regexp = "^[XxA-Fa-f0-9]([A-Fa-f0-9]{63})$")
   private String id;
 
   /**
