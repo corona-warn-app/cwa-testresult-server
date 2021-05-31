@@ -21,13 +21,11 @@
 
 package app.coronawarn.testresult;
 
-import app.coronawarn.testresult.model.QuickTestResult;
 import app.coronawarn.testresult.model.QuickTestResultList;
 import app.coronawarn.testresult.model.TestResult;
 import app.coronawarn.testresult.model.TestResultList;
 import app.coronawarn.testresult.model.TestResultRequest;
 import app.coronawarn.testresult.model.TestResultResponse;
-import app.coronawarn.testresult.service.HashingService;
 import app.coronawarn.testresult.service.TestResultService;
 import io.swagger.v3.oas.annotations.Operation;
 import javax.validation.Valid;
@@ -72,6 +70,7 @@ public class TestResultController {
 
     TestResult result = testResultService.getOrCreate(request.getId(), false, null);
     return ResponseEntity.ok(new TestResultResponse()
+      .setLabId(result.getLabId())
       .setTestResult(result.getResult(), result.getSc())
     );
   }
@@ -94,7 +93,11 @@ public class TestResultController {
     @RequestBody @NotNull @Valid TestResultList list
   ) {
     log.info("Received {} test results to insert or update from lab.", list.getTestResults().size());
-    list.getTestResults().forEach(testResultService::createOrUpdate);
+
+    list.getTestResults().stream()
+      .map(tr -> tr.setLabId(list.getLabId()))
+      .forEach(testResultService::createOrUpdate);
+
     return ResponseEntity.noContent().build();
   }
 
@@ -118,6 +121,7 @@ public class TestResultController {
     log.info("Received test result request from Quicktest.");
     TestResult result = testResultService.getOrCreate(request.getId(), true, request.getSc());
     return ResponseEntity.ok(new TestResultResponse()
+      .setLabId(result.getLabId())
       .setTestResult(result.getResult()));
   }
 
@@ -139,9 +143,11 @@ public class TestResultController {
     @RequestBody @NotNull @Valid QuickTestResultList list
   ) {
     log.info("Received {} test result to insert or update from Quicktests. ", list.getTestResults().size());
-    for (QuickTestResult result: list.getTestResults()) {
-      testResultService.createOrUpdate(testResultService.convertQuickTest(result));
-    }
+
+    list.getTestResults().stream()
+      .map(tr -> testResultService.convertQuickTest(tr, list.getLabId()))
+      .forEach(testResultService::createOrUpdate);
+
     return ResponseEntity.noContent().build();
   }
 }

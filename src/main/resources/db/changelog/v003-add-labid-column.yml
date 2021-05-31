@@ -1,0 +1,12 @@
+databaseChangeLog:
+- changeSet:
+    id: add-lab-id-column
+    author: f11h
+    changes:
+    - addColumn:
+        tableName: test_result
+        columns:
+          name: lab_id
+          type: varchar(64)
+          constraints:
+            nullable: true
