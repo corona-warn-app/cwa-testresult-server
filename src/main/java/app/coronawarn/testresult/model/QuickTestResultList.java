@@ -37,7 +37,7 @@ import lombok.experimental.Accessors;
  * Model of the test result list.
  */
 @Schema(
-  description = "The test result list model."
+  description = "The rapid antigen test result list model."
 )
 @Getter
 @Setter
@@ -51,11 +51,15 @@ public class QuickTestResultList {
    */
   @NotNull
   @NotEmpty
+  @Schema(description = "array of rapid antingen test results", required = true)
   private List<@Valid QuickTestResult> testResults;
 
   /**
    * The labId of the uploader.
    */
+  @Schema(description = "The id that identifies a lab. Every lab can choose its own labid, "
+    + "but it must be unique over all labs, should be generated once via cryptographic hash function",
+    required = true, maxLength = 64)
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private String labId;
 }

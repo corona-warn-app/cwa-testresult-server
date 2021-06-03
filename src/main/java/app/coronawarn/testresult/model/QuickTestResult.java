@@ -37,7 +37,7 @@ import lombok.experimental.Accessors;
  * Model of the test result.
  */
 @Schema(
-  description = "The test result model."
+  description = "The rapid antigen test result model."
 )
 @Getter
 @Setter
@@ -51,6 +51,7 @@ public class QuickTestResult {
    */
   @NotBlank
   @Pattern(regexp = "^[XxA-Fa-f0-9]([A-Fa-f0-9]{63})$")
+  @Schema(description = "the testId (Hashed GUID")
   private String id;
 
   /**
@@ -64,10 +65,13 @@ public class QuickTestResult {
   @Min(5)
   @Max(9)
   @NotNull
+  @Schema(description = "the result of the rapid antigen test", required = true)
   private Integer result;
 
   /**
    * Timestamp of the SampleCollection (sc).
    */
+  @Schema(description = "the timestamp of the sample collection (sc) in unix epoch format. If not set,"
+    + " the time of insertion will be used instead", required = false)
   private Long sc;
 }

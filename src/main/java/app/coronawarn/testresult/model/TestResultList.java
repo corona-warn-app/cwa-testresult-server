@@ -51,12 +51,16 @@ public class TestResultList {
    */
   @NotNull
   @NotEmpty
+  @Schema(description = "array of PCR test results", required = true)
   private List<@Valid TestResult> testResults;
 
   /**
    * The labId of the uploader.
    */
   @JsonInclude(JsonInclude.Include.NON_NULL)
+  @Schema(description = "The labid that identifys a lab. Every lab can choose its own labid, "
+    + "but it must be unique over all labs, should be generated once via cryptographic hash function",
+    required = true, maxLength = 64)
   private String labId;
 
 }

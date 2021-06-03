@@ -33,6 +33,7 @@ import lombok.ToString;
  */
 @Schema(
   description = "The test result request model."
+
 )
 @Getter
 @ToString
