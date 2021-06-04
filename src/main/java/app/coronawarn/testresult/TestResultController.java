@@ -75,7 +75,7 @@ public class TestResultController {
     produces = MediaType.APPLICATION_JSON_VALUE
   )
   public ResponseEntity<TestResultResponse> result(
-    @RequestBody @Valid TestResultRequest request
+    @org.springframework.web.bind.annotation.RequestBody @Valid TestResultRequest request
   ) {
     log.info("Received test result request from app.");
 
@@ -109,7 +109,7 @@ public class TestResultController {
     produces = MediaType.APPLICATION_JSON_VALUE
   )
   public ResponseEntity<?> results(
-    @RequestBody @NotNull @Valid TestResultList list
+    @org.springframework.web.bind.annotation.RequestBody @NotNull @Valid TestResultList list
   ) {
     log.info("Received {} test results to insert or update from lab.", list.getTestResults().size());
 
@@ -143,7 +143,7 @@ public class TestResultController {
     produces = MediaType.APPLICATION_JSON_VALUE
   )
   public ResponseEntity<TestResultResponse> quickTestResult(
-    @RequestBody @Valid TestResultRequest request
+    @org.springframework.web.bind.annotation.RequestBody @Valid TestResultRequest request
   ) {
     log.info("Received test result request from Quicktest.");
     TestResult result = testResultService.getOrCreate(request.getId(), true, request.getSc());
@@ -175,7 +175,7 @@ public class TestResultController {
     produces = MediaType.APPLICATION_JSON_VALUE
   )
   public ResponseEntity<?> quicktestResults(
-    @RequestBody @NotNull @Valid QuickTestResultList list
+    @org.springframework.web.bind.annotation.RequestBody @NotNull @Valid QuickTestResultList list
   ) {
     log.info("Received {} test result to insert or update from Quicktests. ", list.getTestResults().size());
 

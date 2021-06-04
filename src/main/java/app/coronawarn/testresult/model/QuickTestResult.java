@@ -72,6 +72,6 @@ public class QuickTestResult {
    * Timestamp of the SampleCollection (sc).
    */
   @Schema(description = "the timestamp of the sample collection (sc) in unix epoch format. If not set,"
-    + " the time of insertion will be used instead", required = false)
+    + " the time of insertion will be used instead")
   private Long sc;
 }

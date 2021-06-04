@@ -3,6 +3,7 @@ package app.coronawarn.testresult;
 import app.coronawarn.testresult.entity.TestResultEntity;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
@@ -59,8 +60,10 @@ public class TestResultCleanupTest {
     Optional<TestResultEntity> find = testResultRepository.findByResultId(resultId);
     Assert.assertTrue(find.isPresent());
     Assert.assertEquals(resultId, find.get().getResultId());
-    Assert.assertEquals(createdAt, find.get().getCreatedAt());
-    Assert.assertEquals(resultDate, find.get().getResultDate());
+    Assert.assertEquals(
+      createdAt.truncatedTo(ChronoUnit.MILLIS), find.get().getCreatedAt().truncatedTo(ChronoUnit.MILLIS));
+    Assert.assertEquals(
+      resultDate.truncatedTo(ChronoUnit.MILLIS), find.get().getResultDate().truncatedTo(ChronoUnit.MILLIS));
     // wait
     Single.fromCallable(() -> true).delay(2, TimeUnit.SECONDS).toBlocking().value();
     // find
@@ -93,8 +96,10 @@ public class TestResultCleanupTest {
     Optional<TestResultEntity> find = testResultRepository.findByResultId(resultId);
     Assert.assertTrue(find.isPresent());
     Assert.assertEquals(resultId, find.get().getResultId());
-    Assert.assertEquals(createdAt, find.get().getCreatedAt());
-    Assert.assertEquals(resultDate, find.get().getResultDate());
+    Assert.assertEquals(
+      createdAt.truncatedTo(ChronoUnit.MILLIS), find.get().getCreatedAt().truncatedTo(ChronoUnit.MILLIS));
+    Assert.assertEquals(
+      resultDate.truncatedTo(ChronoUnit.MILLIS), find.get().getResultDate().truncatedTo(ChronoUnit.MILLIS));
     // wait
     Single.fromCallable(() -> true).delay(2, TimeUnit.SECONDS).toBlocking().value();
     // find
