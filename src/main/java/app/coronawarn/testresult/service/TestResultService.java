@@ -53,7 +53,8 @@ public class TestResultService {
     return new TestResult()
       .setId(entity.getResultId())
       .setResult(entity.getResult())
-      .setSampleCollection(entity.getResultDate().atZone(ZoneId.of("UTC")).toEpochSecond());
+      .setSc(entity.getResultDate().atZone(ZoneId.of("UTC")).toEpochSecond())
+      .setLabId(entity.getLabId());
   }
 
   /**
@@ -65,12 +66,13 @@ public class TestResultService {
    */
   public TestResultEntity toEntity(TestResult model) {
     if (model.getSc() == null) {
-      model.setSampleCollection(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+      model.setSc(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
     }
     return new TestResultEntity()
       .setResult(model.getResult())
       .setResultId(model.getId())
-      .setResultDate(LocalDateTime.ofEpochSecond(model.getSc(), 0, ZoneOffset.UTC));
+      .setResultDate(LocalDateTime.ofEpochSecond(model.getSc(), 0, ZoneOffset.UTC))
+      .setLabId(model.getLabId());
   }
 
   /**
@@ -97,6 +99,7 @@ public class TestResultService {
         }
         entity.setResult(result.getResult())
           .setResultDate(sc);
+        entity.setLabId(result.getLabId());
         entity = testResultRepository.save(entity);
       }
       return toModel(entity);
@@ -147,9 +150,10 @@ public class TestResultService {
    * @param quickTestResult the Result to convert
    * @return the converted test result
    */
-  public TestResult convertQuickTest(QuickTestResult quickTestResult) {
+  public TestResult convertQuickTest(QuickTestResult quickTestResult, String labId) {
     TestResult testResult = new TestResult();
     testResult.setResult(quickTestResult.getResult());
+    testResult.setLabId(labId);
     testResult.setId(hashingService.sha256Hash(quickTestResult.getId()));
     testResult.setSampleCollection(quickTestResult.getSc());
     return testResult;

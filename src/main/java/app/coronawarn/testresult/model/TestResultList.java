@@ -21,6 +21,7 @@
 
 package app.coronawarn.testresult.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import javax.validation.Valid;
@@ -28,7 +29,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 /**
  * Model of the test result list.
@@ -37,8 +40,10 @@ import lombok.ToString;
   description = "The test result list model."
 )
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
+@Accessors(chain = true)
 public class TestResultList {
 
   /**
@@ -46,10 +51,16 @@ public class TestResultList {
    */
   @NotNull
   @NotEmpty
+  @Schema(description = "array of PCR test results", required = true)
   private List<@Valid TestResult> testResults;
 
-  public TestResultList setTestResults(List<TestResult> testResults) {
-    this.testResults = testResults;
-    return this;
-  }
+  /**
+   * The labId of the uploader.
+   */
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  @Schema(description = "The labid that identifys a lab. Every lab can choose its own labid, "
+    + "but it must be unique over all labs, should be generated once via cryptographic hash function",
+    required = true, maxLength = 64)
+  private String labId;
+
 }

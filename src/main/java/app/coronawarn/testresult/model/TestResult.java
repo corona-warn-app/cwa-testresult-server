@@ -21,6 +21,7 @@
 
 package app.coronawarn.testresult.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -29,8 +30,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
+import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 /**
  * Model of the test result.
@@ -39,15 +41,17 @@ import lombok.ToString;
   description = "The test result model."
 )
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
+@Accessors(chain = true)
 public class TestResult {
 
   /**
    * Hash (SHA256) of test result id (aka QR-Code, GUID) encoded as hex string.
    */
   @NotBlank
-  @Pattern(regexp = "^([A-Fa-f0-9]{2}){32}$")
+  @Pattern(regexp = "^[XxA-Fa-f0-9]([A-Fa-f0-9]{63})$")
   private String id;
 
   /**
@@ -65,25 +69,20 @@ public class TestResult {
   @Min(1)
   @Max(3)
   @NotNull
+  @Schema(description = "the result of the PCR test", required = true)
   private Integer result;
 
   /**
    * Timestamp of the SampleCollection (sc).
    */
+  @Schema(description = "time of sample collection (sc) in unix epoch format. "
+     + "If not set time of insert will be used instead", required = false, 
+    defaultValue = "Current time")
   private Long sc;
 
-  public TestResult setId(String id) {
-    this.id = id;
-    return this;
-  }
-
-  public TestResult setResult(Integer result) {
-    this.result = result;
-    return this;
-  }
-
-  public TestResult setSampleCollection(Long sc) {
-    this.sc = sc;
-    return this;
-  }
+  @JsonIgnore
+  @Schema(description = "The id that identifies a lab. Every lab can choose its own labid, "
+    + "but it must be unique over all labs, should be generated once via cryptographic hash function",
+    required = true, maxLength = 64)
+  private String labId;
 }
