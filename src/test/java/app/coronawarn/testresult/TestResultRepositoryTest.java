@@ -23,6 +23,7 @@ package app.coronawarn.testresult;
 
 import app.coronawarn.testresult.entity.TestResultEntity;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Before;
@@ -65,7 +66,8 @@ public class TestResultRepositoryTest {
     Assert.assertTrue(find.isPresent());
     Assert.assertEquals(result, find.get().getResult());
     Assert.assertEquals(resultId, find.get().getResultId());
-    Assert.assertEquals(resultDate, find.get().getResultDate());
+    Assert.assertEquals(
+      resultDate.truncatedTo(ChronoUnit.MILLIS), find.get().getResultDate().truncatedTo(ChronoUnit.MILLIS));
     Assert.assertNotNull(find.get().getCreatedAt());
     Assert.assertNotNull(find.get().getUpdatedAt());
     Assert.assertNotNull(find.get().getVersion());

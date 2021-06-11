@@ -69,13 +69,20 @@ public class TestResult {
   @Min(1)
   @Max(3)
   @NotNull
+  @Schema(description = "the result of the PCR test", required = true)
   private Integer result;
 
   /**
    * Timestamp of the SampleCollection (sc).
    */
+  @Schema(description = "time of sample collection (sc) in unix epoch format. "
+     + "If not set time of insert will be used instead", required = false, 
+    defaultValue = "Current time")
   private Long sc;
 
   @JsonIgnore
+  @Schema(description = "The id that identifies a lab. Every lab can choose its own labid, "
+    + "but it must be unique over all labs, should be generated once via cryptographic hash function",
+    required = true, maxLength = 64)
   private String labId;
 }
