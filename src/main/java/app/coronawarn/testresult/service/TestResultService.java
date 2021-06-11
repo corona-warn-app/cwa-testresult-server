@@ -155,6 +155,7 @@ public class TestResultService {
     testResult.setResult(quickTestResult.getResult());
     testResult.setLabId(labId);
     testResult.setId(hashingService.sha256Hash(quickTestResult.getId()));
+    testResult.setSc(quickTestResult.getSc());
     return testResult;
   }
 
