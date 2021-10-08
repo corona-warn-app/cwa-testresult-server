@@ -66,6 +66,7 @@ public class TestResultService {
    */
   public TestResultEntity toEntity(TestResult model) {
     if (model.getSc() == null) {
+      log.info("Set Sc during concertion to Entity for Lab {}", model.getLabId());
       model.setSc(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
     }
     return new TestResultEntity()
@@ -95,6 +96,7 @@ public class TestResultService {
         log.info("Updating test result in database.");
         LocalDateTime sc = LocalDateTime.now();
         if (result.getSc() != null) {
+          log.warn("Set Sc for Lab {}",result.getLabId());
           sc = LocalDateTime.ofEpochSecond(result.getSc(),0, ZoneOffset.UTC);
         }
         entity.setResult(result.getResult())
@@ -130,6 +132,7 @@ public class TestResultService {
             resultEntity.setResultId(id);
           }
           if (sc == null) {
+            log.info("Set Sc during get or create");
             resultEntity.setResultDate(LocalDateTime.now());
           } else  {
             resultEntity.setResultDate(LocalDateTime.ofEpochSecond(sc, 0, ZoneOffset.UTC));
