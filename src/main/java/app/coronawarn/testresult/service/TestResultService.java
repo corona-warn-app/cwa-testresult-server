@@ -96,7 +96,7 @@ public class TestResultService {
         log.info("Updating test result in database.");
         LocalDateTime sc = LocalDateTime.now();
         if (result.getSc() != null) {
-          log.warn("Set Sc for Lab {}",result.getLabId());
+          log.warn("Set Sc for Lab {}", result.getLabId());
           sc = LocalDateTime.ofEpochSecond(result.getSc(),0, ZoneOffset.UTC);
         }
         entity.setResult(result.getResult())
