@@ -66,7 +66,7 @@ public class TestResultService {
    */
   public TestResultEntity toEntity(TestResult model) {
     if (model.getSc() == null) {
-      log.info("Set Sc during concertion to Entity for Lab {}", model.getLabId());
+      log.info("Set Sc during conversion to Entity for Lab {}", model.getLabId());
       model.setSc(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
     }
     return new TestResultEntity()
