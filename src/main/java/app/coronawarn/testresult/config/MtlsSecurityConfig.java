@@ -27,6 +27,7 @@ import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -78,7 +79,9 @@ public class MtlsSecurityConfig extends WebSecurityConfigurerAdapter {
   public UserDetailsService userDetailsService() {
     return hash -> {
 
-      boolean allowed = testResultConfig.getAllowedClientCertificates().stream()
+      boolean allowed = Stream.of(testResultConfig.getAllowedClientCertificates()
+        .split(","))
+        .map(String::trim)
         .anyMatch(entry -> entry.equalsIgnoreCase(hash));
 
       if (allowed) {
