@@ -52,3 +52,4 @@ testresult:
     delete:
       days: 60
       rate: 3600000
+  allowed-client-certificates: [ ]

@@ -1,5 +1,6 @@
 package app.coronawarn.testresult.config;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "testresult")
 public class TestResultConfig {
+
+  private List<String> allowedClientCertificates;
 
   private Cleanup cleanup;
 
