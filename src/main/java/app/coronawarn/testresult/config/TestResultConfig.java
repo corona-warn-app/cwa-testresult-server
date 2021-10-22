@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "testresult")
 public class TestResultConfig {
 
+  private String allowedClientCertificates;
+
   private Cleanup cleanup;
 
   @Getter

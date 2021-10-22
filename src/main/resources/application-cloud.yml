@@ -11,3 +11,5 @@ server:
     enabled: true
     key-store-password: ${SSL_TESTRESULT_KEYSTORE_PASSWORD}
     trust-store-password: ${SSL_TESTRESULT_TRUSTSTORE_PASSWORD}
+testresult:
+  allowed-client-certificates: ${TESTRESULT_ALLOWEDCLIENTCERTIFICATES}

@@ -21,35 +21,20 @@
 
 package app.coronawarn.testresult.config;
 
-import java.util.Arrays;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.firewall.HttpFirewall;
-import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-  @Bean
-  protected HttpFirewall strictFirewall() {
-    StrictHttpFirewall firewall = new StrictHttpFirewall();
-    firewall.setAllowedHttpMethods(Arrays.asList(
-      HttpMethod.GET.name(),
-      HttpMethod.POST.name()
-    ));
-    return firewall;
-  }
+@ConditionalOnProperty(name = "server.ssl.client-auth", havingValue = "none", matchIfMissing = true)
+public class LocalSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests()
-      .mvcMatchers("/api/**").permitAll()
-      .mvcMatchers("/actuator/**").permitAll()
-      .anyRequest().denyAll()
+    http
+      .authorizeRequests()
+      .anyRequest().permitAll()
       .and().csrf().disable();
   }
-
 }
