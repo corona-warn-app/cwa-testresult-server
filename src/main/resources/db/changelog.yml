@@ -11,3 +11,6 @@ databaseChangeLog:
 - include:
     file: changelog/v003-add-labid-column.yml
     relativeToChangelogFile: true
+- include:
+    file: changelog/v004-add-shedlock.yml
+    relativeToChangelogFile: true

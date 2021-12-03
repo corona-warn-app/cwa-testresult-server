@@ -28,7 +28,7 @@ public class TestResultConfig {
   @Setter
   public static class Scheduled {
 
-    private Integer days;
+    private int days;
 
   }
 

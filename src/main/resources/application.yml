@@ -48,8 +48,10 @@ testresult:
   cleanup:
     redeem:
       days: 21
-      rate: 3600000
+      cron: 0 1 * * * *
+      locklimit: 600
     delete:
       days: 60
-      rate: 3600000
+      cron: 0 0 * * * *
+      locklimit: 600
   allowed-client-certificates:
