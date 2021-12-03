@@ -7,6 +7,7 @@ import java.time.Period;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +23,10 @@ public class TestResultCleanup {
    * All test results that are older than configured days should be marked as redeemed.
    */
   @Scheduled(
-    fixedDelayString = "${testresult.cleanup.redeem.rate}"
+    cron = "${testresult.cleanup.redeem.cron}"
   )
+  @SchedulerLock(name = "TestresultCleanupService_redeem", lockAtLeastFor = "PT0S",
+    lockAtMostFor = "${testresult.cleanup.redeem.locklimit}")
   @Transactional
   public void redeem() {
     Integer redeemed = testResultRepository.updateResultByCreatedAtBefore(
@@ -36,8 +39,10 @@ public class TestResultCleanup {
    * All test results that are older than configured days should get deleted.
    */
   @Scheduled(
-    fixedDelayString = "${testresult.cleanup.delete.rate}"
+    cron = "${testresult.cleanup.delete.cron}"
   )
+  @SchedulerLock(name = "TestresultCleanupService_delete", lockAtLeastFor = "PT0S",
+    lockAtMostFor = "${testresult.cleanup.delete.locklimit}")
   @Transactional
   public void delete() {
     Integer deleted = testResultRepository.deleteByCreatedAtBefore(

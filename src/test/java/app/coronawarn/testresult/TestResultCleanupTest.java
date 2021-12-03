@@ -20,9 +20,9 @@ import rx.Single;
 @SpringBootTest(
   properties = {
     "testresult.cleanup.redeem.days=21",
-    "testresult.cleanup.redeem.rate=1000",
+    "testresult.cleanup.redeem.cron=* * * * * *",
     "testresult.cleanup.delete.days=60",
-    "testresult.cleanup.delete.rate=1000"
+    "testresult.cleanup.delete.cron=* * * * * *"
   }
 )
 @ContextConfiguration(classes = TestResultApplication.class)
