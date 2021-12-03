@@ -78,7 +78,6 @@ public class MtlsSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   public UserDetailsService userDetailsService() {
     return hash -> {
-
       boolean allowed = Stream.of(testResultConfig.getAllowedClientCertificates()
         .split(","))
         .map(String::trim)
@@ -103,8 +102,11 @@ public class MtlsSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public Object extractPrincipal(X509Certificate x509Certificate) {
+
       try {
-        return String.valueOf(Hex.encode(messageDigest.digest(x509Certificate.getEncoded())));
+        String ret = String.valueOf(Hex.encode(messageDigest.digest(x509Certificate.getEncoded())));
+        log.debug("Accessed by Subject {} Hash {}",x509Certificate.getSubjectDN().getName(), ret);
+        return ret;
       } catch (CertificateEncodingException e) {
         log.error("Failed to extract bytes from certificate");
         return null;
