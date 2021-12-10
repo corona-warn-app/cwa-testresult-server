@@ -32,6 +32,7 @@ import java.time.ZoneOffset;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +42,6 @@ import org.springframework.stereotype.Service;
 public class TestResultService {
 
   private final TestResultRepository testResultRepository;
-  private final HashingService hashingService;
 
   /**
    * Map the entity of a test result to a test result model.
@@ -126,7 +126,7 @@ public class TestResultService {
           TestResultEntity resultEntity = new TestResultEntity();
           if (quicktest) {
             resultEntity.setResult(TestResultEntity.Result.QUICK_PENDING.ordinal());
-            resultEntity.setResultId(hashingService.sha256Hash(id));
+            resultEntity.setResultId(DigestUtils.sha256Hex(id));
           } else {
             resultEntity.setResult(TestResultEntity.Result.PENDING.ordinal());
             resultEntity.setResultId(id);
@@ -157,7 +157,7 @@ public class TestResultService {
     TestResult testResult = new TestResult();
     testResult.setResult(quickTestResult.getResult());
     testResult.setLabId(labId);
-    testResult.setId(hashingService.sha256Hash(quickTestResult.getId()));
+    testResult.setId(DigestUtils.sha256Hex(quickTestResult.getId()));
     testResult.setSc(quickTestResult.getSc());
     return testResult;
   }
