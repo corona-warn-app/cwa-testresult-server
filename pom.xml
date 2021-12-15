@@ -31,7 +31,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- dependencies -->
-    <spring.boot.version>2.5.4</spring.boot.version>
+    <spring.boot.version>2.5.7</spring.boot.version>
     <spring.cloud.version>2020.0.4</spring.cloud.version>
     <lombok.version>1.18.12</lombok.version>
     <liquibase.version>3.9.0</liquibase.version>
