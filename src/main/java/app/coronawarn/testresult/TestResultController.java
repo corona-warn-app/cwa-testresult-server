@@ -21,7 +21,13 @@
 
 package app.coronawarn.testresult;
 
-import app.coronawarn.testresult.model.*;
+import app.coronawarn.testresult.model.PocNatResultList;
+import app.coronawarn.testresult.model.QuickTestResultList;
+import app.coronawarn.testresult.model.TestResult;
+import app.coronawarn.testresult.model.TestResultList;
+import app.coronawarn.testresult.model.TestResultRequest;
+import app.coronawarn.testresult.model.TestResultResponse;
+import app.coronawarn.testresult.model.TestType;
 import app.coronawarn.testresult.service.TestResultService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -237,12 +243,12 @@ public class TestResultController {
     produces = MediaType.APPLICATION_JSON_VALUE
   )
   public ResponseEntity<?> pocnatResults(
-    @org.springframework.web.bind.annotation.RequestBody @NotNull @Valid PoCNATResultList list
+    @org.springframework.web.bind.annotation.RequestBody @NotNull @Valid PocNatResultList list
   ) {
     log.info("Received {} test result to insert or update from PoC-NATs. ", list.getTestResults().size());
 
     list.getTestResults().stream()
-      .map(tr -> testResultService.convertPoCNAT(tr, list.getLabId()))
+      .map(tr -> testResultService.convertPocNat(tr, list.getLabId()))
       .forEach(testResultService::createOrUpdate);
 
     return ResponseEntity.noContent().build();

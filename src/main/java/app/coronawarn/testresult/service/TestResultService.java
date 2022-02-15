@@ -24,16 +24,14 @@ package app.coronawarn.testresult.service;
 import app.coronawarn.testresult.TestResultRepository;
 import app.coronawarn.testresult.entity.TestResultEntity;
 import app.coronawarn.testresult.exception.TestResultException;
-import app.coronawarn.testresult.model.PoCNATResult;
+import app.coronawarn.testresult.model.PocNatResult;
 import app.coronawarn.testresult.model.QuickTestResult;
 import app.coronawarn.testresult.model.TestResult;
-
+import app.coronawarn.testresult.model.TestType;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Optional;
-
-import app.coronawarn.testresult.model.TestType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -175,7 +173,7 @@ public class TestResultService {
    * @param pocnatResult the Result to convert
    * @return the converted test result
    */
-  public TestResult convertPoCNAT(PoCNATResult pocnatResult, String labId) {
+  public TestResult convertPocNat(PocNatResult pocnatResult, String labId) {
     TestResult testResult = new TestResult();
     testResult.setResult(pocnatResult.getResult());
     testResult.setLabId(labId);
@@ -185,7 +183,7 @@ public class TestResultService {
   }
 
   /**
-   * Checks and converts PoC-NAT results to PCR results for REST reponse
+   * Checks and converts PoC-NAT results to PCR results for REST reponse.
    *
    * @param result the Result to check and possibly convert
    * @return either the original result or the converted result

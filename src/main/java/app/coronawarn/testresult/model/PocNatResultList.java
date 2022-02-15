@@ -23,16 +23,17 @@ package app.coronawarn.testresult.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.List;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.List;
+
 
 /**
  * Model of the test result list.
@@ -45,7 +46,7 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 @Accessors(chain = true)
-public class PoCNATResultList {
+public class PocNatResultList {
 
   /**
    * The test result entries.
@@ -53,7 +54,7 @@ public class PoCNATResultList {
   @NotNull
   @NotEmpty
   @Schema(description = "array of PoC-NAT results", required = true)
-  private List<@Valid PoCNATResult> testResults;
+  private List<@Valid PocNatResult> testResults;
 
   /**
    * The labId of the uploader.

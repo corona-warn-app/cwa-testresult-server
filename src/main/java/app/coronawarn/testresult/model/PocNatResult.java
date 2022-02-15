@@ -22,13 +22,16 @@
 package app.coronawarn.testresult.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-
-import javax.validation.constraints.*;
 
 /**
  * Model of the test result.
@@ -41,7 +44,7 @@ import javax.validation.constraints.*;
 @ToString
 @EqualsAndHashCode
 @Accessors(chain = true)
-public class PoCNATResult {
+public class PocNatResult {
 
   /**
    * Hash (SHA256) of test result id (aka QR-Code, GUID) encoded as hex string.
