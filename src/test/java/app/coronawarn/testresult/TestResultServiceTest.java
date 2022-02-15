@@ -171,4 +171,27 @@ public class TestResultServiceTest {
     Assert.assertNotNull(update);
     Assert.assertNotEquals(resultUpdate, update.getResult());
   }
+
+  @Test
+  public void conversionCheckIsPocNat() {
+    Assert.assertEquals(TestResultEntity.Result.PENDING.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POCNAT_PENDING.ordinal()));
+    Assert.assertEquals(TestResultEntity.Result.REDEEMED.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POCNAT_REDEEMED.ordinal()));
+    Assert.assertEquals(TestResultEntity.Result.INVALID.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POCNAT_INVALID.ordinal()));
+    Assert.assertEquals(TestResultEntity.Result.NEGATIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POCNAT_NEGATIVE.ordinal()));
+    Assert.assertEquals(TestResultEntity.Result.POSITIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POCNAT_POSITIVE.ordinal()));
+  }
+
+  @Test
+  public void conversionCheckNotPocNat() {
+    Assert.assertEquals(TestResultEntity.Result.PENDING.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.PENDING.ordinal()));
+    Assert.assertEquals(TestResultEntity.Result.REDEEMED.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.REDEEMED.ordinal()));
+    Assert.assertEquals(TestResultEntity.Result.INVALID.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.INVALID.ordinal()));
+    Assert.assertEquals(TestResultEntity.Result.NEGATIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.NEGATIVE.ordinal()));
+    Assert.assertEquals(TestResultEntity.Result.POSITIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POSITIVE.ordinal()));
+    Assert.assertEquals(TestResultEntity.Result.QUICK_PENDING.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_PENDING.ordinal()));
+    Assert.assertEquals(TestResultEntity.Result.QUICK_REDEEMED.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_REDEEMED.ordinal()));
+    Assert.assertEquals(TestResultEntity.Result.QUICK_INVALID.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_INVALID.ordinal()));
+    Assert.assertEquals(TestResultEntity.Result.QUICK_NEGATIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_NEGATIVE.ordinal()));
+    Assert.assertEquals(TestResultEntity.Result.QUICK_POSITIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_POSITIVE.ordinal()));
+  }
 }
