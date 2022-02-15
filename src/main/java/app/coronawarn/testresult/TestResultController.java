@@ -21,11 +21,7 @@
 
 package app.coronawarn.testresult;
 
-import app.coronawarn.testresult.model.QuickTestResultList;
-import app.coronawarn.testresult.model.TestResult;
-import app.coronawarn.testresult.model.TestResultList;
-import app.coronawarn.testresult.model.TestResultRequest;
-import app.coronawarn.testresult.model.TestResultResponse;
+import app.coronawarn.testresult.model.*;
 import app.coronawarn.testresult.service.TestResultService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -79,10 +75,10 @@ public class TestResultController {
   ) {
     log.info("Received test result request from app.");
 
-    TestResult result = testResultService.getOrCreate(request.getId(), false, null);
+    TestResult result = testResultService.getOrCreate(request.getId(), TestType.PCR, null);
     return ResponseEntity.ok(new TestResultResponse()
       .setLabId(result.getLabId())
-      .setTestResult(result.getResult(), result.getSc())
+      .setTestResult(testResultService.conversionCheck(result.getResult()), result.getSc())
     );
   }
 
@@ -146,7 +142,7 @@ public class TestResultController {
     @org.springframework.web.bind.annotation.RequestBody @Valid TestResultRequest request
   ) {
     log.info("Received test result request from Quicktest.");
-    TestResult result = testResultService.getOrCreate(request.getId(), true, request.getSc());
+    TestResult result = testResultService.getOrCreate(request.getId(), TestType.QUICKTEST, request.getSc());
     return ResponseEntity.ok(new TestResultResponse()
       .setLabId(result.getLabId())
       .setTestResult(result.getResult()));
@@ -181,6 +177,72 @@ public class TestResultController {
 
     list.getTestResults().stream()
       .map(tr -> testResultService.convertQuickTest(tr, list.getLabId()))
+      .forEach(testResultService::createOrUpdate);
+
+    return ResponseEntity.noContent().build();
+  }
+
+  /**
+   * Get the test result response from a request containing the id.
+   *
+   * @param request the test result request with id
+   * @return the test result response
+   */
+  @Operation(
+    description = "The result and the sc (sample collection) timestamp of a PoC-NAT can be set.",
+    summary = "Set the testresult for a PoC-NAT.",
+    requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = TestResultRequest.class))),
+    responses = {
+      @ApiResponse(
+        responseCode = "200",
+        description = "Ok, PoC-NAT result inserted successfully."
+      )
+    }
+  )
+  @PostMapping(
+    value = "/api/v1/pocnat/result",
+    consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  public ResponseEntity<TestResultResponse> pocnatResult(
+    @org.springframework.web.bind.annotation.RequestBody @Valid TestResultRequest request
+  ) {
+    log.info("Received test result request from PoC-NAT.");
+    TestResult result = testResultService.getOrCreate(request.getId(), TestType.POCNAT, request.getSc());
+    return ResponseEntity.ok(new TestResultResponse()
+      .setLabId(result.getLabId())
+      .setTestResult(result.getResult()));
+  }
+
+  /**
+   * Insert or update the PoC-NAT.
+   *
+   * @param list the test result list request
+   * @return the response
+   */
+  @Operation(
+    description = "The result and the sc (sample collection) timestamp of a PoC-NAT can be set.",
+    summary = "Set multiple testresults for a PoC-NAT as an array.",
+    requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = TestResultRequest.class))),
+    responses = {
+      @ApiResponse(
+        responseCode = "204",
+        description = "No content, PoC-NAT result(s) inserted successfully."
+      )
+    }
+  )
+  @PostMapping(
+    value = "/api/v1/pocnat/results",
+    consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  public ResponseEntity<?> pocnatResults(
+    @org.springframework.web.bind.annotation.RequestBody @NotNull @Valid PoCNATResultList list
+  ) {
+    log.info("Received {} test result to insert or update from PoC-NATs. ", list.getTestResults().size());
+
+    list.getTestResults().stream()
+      .map(tr -> testResultService.convertPoCNAT(tr, list.getLabId()))
       .forEach(testResultService::createOrUpdate);
 
     return ResponseEntity.noContent().build();

@@ -23,6 +23,7 @@ package app.coronawarn.testresult;
 
 import app.coronawarn.testresult.entity.TestResultEntity;
 import app.coronawarn.testresult.model.TestResult;
+import app.coronawarn.testresult.model.TestType;
 import app.coronawarn.testresult.service.TestResultService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -90,7 +91,7 @@ public class TestResultServiceTest {
     Assert.assertEquals(result, create.getResult());
     Assert.assertEquals(labId, create.getLabId());
     // get
-    TestResult get = testResultService.getOrCreate(id, false, 0L);
+    TestResult get = testResultService.getOrCreate(id, TestType.PCR, 0L);
     Assert.assertNotNull(get);
     Assert.assertEquals(result, get.getResult());
     Assert.assertEquals(labId, get.getLabId());
@@ -113,7 +114,7 @@ public class TestResultServiceTest {
     Assert.assertEquals(resultCreate, create.getResult());
     Assert.assertEquals(labId, create.getLabId());
     // get
-    TestResult get = testResultService.getOrCreate(id, false, 0L);
+    TestResult get = testResultService.getOrCreate(id, TestType.PCR, 0L);
     Assert.assertNotNull(get);
     Assert.assertEquals(resultCreate, get.getResult());
     Assert.assertEquals(labId, get.getLabId());
@@ -127,7 +128,7 @@ public class TestResultServiceTest {
     Assert.assertEquals(resultUpdate, update.getResult());
     Assert.assertEquals(labId, update.getLabId());
     // get
-    get = testResultService.getOrCreate(id, false, 0L);
+    get = testResultService.getOrCreate(id, TestType.PCR, 0L);
     Assert.assertNotNull(get);
     Assert.assertEquals(resultUpdate, get.getResult());
     Assert.assertEquals(labId, get.getLabId());
@@ -139,7 +140,7 @@ public class TestResultServiceTest {
     String id = "a".repeat(64);
     Integer result = 0;
     // get
-    TestResult get = testResultService.getOrCreate(id, false, 0L);
+    TestResult get = testResultService.getOrCreate(id, TestType.PCR, 0L);
     Assert.assertNotNull(get);
     Assert.assertEquals(result, get.getResult());
     Assert.assertNull(get.getLabId());
