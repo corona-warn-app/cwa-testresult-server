@@ -110,7 +110,7 @@ public class TestResultController {
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public ResponseEntity<?> results(
+  public ResponseEntity<Object> results(
     @org.springframework.web.bind.annotation.RequestBody @NotNull @Valid TestResultList list
   ) {
     log.info("Received {} test results to insert or update from lab.", list.getTestResults().size());
@@ -176,7 +176,7 @@ public class TestResultController {
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public ResponseEntity<?> quicktestResults(
+  public ResponseEntity<Object> quicktestResults(
     @org.springframework.web.bind.annotation.RequestBody @NotNull @Valid QuickTestResultList list
   ) {
     log.info("Received {} test result to insert or update from Quicktests. ", list.getTestResults().size());
@@ -242,7 +242,7 @@ public class TestResultController {
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public ResponseEntity<?> pocnatResults(
+  public ResponseEntity<Object> pocnatResults(
     @org.springframework.web.bind.annotation.RequestBody @NotNull @Valid PocNatResultList list
   ) {
     log.info("Received {} test result to insert or update from PoC-NATs. ", list.getTestResults().size());
