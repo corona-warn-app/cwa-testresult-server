@@ -340,6 +340,20 @@ public class TestResultControllerTest {
       .getResponse()
       .getContentAsString()
       .contains("cs");
+
+    request = new TestResultRequest()
+      .setId(id);
+    mockMvc.perform(MockMvcRequestBuilders
+        .post("/api/v1/quicktest/result")
+        .accept(MediaType.APPLICATION_JSON_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .content(objectMapper.writeValueAsString(request)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isOk())
+      .andReturn()
+      .getResponse()
+      .getContentAsString()
+      .contains("cs");
   }
 
   @Test
@@ -461,6 +475,20 @@ public class TestResultControllerTest {
       .setId(id);
     mockMvc.perform(MockMvcRequestBuilders
         .post("/api/v1/app/result")
+        .accept(MediaType.APPLICATION_JSON_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .content(objectMapper.writeValueAsString(request)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isOk())
+      .andReturn()
+      .getResponse()
+      .getContentAsString()
+      .contains("cs");
+
+    request = new TestResultRequest()
+      .setId(id);
+    mockMvc.perform(MockMvcRequestBuilders
+        .post("/api/v1/pocnat/result")
         .accept(MediaType.APPLICATION_JSON_VALUE)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .content(objectMapper.writeValueAsString(request)))

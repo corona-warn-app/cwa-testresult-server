@@ -22,6 +22,8 @@
 package app.coronawarn.testresult;
 
 import app.coronawarn.testresult.entity.TestResultEntity;
+import app.coronawarn.testresult.model.PocNatResult;
+import app.coronawarn.testresult.model.QuickTestResult;
 import app.coronawarn.testresult.model.TestResult;
 import app.coronawarn.testresult.model.TestType;
 import app.coronawarn.testresult.service.TestResultService;
@@ -34,6 +36,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.time.Instant;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -122,7 +126,8 @@ public class TestResultServiceTest {
     TestResult update = new TestResult()
       .setId(id)
       .setResult(resultUpdate)
-      .setLabId(labId);
+      .setLabId(labId)
+      .setSc(Instant.now().getEpochSecond());
     update = testResultService.createOrUpdate(update);
     Assert.assertNotNull(update);
     Assert.assertEquals(resultUpdate, update.getResult());
@@ -141,6 +146,20 @@ public class TestResultServiceTest {
     Integer result = 0;
     // get
     TestResult get = testResultService.getOrCreate(id, TestType.PCR, 0L);
+    Assert.assertNotNull(get);
+    Assert.assertEquals(result, get.getResult());
+    Assert.assertNull(get.getLabId());
+
+    id = "b".repeat(64);
+    result = 5;
+    get = testResultService.getOrCreate(id, TestType.QUICKTEST, null);
+    Assert.assertNotNull(get);
+    Assert.assertEquals(result, get.getResult());
+    Assert.assertNull(get.getLabId());
+
+    id = "c".repeat(64);
+    result = 10;
+    get = testResultService.getOrCreate(id, TestType.POCNAT, 0L);
     Assert.assertNotNull(get);
     Assert.assertEquals(result, get.getResult());
     Assert.assertNull(get.getLabId());
@@ -193,5 +212,33 @@ public class TestResultServiceTest {
     Assert.assertEquals(TestResultEntity.Result.QUICK_INVALID.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_INVALID.ordinal()));
     Assert.assertEquals(TestResultEntity.Result.QUICK_NEGATIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_NEGATIVE.ordinal()));
     Assert.assertEquals(TestResultEntity.Result.QUICK_POSITIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_POSITIVE.ordinal()));
+  }
+
+  @Test
+  public void convertQuickTest() {
+    String id = "b".repeat(64);
+    QuickTestResult quicktest = new QuickTestResult();
+    quicktest.setResult(5);
+    quicktest.setId(id);
+    quicktest.setSc(Instant.now().getEpochSecond());
+    TestResult result = testResultService.convertQuickTest(quicktest,"TestId");
+
+    Assert.assertEquals(quicktest.getResult(), result.getResult());
+    Assert.assertEquals(quicktest.getSc(), result.getSc());
+    Assert.assertNotEquals(quicktest.getId(), result.getId());
+  }
+
+  @Test
+  public void convertPocNat() {
+    String id = "b".repeat(64);
+    PocNatResult pocnat = new PocNatResult();
+    pocnat.setResult(5);
+    pocnat.setId(id);
+    pocnat.setSc(Instant.now().getEpochSecond());
+    TestResult result = testResultService.convertPocNat(pocnat,"TestId");
+
+    Assert.assertEquals(pocnat.getResult(), result.getResult());
+    Assert.assertEquals(pocnat.getSc(), result.getSc());
+    Assert.assertNotEquals(pocnat.getId(), result.getId());
   }
 }
