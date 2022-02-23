@@ -41,13 +41,13 @@ public class TestResultExceptionHandler {
     MethodArgumentNotValidException.class,
     ConstraintViolationException.class
   })
-  public ResponseEntity<?> handleValidationExceptions() {
+  public ResponseEntity<Object> handleValidationExceptions() {
     log.warn("Request contains invalid arguments or constraint violations in body.");
     return ResponseEntity.badRequest().build();
   }
 
   @ExceptionHandler(TestResultException.class)
-  public ResponseEntity<?> handleTestResultExceptions(
+  public ResponseEntity<Object> handleTestResultExceptions(
     TestResultException exception
   ) {
     log.warn("Request produced a test result exception with status {}.", exception.getStatus());

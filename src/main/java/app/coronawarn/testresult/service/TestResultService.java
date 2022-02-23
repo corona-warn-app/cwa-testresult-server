@@ -24,8 +24,10 @@ package app.coronawarn.testresult.service;
 import app.coronawarn.testresult.TestResultRepository;
 import app.coronawarn.testresult.entity.TestResultEntity;
 import app.coronawarn.testresult.exception.TestResultException;
+import app.coronawarn.testresult.model.PocNatResult;
 import app.coronawarn.testresult.model.QuickTestResult;
 import app.coronawarn.testresult.model.TestResult;
+import app.coronawarn.testresult.model.TestType;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -97,7 +99,7 @@ public class TestResultService {
         LocalDateTime sc = LocalDateTime.now();
         if (result.getSc() != null) {
           log.warn("Set Sc for Lab {}", result.getLabId());
-          sc = LocalDateTime.ofEpochSecond(result.getSc(),0, ZoneOffset.UTC);
+          sc = LocalDateTime.ofEpochSecond(result.getSc(), 0, ZoneOffset.UTC);
         }
         entity.setResult(result.getResult())
           .setResultDate(sc);
@@ -118,15 +120,18 @@ public class TestResultService {
    * @param id the test result id
    * @return the test result
    */
-  public TestResult getOrCreate(final String id, boolean quicktest, Long sc) {
+  public TestResult getOrCreate(final String id, TestType testtype, Long sc) {
     try {
       TestResultEntity entity = testResultRepository.findByResultId(id)
         .orElseGet(() -> {
           log.info("Get failed now creating test result in database.");
           TestResultEntity resultEntity = new TestResultEntity();
-          if (quicktest) {
+          if (testtype == TestType.QUICKTEST) {
             resultEntity.setResult(TestResultEntity.Result.QUICK_PENDING.ordinal());
             resultEntity.setResultId(DigestUtils.sha256Hex(id));
+          } else if (testtype == TestType.POCNAT) {
+            resultEntity.setResult(TestResultEntity.Result.POCNAT_PENDING.ordinal());
+            resultEntity.setResultId(id);
           } else {
             resultEntity.setResult(TestResultEntity.Result.PENDING.ordinal());
             resultEntity.setResultId(id);
@@ -134,7 +139,7 @@ public class TestResultService {
           if (sc == null) {
             log.info("Set Sc during get or create");
             resultEntity.setResultDate(LocalDateTime.now());
-          } else  {
+          } else {
             resultEntity.setResultDate(LocalDateTime.ofEpochSecond(sc, 0, ZoneOffset.UTC));
           }
           return testResultRepository.save(resultEntity);
@@ -162,4 +167,31 @@ public class TestResultService {
     return testResult;
   }
 
+  /**
+   * Converting a PoCNATResult to Testresult for saving.
+   *
+   * @param pocnatResult the Result to convert
+   * @return the converted test result
+   */
+  public TestResult convertPocNat(PocNatResult pocnatResult, String labId) {
+    TestResult testResult = new TestResult();
+    testResult.setResult(pocnatResult.getResult());
+    testResult.setLabId(labId);
+    testResult.setId(DigestUtils.sha256Hex(pocnatResult.getId()));
+    testResult.setSc(pocnatResult.getSc());
+    return testResult;
+  }
+
+  /**
+   * Checks and converts PoC-NAT results to PCR results for REST reponse.
+   *
+   * @param result the Result to check and possibly convert
+   * @return either the original result or the converted result
+   */
+  public Integer conversionCheck(Integer result) {
+    if (result >= 10 && result <= 14) {
+      result -= 10;
+    }
+    return result;
+  }
 }

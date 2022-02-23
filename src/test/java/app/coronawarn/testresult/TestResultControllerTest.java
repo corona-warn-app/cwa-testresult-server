@@ -24,11 +24,7 @@ package app.coronawarn.testresult;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-import app.coronawarn.testresult.model.QuickTestResult;
-import app.coronawarn.testresult.model.QuickTestResultList;
-import app.coronawarn.testresult.model.TestResult;
-import app.coronawarn.testresult.model.TestResultList;
-import app.coronawarn.testresult.model.TestResultRequest;
+import app.coronawarn.testresult.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collections;
 import java.util.List;
@@ -344,6 +340,20 @@ public class TestResultControllerTest {
       .getResponse()
       .getContentAsString()
       .contains("cs");
+
+    request = new TestResultRequest()
+      .setId(id);
+    mockMvc.perform(MockMvcRequestBuilders
+        .post("/api/v1/quicktest/result")
+        .accept(MediaType.APPLICATION_JSON_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .content(objectMapper.writeValueAsString(request)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isOk())
+      .andReturn()
+      .getResponse()
+      .getContentAsString()
+      .contains("cs");
   }
 
   @Test
@@ -380,6 +390,150 @@ public class TestResultControllerTest {
       .accept(MediaType.APPLICATION_JSON_VALUE)
       .contentType(MediaType.APPLICATION_JSON_VALUE)
       .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isBadRequest());
+  }
+
+  @Test
+  public void pocnatInsertValidWithCsShouldReturnNoContent() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    Integer result = 10;
+    // create
+    PocNatResultList valid = new PocNatResultList();
+    valid.setTestResults(Collections.singletonList(
+      new PocNatResult().setId(id).setResult(result).setSc(System.currentTimeMillis())
+    ));
+    mockMvc.perform(MockMvcRequestBuilders
+        .post("/api/v1/pocnat/results")
+        .accept(MediaType.APPLICATION_JSON_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isNoContent());
+  }
+
+  @Test
+  public void pocnatInsertValidWithDobHashAndWithCsShouldReturnNoContent() throws Exception {
+    // data
+    String id = "x" + "b".repeat(63);
+    Integer result = 10;
+    // create
+    PocNatResultList valid = new PocNatResultList();
+    valid.setTestResults(Collections.singletonList(
+      new PocNatResult().setId(id).setResult(result).setSc(System.currentTimeMillis())
+    ));
+    mockMvc.perform(MockMvcRequestBuilders
+        .post("/api/v1/pocnat/results")
+        .accept(MediaType.APPLICATION_JSON_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isNoContent());
+  }
+
+  @Test
+  public void pocnatInsertValidWithCsShouldReturnNoContentWithLabId() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    String labId = "l".repeat(64);
+    Integer result = 10;
+    // create
+    PocNatResultList valid = new PocNatResultList();
+    valid.setLabId(labId);
+    valid.setTestResults(Collections.singletonList(
+      new PocNatResult().setId(id).setResult(result).setSc(System.currentTimeMillis())
+    ));
+    mockMvc.perform(MockMvcRequestBuilders
+        .post("/api/v1/pocnat/results")
+        .accept(MediaType.APPLICATION_JSON_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isNoContent());
+  }
+
+  @Test
+  public void pocnatInsertValidWithCsShouldReturnNoContentAndQueryResult() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    Integer result = 10;
+    // create
+    PocNatResultList valid = new PocNatResultList();
+    valid.setTestResults(Collections.singletonList(
+      new PocNatResult().setId(id).setResult(result).setSc(System.currentTimeMillis())
+    ));
+    mockMvc.perform(MockMvcRequestBuilders
+        .post("/api/v1/pocnat/results")
+        .accept(MediaType.APPLICATION_JSON_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+    TestResultRequest request = new TestResultRequest()
+      .setId(id);
+    mockMvc.perform(MockMvcRequestBuilders
+        .post("/api/v1/app/result")
+        .accept(MediaType.APPLICATION_JSON_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .content(objectMapper.writeValueAsString(request)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isOk())
+      .andReturn()
+      .getResponse()
+      .getContentAsString()
+      .contains("cs");
+
+    request = new TestResultRequest()
+      .setId(id);
+    mockMvc.perform(MockMvcRequestBuilders
+        .post("/api/v1/pocnat/result")
+        .accept(MediaType.APPLICATION_JSON_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .content(objectMapper.writeValueAsString(request)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isOk())
+      .andReturn()
+      .getResponse()
+      .getContentAsString()
+      .contains("cs");
+  }
+
+  @Test
+  public void pocnatInsertValidShouldReturnNoContent() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    Integer result = 10;
+    // create
+    PocNatResultList valid = new PocNatResultList();
+    valid.setTestResults(Collections.singletonList(
+      new PocNatResult().setId(id).setResult(result)
+    ));
+    mockMvc.perform(MockMvcRequestBuilders
+        .post("/api/v1/pocnat/results")
+        .accept(MediaType.APPLICATION_JSON_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .content(objectMapper.writeValueAsString(valid)))
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isNoContent());
+  }
+
+  @Test
+  public void pocnatInsertInValidShouldReturnUnprocessableEntity() throws Exception {
+    // data
+    String id = "b".repeat(64);
+    Integer result = 9;
+    // create
+    PocNatResultList valid = new PocNatResultList();
+    valid.setTestResults(Collections.singletonList(
+      new PocNatResult().setId(id).setResult(result)
+    ));
+    mockMvc.perform(MockMvcRequestBuilders
+        .post("/api/v1/pocnat/results")
+        .accept(MediaType.APPLICATION_JSON_VALUE)
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .content(objectMapper.writeValueAsString(valid)))
       .andDo(MockMvcResultHandlers.print())
       .andExpect(MockMvcResultMatchers.status().isBadRequest());
   }
