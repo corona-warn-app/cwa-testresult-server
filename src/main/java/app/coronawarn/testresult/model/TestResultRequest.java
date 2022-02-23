@@ -1,7 +1,7 @@
 /*
  * Corona-Warn-App / cwa-testresult-server
  *
- * (C) 2020, T-Systems International GmbH
+ * (C) 2020 - 2022, T-Systems International GmbH
  *
  * Deutsche Telekom AG and all other contributors /
  * copyright owners license this file to you under the Apache
