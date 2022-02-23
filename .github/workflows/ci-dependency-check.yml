@@ -1,0 +1,32 @@
+name: Dependency Check (OWASP)
+on:
+  schedule:
+    - cron: '48 02 * * 0' # Each Sunday at 02:48 UTC
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-java@v2
+        with:
+          java-version: 11
+          distribution: adopt
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.m2/repository
+          key: ${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+      - name: mvn
+        run: >-
+          mvn dependency-check:check
+          --batch-mode
+          --file ./pom.xml
