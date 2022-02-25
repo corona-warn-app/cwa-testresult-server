@@ -21,6 +21,7 @@
 
 package app.coronawarn.testresult;
 
+import app.coronawarn.testresult.model.PocNatResult;
 import app.coronawarn.testresult.model.PocNatResultList;
 import app.coronawarn.testresult.model.QuickTestResultList;
 import app.coronawarn.testresult.model.TestResult;
@@ -229,7 +230,7 @@ public class TestResultController {
   @Operation(
     description = "The result and the sc (sample collection) timestamp of a PoC-NAT can be set.",
     summary = "Set multiple testresults for a PoC-NAT as an array.",
-    requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = TestResultRequest.class))),
+    requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = PocNatResultList.class))),
     responses = {
       @ApiResponse(
         responseCode = "204",
@@ -242,7 +243,7 @@ public class TestResultController {
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public ResponseEntity<Object> pocnatResults(
+  public ResponseEntity<Void> pocnatResults(
     @org.springframework.web.bind.annotation.RequestBody @NotNull @Valid PocNatResultList list
   ) {
     log.info("Received {} test result to insert or update from PoC-NATs. ", list.getTestResults().size());
