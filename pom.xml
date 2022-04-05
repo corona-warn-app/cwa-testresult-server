@@ -31,10 +31,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- dependencies -->
-    <spring.boot.version>2.6.3</spring.boot.version>
+    <spring.boot.version>2.6.6</spring.boot.version>
     <spring.cloud.version>2021.0.1</spring.cloud.version>
     <lombok.version>1.18.22</lombok.version>
-    <liquibase.version>4.8.0</liquibase.version>
+    <liquibase.version>4.9.1</liquibase.version>
     <springdoc.version>1.6.6</springdoc.version>
     <guava.version>31.0.1-jre</guava.version>
     <h2.version>2.1.210</h2.version>
