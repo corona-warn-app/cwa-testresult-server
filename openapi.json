@@ -1,285 +1,295 @@
-{
-  "openapi": "3.0.1",
-  "info": {
+{"openapi": "3.0.1",
+"info": {
     "title": "cwa-testresult-server",
     "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+        "name": "Apache 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0"
     },
-    "version": "1.2.1-SNAPSHOT"
-  },
-  "servers": [
+    "version": "1.4.4-SNAPSHOT"
+},
+"servers": [
     {
-      "url": "http://localhost:8084",
-      "description": "Generated server url"
+        "url": "http://localhost:8080",
+        "description": "Generated server url"
     }
-  ],
-  "paths": {
-    "/api/v1/quicktest/result": {
-      "post": {
-        "tags": [
-          "test-result-controller"
-        ],
-        "summary": "Set the testresult for a Rapid Antigen Test.",
-        "description": "The result and the sc (sample collection) timestamp of a RAT can be set.",
-        "operationId": "quickTestResult",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TestResultRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Ok, RAT result inserted successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TestResultResponse"
+],
+"paths": {
+    "/api/v1/quicktest/results": {
+        "post": {
+            "tags": [
+                "test-result-controller"
+            ],
+            "summary": "Set multiple testresults for a Rapid Antigen Test as an array.",
+            "description": "The result and the sc (sample collection) timestamp of a RAT can be set.",
+            "operationId": "quicktestResults",
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/TestResultRequest"
+                        }
+                    }
+                },
+                "required": true
+            },
+            "responses": {
+                "204": {
+                    "description": "No content, RAT result(s) inserted successfully.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
         }
-      }
+    },
+    "/api/v1/quicktest/result": {
+        "post": {
+            "tags": [
+                "test-result-controller"
+            ],
+            "summary": "Set the testresult for a Rapid Antigen Test.",
+            "description": "The result and the sc (sample collection) timestamp of a RAT can be set.",
+            "operationId": "quickTestResult",
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/TestResultRequest"
+                        }
+                    }
+                },
+                "required": true
+            },
+            "responses": {
+                "200": {
+                    "description": "Ok, RAT result inserted successfully.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TestResultResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/api/v1/pocnat/results": {
+        "post": {
+            "tags": [
+                "test-result-controller"
+            ],
+            "summary": "Set multiple testresults for a PoC-NAT as an array.",
+            "description": "The result and the sc (sample collection) timestamp of a PoC-NAT can be set.",
+            "operationId": "pocnatResults",
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/PocNatResultList"
+                        }
+                    }
+                },
+                "required": true
+            },
+            "responses": {
+                "204": {
+                    "description": "No content, PoC-NAT result(s) inserted successfully."
+                }
+            }
+        }
+    },
+    "/api/v1/pocnat/result": {
+        "post": {
+            "tags": [
+                "test-result-controller"
+            ],
+            "summary": "Set the testresult for a PoC-NAT.",
+            "description": "The result and the sc (sample collection) timestamp of a PoC-NAT can be set.",
+            "operationId": "pocnatResult",
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/TestResultRequest"
+                        }
+                    }
+                },
+                "required": true
+            },
+            "responses": {
+                "200": {
+                    "description": "Ok, PoC-NAT result inserted successfully.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TestResultResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        }
     },
     "/api/v1/lab/results": {
-      "post": {
-        "tags": [
-          "test-result-controller"
-        ],
-        "summary": "PCR Testresults to be inserted by labs.",
-        "description": "PCR testresults can be inserted.",
-        "operationId": "results",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TestResultList"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "204": {
-            "description": "No content, testresult successfully inserted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
+        "post": {
+            "tags": [
+                "test-result-controller"
+            ],
+            "summary": "PCR Testresults to be inserted by labs.",
+            "description": "PCR testresults can be inserted.",
+            "operationId": "results",
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/TestResultRequest"
+                        }
+                    }
+                },
+                "required": true
+            },
+            "responses": {
+                "204": {
+                    "description": "No content, testresult successfully inserted",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
         }
-      }
     },
     "/api/v1/app/result": {
-      "post": {
-        "tags": [
-          "test-result-controller"
-        ],
-        "summary": "Retrieve test results",
-        "description": "Get test result for a given TestId (Hashed GUID)",
-        "operationId": "result",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TestResultRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Content exists",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TestResultResponse"
+        "post": {
+            "tags": [
+                "test-result-controller"
+            ],
+            "summary": "Retrieve test results",
+            "description": "Get test result for a given TestId (Hashed GUID)",
+            "operationId": "result",
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/TestResultRequest"
+                        }
+                    }
+                },
+                "required": true
+            },
+            "responses": {
+                "200": {
+                    "description": "Content exists",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TestResultResponse"
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
         }
-      }
-    },
-    "/api/v1/quicktest/results": {
-      "post": {
-        "tags": [
-          "test-result-controller"
-        ],
-        "summary": "Set multiple testresults for a Rapid Antigen Test as an array.",
-        "description": "The result and the sc (sample collection) timestamp of a RAT can be set.",
-        "operationId": "quicktestResults",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/QuickTestResultList"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "204": {
-            "description": "No content, RAT result(s) inserted successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        }
-      }
     }
-  },
-  "components": {
+},
+"components": {
     "schemas": {
-      "TestResultRequest": {
-        "required": [
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[XxA-Fa-f0-9]([A-Fa-f0-9]{63})$",
-            "type": "string"
-          },
-          "sc": {
-            "type": "integer",
-            "format": "int64"
-          }
+        "TestResultRequest": {
+            "required": [
+                "id"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "pattern": "^[XxA-Fa-f0-9]([A-Fa-f0-9]{63})$",
+                    "type": "string"
+                },
+                "sc": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "description": "The test result request model."
         },
-        "description": "The test result request model."
-      },
-      "TestResultResponse": {
-        "required": [
-          "testResult"
-        ],
-        "type": "object",
-        "properties": {
-          "testResult": {
-            "maximum": 9,
-            "minimum": 0,
-            "type": "integer",
-            "format": "int32"
-          },
-          "sc": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "labId": {
-            "type": "string"
-          }
+        "TestResultResponse": {
+            "required": [
+                "testResult"
+            ],
+            "type": "object",
+            "properties": {
+                "testResult": {
+                    "maximum": 9,
+                    "minimum": 0,
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "sc": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "labId": {
+                    "type": "string"
+                }
+            },
+            "description": "The test result response model."
         },
-        "description": "The test result response model."
-      },
-      "TestResult": {
-        "required": [
-          "id",
-          "result"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[XxA-Fa-f0-9]([A-Fa-f0-9]{63})$",
-            "type": "string"
-          },
-          "result": {
-            "maximum": 3,
-            "minimum": 1,
-            "type": "integer",
-            "description": "the result of the PCR test",
-            "format": "int32"
-          },
-          "sc": {
-            "type": "integer",
-            "description": "time of sample collection (sc) in unix epoch format. If not set time of insert will be used instead",
-            "format": "int64"
-          }
+        "PocNatResult": {
+            "required": [
+                "id",
+                "result"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "pattern": "^[XxA-Fa-f0-9]([A-Fa-f0-9]{63})$",
+                    "type": "string",
+                    "description": "the testId (Hashed GUID"
+                },
+                "result": {
+                    "maximum": 14,
+                    "minimum": 10,
+                    "type": "integer",
+                    "description": "the result of the PoC-NAT",
+                    "format": "int32"
+                },
+                "sc": {
+                    "type": "integer",
+                    "description": "the timestamp of the sample collection (sc) in unix epoch format. If not set, the time of insertion will be used instead",
+                    "format": "int64"
+                }
+            },
+            "description": "The PoC-NAT result model."
         },
-        "description": "The test result model."
-      },
-      "TestResultList": {
-        "required": [
-          "labId",
-          "testResults"
-        ],
-        "type": "object",
-        "properties": {
-          "testResults": {
-            "type": "array",
-            "description": "array of PCR test results",
-            "items": {
-              "$ref": "#/components/schemas/TestResult"
-            }
-          },
-          "labId": {
-            "maxLength": 64,
-            "type": "string",
-            "description": "The labid that identifys a lab. Every lab can choose its own labid, but it must be unique over all labs, should be generated once via cryptographic hash function"
-          }
-        },
-        "description": "The test result list model."
-      },
-      "QuickTestResult": {
-        "required": [
-          "id",
-          "result"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^[XxA-Fa-f0-9]([A-Fa-f0-9]{63})$",
-            "type": "string",
-            "description": "the testId (Hashed GUID"
-          },
-          "result": {
-            "maximum": 9,
-            "minimum": 5,
-            "type": "integer",
-            "description": "the result of the rapid antigen test",
-            "format": "int32"
-          },
-          "sc": {
-            "type": "integer",
-            "description": "the timestamp of the sample collection (sc) in unix epoch format. If not set, the time of insertion will be used instead",
-            "format": "int64"
-          }
-        },
-        "description": "The rapid antigen test result model."
-      },
-      "QuickTestResultList": {
-        "required": [
-          "labId",
-          "testResults"
-        ],
-        "type": "object",
-        "properties": {
-          "testResults": {
-            "type": "array",
-            "description": "array of rapid antingen test results",
-            "items": {
-              "$ref": "#/components/schemas/QuickTestResult"
-            }
-          },
-          "labId": {
-            "maxLength": 64,
-            "type": "string",
-            "description": "The id that identifies a lab. Every lab can choose its own labid, but it must be unique over all labs, should be generated once via cryptographic hash function"
-          }
-        },
-        "description": "The rapid antigen test result list model."
-      }
+        "PocNatResultList": {
+            "required": [
+                "labId",
+                "testResults"
+            ],
+            "type": "object",
+            "properties": {
+                "testResults": {
+                    "type": "array",
+                    "description": "array of PoC-NAT results",
+                    "items": {
+                        "$ref": "#/components/schemas/PocNatResult"
+                    }
+                },
+                "labId": {
+                    "maxLength": 64,
+                    "type": "string",
+                    "description": "The id that identifies a lab. Every lab can choose its own labid, but it must be unique over all labs, should be generated once via cryptographic hash function"
+                }
+            },
+            "description": "The PoC-NAT result list model."
+        }
     }
-  }
+}
 }
