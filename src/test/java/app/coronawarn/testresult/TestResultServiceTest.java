@@ -27,10 +27,9 @@ import app.coronawarn.testresult.model.QuickTestResult;
 import app.coronawarn.testresult.model.TestResult;
 import app.coronawarn.testresult.model.TestType;
 import app.coronawarn.testresult.service.TestResultService;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,7 +38,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.Instant;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = TestResultApplication.class)
@@ -50,7 +48,7 @@ public class TestResultServiceTest {
   @Autowired
   private TestResultRepository testResultRepository;
 
-  @Before
+  @BeforeEach
   public void before() {
     testResultRepository.deleteAll();
   }
@@ -67,16 +65,16 @@ public class TestResultServiceTest {
       .setLabId(labId)
       .setResult(result);
     TestResultEntity entity = testResultService.toEntity(model);
-    Assert.assertNotNull(entity);
-    Assert.assertEquals(id, entity.getResultId());
-    Assert.assertEquals(result, entity.getResult());
-    Assert.assertEquals(labId, entity.getLabId());
+    Assertions.assertNotNull(entity);
+    Assertions.assertEquals(id, entity.getResultId());
+    Assertions.assertEquals(result, entity.getResult());
+    Assertions.assertEquals(labId, entity.getLabId());
     // to model
     model = testResultService.toModel(entity);
-    Assert.assertNotNull(model);
-    Assert.assertEquals(id, model.getId());
-    Assert.assertEquals(result, model.getResult());
-    Assert.assertEquals(labId, model.getLabId());
+    Assertions.assertNotNull(model);
+    Assertions.assertEquals(id, model.getId());
+    Assertions.assertEquals(result, model.getResult());
+    Assertions.assertEquals(labId, model.getLabId());
   }
 
   @Test
@@ -91,14 +89,14 @@ public class TestResultServiceTest {
       .setLabId(labId);
     // create
     create = testResultService.createOrUpdate(create);
-    Assert.assertNotNull(create);
-    Assert.assertEquals(result, create.getResult());
-    Assert.assertEquals(labId, create.getLabId());
+    Assertions.assertNotNull(create);
+    Assertions.assertEquals(result, create.getResult());
+    Assertions.assertEquals(labId, create.getLabId());
     // get
     TestResult get = testResultService.getOrCreate(id, TestType.PCR, 0L);
-    Assert.assertNotNull(get);
-    Assert.assertEquals(result, get.getResult());
-    Assert.assertEquals(labId, get.getLabId());
+    Assertions.assertNotNull(get);
+    Assertions.assertEquals(result, get.getResult());
+    Assertions.assertEquals(labId, get.getLabId());
   }
 
   @Test
@@ -114,14 +112,14 @@ public class TestResultServiceTest {
       .setLabId(labId);
     // create
     create = testResultService.createOrUpdate(create);
-    Assert.assertNotNull(create);
-    Assert.assertEquals(resultCreate, create.getResult());
-    Assert.assertEquals(labId, create.getLabId());
+    Assertions.assertNotNull(create);
+    Assertions.assertEquals(resultCreate, create.getResult());
+    Assertions.assertEquals(labId, create.getLabId());
     // get
     TestResult get = testResultService.getOrCreate(id, TestType.PCR, 0L);
-    Assert.assertNotNull(get);
-    Assert.assertEquals(resultCreate, get.getResult());
-    Assert.assertEquals(labId, get.getLabId());
+    Assertions.assertNotNull(get);
+    Assertions.assertEquals(resultCreate, get.getResult());
+    Assertions.assertEquals(labId, get.getLabId());
     // update
     TestResult update = new TestResult()
       .setId(id)
@@ -129,14 +127,14 @@ public class TestResultServiceTest {
       .setLabId(labId)
       .setSc(Instant.now().getEpochSecond());
     update = testResultService.createOrUpdate(update);
-    Assert.assertNotNull(update);
-    Assert.assertEquals(resultUpdate, update.getResult());
-    Assert.assertEquals(labId, update.getLabId());
+    Assertions.assertNotNull(update);
+    Assertions.assertEquals(resultUpdate, update.getResult());
+    Assertions.assertEquals(labId, update.getLabId());
     // get
     get = testResultService.getOrCreate(id, TestType.PCR, 0L);
-    Assert.assertNotNull(get);
-    Assert.assertEquals(resultUpdate, get.getResult());
-    Assert.assertEquals(labId, get.getLabId());
+    Assertions.assertNotNull(get);
+    Assertions.assertEquals(resultUpdate, get.getResult());
+    Assertions.assertEquals(labId, get.getLabId());
   }
 
   @Test
@@ -146,23 +144,23 @@ public class TestResultServiceTest {
     Integer result = 0;
     // get
     TestResult get = testResultService.getOrCreate(id, TestType.PCR, 0L);
-    Assert.assertNotNull(get);
-    Assert.assertEquals(result, get.getResult());
-    Assert.assertNull(get.getLabId());
+    Assertions.assertNotNull(get);
+    Assertions.assertEquals(result, get.getResult());
+    Assertions.assertNull(get.getLabId());
 
     id = "b".repeat(64);
     result = 5;
     get = testResultService.getOrCreate(id, TestType.QUICKTEST, null);
-    Assert.assertNotNull(get);
-    Assert.assertEquals(result, get.getResult());
-    Assert.assertNull(get.getLabId());
+    Assertions.assertNotNull(get);
+    Assertions.assertEquals(result, get.getResult());
+    Assertions.assertNull(get.getLabId());
 
     id = "c".repeat(64);
     result = 10;
     get = testResultService.getOrCreate(id, TestType.POCNAT, 0L);
-    Assert.assertNotNull(get);
-    Assert.assertEquals(result, get.getResult());
-    Assert.assertNull(get.getLabId());
+    Assertions.assertNotNull(get);
+    Assertions.assertEquals(result, get.getResult());
+    Assertions.assertNull(get.getLabId());
   }
 
   @Test
@@ -176,8 +174,8 @@ public class TestResultServiceTest {
       .setResult(resultCreate);
     // create
     create = testResultService.createOrUpdate(create);
-    Assert.assertNotNull(create);
-    Assert.assertEquals(resultCreate, create.getResult());
+    Assertions.assertNotNull(create);
+    Assertions.assertEquals(resultCreate, create.getResult());
     // redeem
     testResultRepository.findByResultId(id)
       .ifPresent(u -> testResultRepository.save(u
@@ -187,31 +185,31 @@ public class TestResultServiceTest {
       .setId(id)
       .setResult(resultUpdate);
     update = testResultService.createOrUpdate(update);
-    Assert.assertNotNull(update);
-    Assert.assertNotEquals(resultUpdate, update.getResult());
+    Assertions.assertNotNull(update);
+    Assertions.assertNotEquals(resultUpdate, update.getResult());
   }
 
   @Test
   public void conversionCheckIsPocNat() {
-    Assert.assertEquals(TestResultEntity.Result.PENDING.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POCNAT_PENDING.ordinal()));
-    Assert.assertEquals(TestResultEntity.Result.REDEEMED.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POCNAT_REDEEMED.ordinal()));
-    Assert.assertEquals(TestResultEntity.Result.INVALID.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POCNAT_INVALID.ordinal()));
-    Assert.assertEquals(TestResultEntity.Result.NEGATIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POCNAT_NEGATIVE.ordinal()));
-    Assert.assertEquals(TestResultEntity.Result.POSITIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POCNAT_POSITIVE.ordinal()));
+    Assertions.assertEquals(TestResultEntity.Result.PENDING.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POCNAT_PENDING.ordinal()));
+    Assertions.assertEquals(TestResultEntity.Result.REDEEMED.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POCNAT_REDEEMED.ordinal()));
+    Assertions.assertEquals(TestResultEntity.Result.INVALID.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POCNAT_INVALID.ordinal()));
+    Assertions.assertEquals(TestResultEntity.Result.NEGATIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POCNAT_NEGATIVE.ordinal()));
+    Assertions.assertEquals(TestResultEntity.Result.POSITIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POCNAT_POSITIVE.ordinal()));
   }
 
   @Test
   public void conversionCheckNotPocNat() {
-    Assert.assertEquals(TestResultEntity.Result.PENDING.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.PENDING.ordinal()));
-    Assert.assertEquals(TestResultEntity.Result.REDEEMED.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.REDEEMED.ordinal()));
-    Assert.assertEquals(TestResultEntity.Result.INVALID.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.INVALID.ordinal()));
-    Assert.assertEquals(TestResultEntity.Result.NEGATIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.NEGATIVE.ordinal()));
-    Assert.assertEquals(TestResultEntity.Result.POSITIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POSITIVE.ordinal()));
-    Assert.assertEquals(TestResultEntity.Result.QUICK_PENDING.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_PENDING.ordinal()));
-    Assert.assertEquals(TestResultEntity.Result.QUICK_REDEEMED.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_REDEEMED.ordinal()));
-    Assert.assertEquals(TestResultEntity.Result.QUICK_INVALID.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_INVALID.ordinal()));
-    Assert.assertEquals(TestResultEntity.Result.QUICK_NEGATIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_NEGATIVE.ordinal()));
-    Assert.assertEquals(TestResultEntity.Result.QUICK_POSITIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_POSITIVE.ordinal()));
+    Assertions.assertEquals(TestResultEntity.Result.PENDING.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.PENDING.ordinal()));
+    Assertions.assertEquals(TestResultEntity.Result.REDEEMED.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.REDEEMED.ordinal()));
+    Assertions.assertEquals(TestResultEntity.Result.INVALID.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.INVALID.ordinal()));
+    Assertions.assertEquals(TestResultEntity.Result.NEGATIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.NEGATIVE.ordinal()));
+    Assertions.assertEquals(TestResultEntity.Result.POSITIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.POSITIVE.ordinal()));
+    Assertions.assertEquals(TestResultEntity.Result.QUICK_PENDING.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_PENDING.ordinal()));
+    Assertions.assertEquals(TestResultEntity.Result.QUICK_REDEEMED.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_REDEEMED.ordinal()));
+    Assertions.assertEquals(TestResultEntity.Result.QUICK_INVALID.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_INVALID.ordinal()));
+    Assertions.assertEquals(TestResultEntity.Result.QUICK_NEGATIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_NEGATIVE.ordinal()));
+    Assertions.assertEquals(TestResultEntity.Result.QUICK_POSITIVE.ordinal(), (int) testResultService.conversionCheck(TestResultEntity.Result.QUICK_POSITIVE.ordinal()));
   }
 
   @Test
@@ -223,9 +221,9 @@ public class TestResultServiceTest {
     quicktest.setSc(Instant.now().getEpochSecond());
     TestResult result = testResultService.convertQuickTest(quicktest,"TestId");
 
-    Assert.assertEquals(quicktest.getResult(), result.getResult());
-    Assert.assertEquals(quicktest.getSc(), result.getSc());
-    Assert.assertNotEquals(quicktest.getId(), result.getId());
+    Assertions.assertEquals(quicktest.getResult(), result.getResult());
+    Assertions.assertEquals(quicktest.getSc(), result.getSc());
+    Assertions.assertNotEquals(quicktest.getId(), result.getId());
   }
 
   @Test
@@ -237,8 +235,8 @@ public class TestResultServiceTest {
     pocnat.setSc(Instant.now().getEpochSecond());
     TestResult result = testResultService.convertPocNat(pocnat,"TestId");
 
-    Assert.assertEquals(pocnat.getResult(), result.getResult());
-    Assert.assertEquals(pocnat.getSc(), result.getSc());
-    Assert.assertNotEquals(pocnat.getId(), result.getId());
+    Assertions.assertEquals(pocnat.getResult(), result.getResult());
+    Assertions.assertEquals(pocnat.getSc(), result.getSc());
+    Assertions.assertNotEquals(pocnat.getId(), result.getId());
   }
 }
