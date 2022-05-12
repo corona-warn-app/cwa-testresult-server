@@ -30,3 +30,5 @@ jobs:
           mvn dependency-check:check
           --batch-mode
           --file ./pom.xml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
