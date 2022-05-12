@@ -24,25 +24,28 @@ package app.coronawarn.testresult;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-import app.coronawarn.testresult.model.*;
+import app.coronawarn.testresult.model.PocNatResult;
+import app.coronawarn.testresult.model.PocNatResultList;
+import app.coronawarn.testresult.model.QuickTestResult;
+import app.coronawarn.testresult.model.QuickTestResultList;
+import app.coronawarn.testresult.model.TestResult;
+import app.coronawarn.testresult.model.TestResultList;
+import app.coronawarn.testresult.model.TestResultRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = TestResultApplication.class)
@@ -55,7 +58,7 @@ public class TestResultControllerTest {
   @Autowired
   private TestResultRepository testResultRepository;
 
-  @Before
+  @BeforeEach
   public void before() {
     testResultRepository.deleteAll();
   }

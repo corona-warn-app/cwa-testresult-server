@@ -26,18 +26,13 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import rx.Single;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(
   properties = {
     "testresult.cleanup.redeem.days=21",
@@ -52,7 +47,10 @@ public class TestResultCleanupTest {
   @Autowired
   private TestResultRepository testResultRepository;
 
-  @Before
+  @Autowired
+  private TestResultCleanup testResultCleanup;
+
+  @BeforeEach
   public void before() {
     testResultRepository.deleteAll();
   }
@@ -74,24 +72,25 @@ public class TestResultCleanupTest {
     );
     create.setCreatedAt(createdAt);
     testResultRepository.save(create);
-    Assert.assertNotNull(create);
-    Assert.assertEquals(createdAt, create.getCreatedAt());
-    Assert.assertEquals(resultId, create.getResultId());
+    Assertions.assertNotNull(create);
+    Assertions.assertEquals(createdAt, create.getCreatedAt());
+    Assertions.assertEquals(resultId, create.getResultId());
     // find
     Optional<TestResultEntity> find = testResultRepository.findByResultId(resultId);
-    Assert.assertTrue(find.isPresent());
-    Assert.assertEquals(resultId, find.get().getResultId());
-    Assert.assertEquals(
+    Assertions.assertTrue(find.isPresent());
+    Assertions.assertEquals(resultId, find.get().getResultId());
+    Assertions.assertEquals(
       createdAt.truncatedTo(ChronoUnit.MILLIS), find.get().getCreatedAt().truncatedTo(ChronoUnit.MILLIS));
-    Assert.assertEquals(
+    Assertions.assertEquals(
       resultDate.truncatedTo(ChronoUnit.MILLIS), find.get().getResultDate().truncatedTo(ChronoUnit.MILLIS));
-    // wait
-    Single.fromCallable(() -> true).delay(2, TimeUnit.SECONDS).toBlocking().value();
+    // manually trigger cleanup
+    testResultCleanup.redeem();
+    testResultCleanup.delete();
     // find
     find = testResultRepository.findByResultId(resultId);
-    Assert.assertTrue(find.isPresent());
-    Assert.assertEquals(resultId, find.get().getResultId());
-    Assert.assertEquals(resultRedeemed, find.get().getResult());
+    Assertions.assertTrue(find.isPresent());
+    Assertions.assertEquals(resultId, find.get().getResultId());
+    Assertions.assertEquals(resultRedeemed, find.get().getResult());
   }
 
   @Test
@@ -110,21 +109,22 @@ public class TestResultCleanupTest {
     );
     create.setCreatedAt(createdAt);
     testResultRepository.save(create);
-    Assert.assertNotNull(create);
-    Assert.assertEquals(createdAt, create.getCreatedAt());
-    Assert.assertEquals(resultId, create.getResultId());
+    Assertions.assertNotNull(create);
+    Assertions.assertEquals(createdAt, create.getCreatedAt());
+    Assertions.assertEquals(resultId, create.getResultId());
     // find
     Optional<TestResultEntity> find = testResultRepository.findByResultId(resultId);
-    Assert.assertTrue(find.isPresent());
-    Assert.assertEquals(resultId, find.get().getResultId());
-    Assert.assertEquals(
+    Assertions.assertTrue(find.isPresent());
+    Assertions.assertEquals(resultId, find.get().getResultId());
+    Assertions.assertEquals(
       createdAt.truncatedTo(ChronoUnit.MILLIS), find.get().getCreatedAt().truncatedTo(ChronoUnit.MILLIS));
-    Assert.assertEquals(
+    Assertions.assertEquals(
       resultDate.truncatedTo(ChronoUnit.MILLIS), find.get().getResultDate().truncatedTo(ChronoUnit.MILLIS));
-    // wait
-    Single.fromCallable(() -> true).delay(2, TimeUnit.SECONDS).toBlocking().value();
+    // manually trigger cleanup
+    testResultCleanup.redeem();
+    testResultCleanup.delete();
     // find
     find = testResultRepository.findByResultId(resultId);
-    Assert.assertFalse(find.isPresent());
+    Assertions.assertFalse(find.isPresent());
   }
 }

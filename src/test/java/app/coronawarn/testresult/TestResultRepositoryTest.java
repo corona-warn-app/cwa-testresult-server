@@ -25,16 +25,14 @@ import app.coronawarn.testresult.entity.TestResultEntity;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = TestResultApplication.class)
 public class TestResultRepositoryTest {
@@ -42,7 +40,7 @@ public class TestResultRepositoryTest {
   @Autowired
   private TestResultRepository testResultRepository;
 
-  @Before
+  @BeforeEach
   public void before() {
     testResultRepository.deleteAll();
   }
@@ -59,18 +57,18 @@ public class TestResultRepositoryTest {
       .setResultId(resultId)
       .setResultDate(resultDate)
     );
-    Assert.assertNotNull(create);
-    Assert.assertEquals(resultId, create.getResultId());
+    Assertions.assertNotNull(create);
+    Assertions.assertEquals(resultId, create.getResultId());
     // find
     Optional<TestResultEntity> find = testResultRepository.findByResultId(resultId);
-    Assert.assertTrue(find.isPresent());
-    Assert.assertEquals(result, find.get().getResult());
-    Assert.assertEquals(resultId, find.get().getResultId());
-    Assert.assertEquals(
+    Assertions.assertTrue(find.isPresent());
+    Assertions.assertEquals(result, find.get().getResult());
+    Assertions.assertEquals(resultId, find.get().getResultId());
+    Assertions.assertEquals(
       resultDate.truncatedTo(ChronoUnit.MILLIS), find.get().getResultDate().truncatedTo(ChronoUnit.MILLIS));
-    Assert.assertNotNull(find.get().getCreatedAt());
-    Assert.assertNotNull(find.get().getUpdatedAt());
-    Assert.assertNotNull(find.get().getVersion());
+    Assertions.assertNotNull(find.get().getCreatedAt());
+    Assertions.assertNotNull(find.get().getUpdatedAt());
+    Assertions.assertNotNull(find.get().getVersion());
   }
 
 }
