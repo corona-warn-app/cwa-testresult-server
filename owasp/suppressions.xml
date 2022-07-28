@@ -19,4 +19,14 @@
     <notes>CVE warns about usage of sample code in Tomcat Repository. This code is not used by us.</notes>
     <cve>CVE-2022-34305</cve>
   </suppress>
+
+  <suppress>
+    <notes>False Positive</notes>
+    <cve>CVE-2022-31514</cve>
+  </suppress>
+
+  <suppress>
+    <notes>False Positive (https://github.com/jeremylong/DependencyCheck/issues/4693)</notes>
+    <cve>CVE-2022-2393</cve>
+  </suppress>
 </suppressions>
