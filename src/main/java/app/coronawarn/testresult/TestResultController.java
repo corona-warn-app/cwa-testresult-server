@@ -69,7 +69,7 @@ public class TestResultController {
         responseCode = "200",
         description = "Content exists",
         content = @Content(schema = @Schema(implementation = TestResultResponse.class))
-      )
+        )
     }
   )
   @PostMapping(
@@ -103,7 +103,7 @@ public class TestResultController {
       @ApiResponse(
         responseCode = "204",
         description = "No content, testresult successfully inserted"
-      )
+        )
     }
   )
   @PostMapping(
@@ -137,7 +137,7 @@ public class TestResultController {
       @ApiResponse(
         responseCode = "200",
         description = "Ok, RAT result inserted successfully."
-      )
+        )
     }
   )
   @PostMapping(
@@ -169,7 +169,7 @@ public class TestResultController {
       @ApiResponse(
         responseCode = "204",
         description = "No content, RAT result(s) inserted successfully."
-      )
+        )
     }
   )
   @PostMapping(
@@ -203,7 +203,7 @@ public class TestResultController {
       @ApiResponse(
         responseCode = "200",
         description = "Ok, PoC-NAT result inserted successfully."
-      )
+        )
     }
   )
   @PostMapping(
@@ -235,7 +235,7 @@ public class TestResultController {
       @ApiResponse(
         responseCode = "204",
         description = "No content, PoC-NAT result(s) inserted successfully."
-      )
+        )
     }
   )
   @PostMapping(
