@@ -21,7 +21,6 @@
 
 package app.coronawarn.testresult;
 
-import app.coronawarn.testresult.model.PocNatResult;
 import app.coronawarn.testresult.model.PocNatResultList;
 import app.coronawarn.testresult.model.QuickTestResultList;
 import app.coronawarn.testresult.model.TestResult;
