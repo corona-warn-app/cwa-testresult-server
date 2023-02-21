@@ -22,8 +22,8 @@
 package app.coronawarn.testresult.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -61,12 +61,4 @@ public class TestResultRequest {
     return this;
   }
 
-  /**
-   * All args constructor with sc.
-   */
-  public TestResultRequest setId(String id, Long sc) {
-    this.id = id;
-    this.sc = sc;
-    return this;
-  }
 }

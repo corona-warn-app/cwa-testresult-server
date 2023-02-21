@@ -21,12 +21,14 @@
 
 package app.coronawarn.testresult.model;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+
 import io.swagger.v3.oas.annotations.media.Schema;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -65,7 +67,7 @@ public class PocNatResult {
   @Min(10)
   @Max(14)
   @NotNull
-  @Schema(description = "the result of the PoC-NAT", required = true)
+  @Schema(description = "the result of the PoC-NAT", requiredMode = REQUIRED)
   private Integer result;
 
   /**

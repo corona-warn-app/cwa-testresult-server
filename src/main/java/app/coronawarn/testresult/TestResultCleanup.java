@@ -23,9 +23,9 @@ package app.coronawarn.testresult;
 
 import app.coronawarn.testresult.config.TestResultConfig;
 import app.coronawarn.testresult.entity.TestResultEntity;
+import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.Period;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
