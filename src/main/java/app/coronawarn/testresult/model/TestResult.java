@@ -21,13 +21,15 @@
 
 package app.coronawarn.testresult.model;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -69,20 +71,20 @@ public class TestResult {
   @Min(1)
   @Max(3)
   @NotNull
-  @Schema(description = "the result of the PCR test", required = true)
+  @Schema(description = "the result of the PCR test", requiredMode = REQUIRED)
   private Integer result;
 
   /**
    * Timestamp of the SampleCollection (sc).
    */
   @Schema(description = "time of sample collection (sc) in unix epoch format. "
-     + "If not set time of insert will be used instead", required = false, 
+     + "If not set time of insert will be used instead",
     defaultValue = "Current time")
   private Long sc;
 
   @JsonIgnore
   @Schema(description = "The id that identifies a lab. Every lab can choose its own labid, "
     + "but it must be unique over all labs, should be generated once via cryptographic hash function",
-    required = true, maxLength = 64)
+    requiredMode = REQUIRED, maxLength = 64)
   private String labId;
 }
