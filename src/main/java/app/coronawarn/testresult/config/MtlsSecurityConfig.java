@@ -35,9 +35,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.preauth.x509.X509PrincipalExtractor;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
@@ -47,7 +47,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Slf4j
 @RequiredArgsConstructor
 @ConditionalOnProperty(name = "server.ssl.client-auth", havingValue = "need")
-public class MtlsSecurityConfig extends WebSecurityConfigurerAdapter {
+public class MtlsSecurityConfig {
 
   private final TestResultConfig testResultConfig;
 
@@ -61,23 +61,30 @@ public class MtlsSecurityConfig extends WebSecurityConfigurerAdapter {
     return firewall;
   }
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
+  /**
+   * SecurityFilterChain.
+   */
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
-      .authorizeRequests()
-      .mvcMatchers("/api/**").authenticated().and()
+      .authorizeHttpRequests()
+      .requestMatchers("/api/**").authenticated().and()
       .x509().x509PrincipalExtractor(new ThumbprintX509PrincipalExtractor()).userDetailsService(userDetailsService())
-      .and().authorizeRequests()
-      .mvcMatchers("/actuator/**").permitAll()
+      .and().authorizeHttpRequests()
+      .requestMatchers("/actuator/**").permitAll()
       .anyRequest().denyAll()
       .and().csrf().disable();
+    return http.build();
   }
 
-  @Override
+  /**
+   * UserDetailsService.
+   */
+  @Bean
   public UserDetailsService userDetailsService() {
     return hash -> {
       boolean allowed = Stream.of(testResultConfig.getAllowedClientCertificates()
-        .split(","))
+          .split(","))
         .map(String::trim)
         .anyMatch(entry -> entry.equalsIgnoreCase(hash));
 
@@ -97,7 +104,7 @@ public class MtlsSecurityConfig extends WebSecurityConfigurerAdapter {
 
       try {
         String hash = DigestUtils.sha256Hex(x509Certificate.getEncoded());
-        log.debug("Accessed by Subject {} Hash {}",x509Certificate.getSubjectDN().getName(), hash);
+        log.debug("Accessed by Subject {} Hash {}", x509Certificate.getSubjectX500Principal().getName(), hash);
         return hash;
       } catch (CertificateEncodingException e) {
         log.error("Failed to extract bytes from certificate");

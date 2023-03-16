@@ -21,12 +21,14 @@
 
 package app.coronawarn.testresult.model;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -51,7 +53,7 @@ public class QuickTestResultList {
    */
   @NotNull
   @NotEmpty
-  @Schema(description = "array of rapid antingen test results", required = true)
+  @Schema(description = "array of rapid antingen test results", requiredMode = REQUIRED)
   private List<@Valid QuickTestResult> testResults;
 
   /**
@@ -59,7 +61,7 @@ public class QuickTestResultList {
    */
   @Schema(description = "The id that identifies a lab. Every lab can choose its own labid, "
     + "but it must be unique over all labs, should be generated once via cryptographic hash function",
-    required = true, maxLength = 64)
+    requiredMode = REQUIRED, maxLength = 64)
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private String labId;
 }
